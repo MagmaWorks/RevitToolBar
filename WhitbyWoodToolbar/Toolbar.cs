@@ -22,6 +22,7 @@ namespace WhitbyWoodToolbar
         {
             string assemblyPath = Assembly.GetExecutingAssembly().Location;
 
+            
             application.CreateRibbonTab("Whitby Wood");
 
             Uri wwLogo = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/Link.png");

@@ -17,6 +17,9 @@ namespace WhitbyWoodToolbar
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             MessageBox.Show("This would take you to WW BIM Standards");
+
+            //commandData.Application.ActiveUIDocument.Document.PrintManager.ViewSheetSetting.CurrentViewSheetSet
+
             return Result.Succeeded;
         }
     }
