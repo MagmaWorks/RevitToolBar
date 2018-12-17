@@ -8,11 +8,15 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.ApplicationServices;
 using System.Reflection;
 using System.Windows.Media.Imaging;
+using System.IO;
+using System.Windows.Forms;
 
 namespace WhitbyWoodToolbar
 {
     public class Toolbar : IExternalApplication
     {
+        UIControlledApplication revitApp;
+
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
@@ -20,7 +24,12 @@ namespace WhitbyWoodToolbar
 
         public Result OnStartup(UIControlledApplication application)
         {
+            this.revitApp = application;
+
             string assemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            //This could check for Dynamo packages on start up
+            //CheckDynamo.checkDynamoPackages(); 
 
             
             application.CreateRibbonTab("Whitby Wood");
@@ -28,16 +37,28 @@ namespace WhitbyWoodToolbar
             Uri wwLogo = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/Link.png");
             var panel1 = application.CreateRibbonPanel("Whitby Wood", "General panel");
             panel1.AddItem(new PushButtonData(
-                "WW Standards",
-                "WW",
+                "WW Batch print",
+                "Batch PDF",
                 assemblyPath,
-                "WhitbyWoodToolbar.WWStandards")
+                "WhitbyWoodToolbar.WWBatchPrint")
             {
-                ToolTip = "Link to WW BIM standards",
+                ToolTip = "Batch print",
+                LargeImage = new BitmapImage(wwLogo)
+            });
+
+            panel1.AddItem(new PushButtonData(
+                "Check Dynamo version and packages",
+                "Check Dynamo",
+                assemblyPath,
+                "WhitbyWoodToolbar.WWCheckDynamo")
+            {
+                ToolTip = "Batch print",
                 LargeImage = new BitmapImage(wwLogo)
             });
 
             return Result.Succeeded;
         }
+
+
     }
 }

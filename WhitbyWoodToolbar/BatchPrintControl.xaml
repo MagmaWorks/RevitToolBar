@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="WhitbyWoodToolbar.BatchPrintControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WhitbyWoodToolbar"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Print" Command="{Binding PrintCommand}"/>
+                <TextBlock Text="Using Bluebeam PDF and A1 TO A1 settings" Margin="15 0 0 0"/>
+                <CheckBox Content="Include revision" IsChecked="{Binding IncludeRev}" Margin="15 0 0 0"/>
+                <CheckBox Content="Include name" IsChecked="{Binding IncludeName}" Margin="15 0 0 0"/>
+                <TextBlock Text="Comment to append: " Margin="15 0 0 0"/>
+                <TextBox Text="{Binding Comment}" Width="100" Margin="15 0 0 0"/>
+                <Button Content="Add comment to all" Command="{Binding AddCommentCommand}"/>
+                <CheckBox Content="Copy to another folder" IsChecked="{Binding CopyToFolder}" Margin="15 0 0 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Content="Select All" IsChecked="{Binding SelectAll}"/>
+                <TextBox Text="{Binding FilterBy}" Width="100" Margin="15 0 0 0"/>
+                <Button Content="Filter" Command="{Binding FilterCommand}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!--<StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="" Width="20"/>
+            <TextBlock Text="Number" Width="100"/>
+            <TextBlock Text="Name}" Width="300"/>
+            <TextBlock Text="Rev" Width="40"/>
+            <TextBlock Text="Rev Date" Width="60"/>
+            <TextBlock Text="Rev Description"/>
+        </StackPanel>-->
+        <ListView Grid.Row="2" ItemsSource="{Binding SheetInfo}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Print">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding ToPrint}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Number}"/>
+                    <GridViewColumn Header="Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IncludeName}" Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Rev">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IncludeRev}" Content="{Binding Rev}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Comment">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Comment}" Width="100"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding RevDate}"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding RevDescript}"/>
+                    <GridViewColumn Header="File Path" DisplayMemberBinding="{Binding FilePath}"/>
+                </GridView>
+            </ListView.View>
+            <!--<ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding ToPrint}" Width="20"/>
+                        <TextBlock Text="{Binding Number}" Width="100"/>
+                        <TextBlock Text="{Binding Name}" Width="300"/>
+                        <TextBlock Text="{Binding Rev}" Width="40"/>
+                        <TextBlock Text="{Binding RevDate}" Width="60"/>
+                        <TextBlock Text="{Binding RevDescript}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>-->
+        </ListView>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Image HorizontalAlignment="Left" Source="pack://application:,,,/WhitbyWoodToolbar;component/resources/WhitbyWood.jpg"/>
+
+            <TextBlock Text="Batch Print Utility" VerticalAlignment="Center" Margin="30 0 0 0" FontSize="12" FontWeight="Bold"/>
+        </StackPanel>
+        <!--<Button Content="Cancel" />-->
+    </Grid>
+</UserControl>
