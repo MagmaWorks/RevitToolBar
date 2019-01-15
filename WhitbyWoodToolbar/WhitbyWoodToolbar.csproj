@@ -59,8 +59,12 @@
       <DependentUpon>BatchPrintControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="BatchPrintViewModel.cs" />
+    <Compile Include="CannotFindFileVM.cs" />
     <Compile Include="CheckDynamo.cs" />
     <Compile Include="CommandHandler.cs" />
+    <Compile Include="ContinueLooking.xaml.cs">
+      <DependentUpon>ContinueLooking.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +98,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="BatchPrintControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContinueLooking.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

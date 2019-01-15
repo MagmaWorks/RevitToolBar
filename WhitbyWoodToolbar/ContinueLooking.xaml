@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="WhitbyWoodToolbar.ContinueLooking"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WhitbyWoodToolbar"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="650">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="We're not sure what Bluebeam is up to, the following file cannot be found:"/>
+            <TextBlock Text="{Binding FileName}"/>
+        </StackPanel>
+        <StackPanel Margin="0,53,0,375.6" Orientation="Horizontal">
+            <Button Content="Wait" Width="200" Margin="0 0 25 0" Click="Button_Click_1"/>
+            <Button Content="Skip one" Width="200" Margin="0 0 25 0" Click="Button_Click_2"/>
+            <Button Content="Skip all" Width="200" Click="Button_Click_3"/>
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>

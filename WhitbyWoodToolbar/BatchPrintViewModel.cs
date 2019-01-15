@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -77,6 +78,26 @@ namespace WhitbyWoodToolbar
             }
         }
 
+        public string Prefix { get; set; }
+
+        ICommand _addPrefixCommand;
+
+        public ICommand AddPrefixCommand
+        {
+            get
+            {
+                return _addPrefixCommand ?? (_addPrefixCommand = new CommandHandler(() => addPrefix(), true));
+            }
+        }
+
+        private void addPrefix()
+        {
+            foreach (var sheet in SheetInfo)
+            {
+                sheet.Prefix = Prefix;
+            }
+        }
+
         bool _includeName = false;
         public bool IncludeName
         {
@@ -95,7 +116,7 @@ namespace WhitbyWoodToolbar
             }
         }
 
-        bool _copyToFolder = true;
+        bool _copyToFolder = false;
         public bool CopyToFolder
         {
             get
@@ -234,18 +255,46 @@ namespace WhitbyWoodToolbar
                     printM.SubmitPrint(sheet.Sheet);
                 }
             }
-            System.Windows.MessageBox.Show(output);
+            //System.Windows.MessageBox.Show(output);
 
             if (CopyToFolder)
             {
                 foreach (var fileName in printedFileNames)
                 {
+                    int waitCycles = 0;
+                    CannotFindFileVM vm = new CannotFindFileVM();
                     while (!File.Exists(fileName))
                     {
                         Thread.Sleep(1000);
+                        waitCycles++;
+                        if (waitCycles > 15)
+                        {
+                            var skipFile = new Window();
+                            var userControl = new ContinueLooking(vm);
+                            var window = new Window()
+                            {
+                                Content = userControl
+                            };
+                            window.ShowDialog();
+                        }
+                        if (vm.SkipAll == true || vm.SkipOne == true)
+                        {
+                            break;
+                        }
                     }
-                    string file = Path.GetFileName(fileName);
-                    File.Copy(fileName, dest + @"\" + file, true);
+                    if (vm.SkipOne == false && vm.SkipAll == false)
+                    {
+                        string file = Path.GetFileName(fileName);
+                        File.Copy(fileName, dest + @"\" + file, true);
+                    }
+                    else
+                    {
+                        if (vm.SkipAll == true)
+                        {
+                            break;
+                        }
+                    }
+
                 }
             }
             trans.Commit();
@@ -272,6 +321,21 @@ namespace WhitbyWoodToolbar
             {
                 _comment = value;
                 RaisePropertyChanged(nameof(Comment));
+                RaisePropertyChanged(nameof(FilePath));
+            }
+        }
+
+        string _prefix;
+        public string Prefix
+        {
+            get
+            {
+                return _prefix;
+            }
+            set
+            {
+                _prefix = value;
+                RaisePropertyChanged(nameof(Prefix));
                 RaisePropertyChanged(nameof(FilePath));
             }
         }
@@ -320,7 +384,9 @@ namespace WhitbyWoodToolbar
         {
             get
             {
-                string fp = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + this.Number;
+                string fp = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\";
+                fp += this.Prefix;
+                fp += this.Number;
                 if (IncludeRev)
                 {
                     fp += "-" + this.Rev;

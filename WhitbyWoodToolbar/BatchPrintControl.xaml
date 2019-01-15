@@ -19,10 +19,13 @@
                 <TextBlock Text="Using Bluebeam PDF and A1 TO A1 settings" Margin="15 0 0 0"/>
                 <CheckBox Content="Include revision" IsChecked="{Binding IncludeRev}" Margin="15 0 0 0"/>
                 <CheckBox Content="Include name" IsChecked="{Binding IncludeName}" Margin="15 0 0 0"/>
+                <TextBlock Text="Prefix:" Margin="15 0 0 0"/>
+                <TextBox Text="{Binding Prefix}" Width="100" Margin="15 0 0 0"/>
+                <Button Content="Add prefix to all" Command="{Binding AddPrefixCommand}"/>
                 <TextBlock Text="Comment to append: " Margin="15 0 0 0"/>
                 <TextBox Text="{Binding Comment}" Width="100" Margin="15 0 0 0"/>
                 <Button Content="Add comment to all" Command="{Binding AddCommentCommand}"/>
-                <CheckBox Content="Copy to another folder" IsChecked="{Binding CopyToFolder}" Margin="15 0 0 0"/>
+                <!--<CheckBox Content="Copy to another folder" IsChecked="{Binding CopyToFolder}" Margin="15 0 0 0"/>-->
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <CheckBox Content="Select All" IsChecked="{Binding SelectAll}"/>
@@ -46,6 +49,13 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding ToPrint}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Prefix">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Prefix}" Width="100"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
