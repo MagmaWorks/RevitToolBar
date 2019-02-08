@@ -31,10 +31,9 @@ namespace WhitbyWoodToolbar
             //This could check for Dynamo packages on start up
             //CheckDynamo.checkDynamoPackages(); 
 
-            
             application.CreateRibbonTab("Whitby Wood");
 
-            Uri wwLogo = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/Link.png");
+            Uri batchIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/dwgpdf.png");
             var panel1 = application.CreateRibbonPanel("Whitby Wood", "General panel");
             panel1.AddItem(new PushButtonData(
                 "WW Batch print",
@@ -43,9 +42,10 @@ namespace WhitbyWoodToolbar
                 "WhitbyWoodToolbar.WWBatchPrint")
             {
                 ToolTip = "Batch print",
-                LargeImage = new BitmapImage(wwLogo)
+                LargeImage = new BitmapImage(batchIcon)
             });
 
+            Uri dynamoCheckIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/DynamoCheck.png");
             panel1.AddItem(new PushButtonData(
                 "Check Dynamo version and packages",
                 "Check Dynamo",
@@ -53,9 +53,8 @@ namespace WhitbyWoodToolbar
                 "WhitbyWoodToolbar.WWCheckDynamo")
             {
                 ToolTip = "Batch print",
-                LargeImage = new BitmapImage(wwLogo)
+                LargeImage = new BitmapImage(dynamoCheckIcon)
             });
-
             return Result.Succeeded;
         }
 

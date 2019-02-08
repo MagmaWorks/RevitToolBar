@@ -98,6 +98,20 @@ namespace WhitbyWoodToolbar
             }
         }
 
+        bool _exportDWG = false;
+        public bool ExportDWG
+        {
+            get
+            {
+                return _exportDWG;
+            }
+            set
+            {
+                _exportDWG = value;
+                RaisePropertyChanged(nameof(ExportDWG));
+            }
+        }
+
         bool _includeName = false;
         public bool IncludeName
         {
@@ -181,7 +195,18 @@ namespace WhitbyWoodToolbar
                 string currentRev = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION).AsString();
                 string currentRevDate = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION_DATE).AsString();
                 string currentRevDescript = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION_DESCRIPTION).AsString();
-                SheetInfo.Add(new sheetVM { Name = sheetName, Number = sheetNumber, Rev = currentRev, RevDate = currentRevDate, RevDescript = currentRevDescript, Sheet = sheet as ViewSheet, IncludeName=false, IncludeRev=false });
+                SheetInfo.Add(
+                    new sheetVM(this) {
+                        Name = sheetName,
+                        Number = sheetNumber,
+                        Rev = currentRev,
+                        RevDate = currentRevDate,
+                        RevDescript = currentRevDescript,
+                        Sheet = sheet as ViewSheet,
+                        IncludeName =false,
+                        IncludeRev =false,
+                        ElementID = sheet.Id
+                    });
             }
         }
 
@@ -208,7 +233,6 @@ namespace WhitbyWoodToolbar
             string printSetting = "A1 TO A1";
 
             var doc = commandData.Application.ActiveUIDocument.Document;
-            string filePath = @"C:\Users\Alex Baalham\Documents\";
 
             var printM = commandData.Application.ActiveUIDocument.Document.PrintManager;
             printM.SelectNewPrintDriver("Bluebeam PDF");
@@ -237,10 +261,6 @@ namespace WhitbyWoodToolbar
                 }
             }
 
-
-            //List<Element> mySheets = new List<Element>();
-            //FilteredElementCollector sheets = new FilteredElementCollector(doc);
-            //mySheets.AddRange(sheets.OfClass(typeof(ViewSheet)).ToElements());
             string output = "Sheets printed: " + Environment.NewLine;
             List<string> printedFileNames = new List<string>();
 
@@ -253,9 +273,14 @@ namespace WhitbyWoodToolbar
                     printM.PrintToFileName = fp;
                     printedFileNames.Add(fp);
                     printM.SubmitPrint(sheet.Sheet);
+
+                    string dwgFilepath = Path.GetDirectoryName(fp);
+                    string dwgfileName = Path.GetFileNameWithoutExtension(fp) + @".dwg";
+                    var dwgxopt = new DWGExportOptions();
+                    dwgxopt.MergedViews = true;
+                    doc.Export(dwgFilepath, dwgfileName, new List<ElementId> { sheet.ElementID }, dwgxopt);
                 }
             }
-            //System.Windows.MessageBox.Show(output);
 
             if (CopyToFolder)
             {
@@ -309,6 +334,22 @@ namespace WhitbyWoodToolbar
         public string Rev { get; set; }
         public string RevDate { get; set; }
         public string RevDescript { get; set; }
+        public ElementId ElementID { get; set; }
+        BatchPrintViewModel parent;
+
+        bool _isHighlighted;
+        public bool IsHighlighted
+        {
+            get
+            {
+                return _isHighlighted;
+            }
+            set
+            {
+                _isHighlighted = value;
+                RaisePropertyChanged(nameof(IsHighlighted));
+            }
+        }
 
         string _comment;
         public string Comment
@@ -399,6 +440,32 @@ namespace WhitbyWoodToolbar
                 fp += @".pdf";
                 return fp;
             }
+        }
+
+        ICommand _namesCommand;
+
+        public ICommand NamesCommand
+        {
+            get
+            {
+                return _namesCommand ?? (_namesCommand = new CommandHandlerWithString(new Action<string>(ApplyToAll), true));
+            }
+        }
+
+        private void ApplyToAll(string propName)
+        {
+            foreach (var item in parent.SheetInfo)
+            {
+                if (item.IsHighlighted)
+                {
+                    item.GetType().GetProperty(propName).SetValue(item, this.GetType().GetProperty(propName).GetValue(this));
+                }
+            }
+        }
+
+        public sheetVM(BatchPrintViewModel parent)
+        {
+            this.parent = parent;
         }
     }
 }

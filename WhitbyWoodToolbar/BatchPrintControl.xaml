@@ -15,22 +15,25 @@
         </Grid.RowDefinitions>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Print" Command="{Binding PrintCommand}"/>
+                <Button Content="Print to PDF" Command="{Binding PrintCommand}"/>
                 <TextBlock Text="Using Bluebeam PDF and A1 TO A1 settings" Margin="15 0 0 0"/>
-                <CheckBox Content="Include revision" IsChecked="{Binding IncludeRev}" Margin="15 0 0 0"/>
+                <!--<CheckBox Content="Include revision" IsChecked="{Binding IncludeRev}" Margin="15 0 0 0"/>
                 <CheckBox Content="Include name" IsChecked="{Binding IncludeName}" Margin="15 0 0 0"/>
                 <TextBlock Text="Prefix:" Margin="15 0 0 0"/>
                 <TextBox Text="{Binding Prefix}" Width="100" Margin="15 0 0 0"/>
                 <Button Content="Add prefix to all" Command="{Binding AddPrefixCommand}"/>
                 <TextBlock Text="Comment to append: " Margin="15 0 0 0"/>
                 <TextBox Text="{Binding Comment}" Width="100" Margin="15 0 0 0"/>
-                <Button Content="Add comment to all" Command="{Binding AddCommentCommand}"/>
+                <Button Content="Add comment to all" Command="{Binding AddCommentCommand}"/>-->
+                <CheckBox Content="Export to DWG" IsChecked="{Binding ExportDWG}" Margin="15 0 0 0"/>
                 <!--<CheckBox Content="Copy to another folder" IsChecked="{Binding CopyToFolder}" Margin="15 0 0 0"/>-->
+                <Button Content="Select all sheets where name includes:" Command="{Binding FilterCommand}" Margin="15 0 0 0"/>
+                <TextBox Text="{Binding FilterBy}" Width="100"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="Select All" IsChecked="{Binding SelectAll}"/>
-                <TextBox Text="{Binding FilterBy}" Width="100" Margin="15 0 0 0"/>
-                <Button Content="Filter" Command="{Binding FilterCommand}"/>
+                <!--<CheckBox Content="Select All" IsChecked="{Binding SelectAll}"/>-->
+                <TextBlock Text="Select multiple rows to simultaneously edit multiple entries. The destination folder can be changed through Bluebeam admin settings." Margin="0 0 0 15"/>
+
             </StackPanel>
         </StackPanel>
 
@@ -42,20 +45,20 @@
             <TextBlock Text="Rev Date" Width="60"/>
             <TextBlock Text="Rev Description"/>
         </StackPanel>-->
-        <ListView Grid.Row="2" ItemsSource="{Binding SheetInfo}">
+        <ListView Grid.Row="2" ItemsSource="{Binding SheetInfo}" VirtualizingPanel.IsVirtualizing="False" SelectionMode="Extended">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Print">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding ToPrint}"/>
+                                <CheckBox IsChecked="{Binding ToPrint}" Command="{Binding NamesCommand}" CommandParameter="ToPrint"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Prefix">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Prefix}" Width="100"/>
+                                <TextBox Text="{Binding Prefix}" Width="100" TextChanged="TextBox_TextChanged_1"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -63,21 +66,22 @@
                     <GridViewColumn Header="Name">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IncludeName}" Content="{Binding Name}"/>
+                                <CheckBox IsChecked="{Binding IncludeName}" Content="{Binding Name}" Command="{Binding NamesCommand}" CommandParameter="IncludeName"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Rev">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IncludeRev}" Content="{Binding Rev}"/>
+                                <CheckBox IsChecked="{Binding IncludeRev}" Content="{Binding Rev}" Command="{Binding NamesCommand}" CommandParameter="IncludeRev"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Comment">
+                    <GridViewColumn Header="Suffix">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Comment}" Width="100"/>
+                                <TextBox Text="{Binding Comment}" Width="100" TextChanged="TextBox_TextChanged">
+                                </TextBox>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -86,6 +90,12 @@
                     <GridViewColumn Header="File Path" DisplayMemberBinding="{Binding FilePath}"/>
                 </GridView>
             </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="IsSelected" Value="{Binding IsHighlighted}"/>
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="OnMouseLeftButtonDown"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <!--<ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

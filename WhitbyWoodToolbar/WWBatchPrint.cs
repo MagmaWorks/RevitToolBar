@@ -19,6 +19,20 @@ namespace WhitbyWoodToolbar
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            var doc = commandData.Application.ActiveUIDocument.Document;
+            List<Element> mySheets = new List<Element>();
+            FilteredElementCollector sheets = new FilteredElementCollector(doc);
+            mySheets.AddRange(sheets.OfClass(typeof(ViewSheet)).ToElements());
+
+            foreach (var sheet in mySheets)
+            {
+                string sheetName = sheet.get_Parameter(BuiltInParameter.SHEET_NAME).AsString();
+                string sheetNumber = sheet.get_Parameter(BuiltInParameter.SHEET_NUMBER).AsString();
+                string currentRev = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION).AsString();
+                string currentRevDate = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION_DATE).AsString();
+                string currentRevDescript = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION_DESCRIPTION).AsString();
+            }
+
             BatchPrintViewModel vm = new BatchPrintViewModel(commandData);
             BatchPrintControl userControl = new BatchPrintControl();
             Window batchWindow = new Window()

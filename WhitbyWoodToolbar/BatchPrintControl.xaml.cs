@@ -25,5 +25,33 @@ namespace WhitbyWoodToolbar
             InitializeComponent();
             
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var box = sender as TextBox;
+            (box.DataContext as sheetVM).Comment = box.Text;
+            (box.DataContext as sheetVM).NamesCommand.Execute("Comment");
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            var box = sender as TextBox;
+            (box.DataContext as sheetVM).Prefix = box.Text;
+            (box.DataContext as sheetVM).NamesCommand.Execute("Prefix");
+        }
+
+        private void OnMouseLeftButtonDown(object sender, MouseEventArgs e)
+        {
+            ListBoxItem lbi = sender as ListViewItem;
+            if (lbi != null)
+            {
+                if (lbi.IsSelected)
+                {
+                    lbi.IsSelected = false;
+                    e.Handled = true;
+                }
+            }
+        }
+        
     }
 }
