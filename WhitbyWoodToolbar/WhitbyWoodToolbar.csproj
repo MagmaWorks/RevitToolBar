@@ -80,6 +80,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="resources\WWRevitToolbarInstaller.nsi" />
+    <None Include="resources\WWToolbar.addin" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\image.jpg">
@@ -116,4 +117,11 @@
     <Resource Include="resources\DynamoCheck.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)resources\WWToolbar.addin" "$(TargetDir)" /Y
+xcopy "$(ProjectDir)resources\WWRevitToolbarInstaller.nsi" "$(TargetDir)" /Y
+mkdir "$(TargetDir)WWToolbar" /Y
+xcopy "$(TargetPath)" "$(TargetDir)WWToolbar" /Y
+"C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)WWRevitToolbarInstaller.nsi"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

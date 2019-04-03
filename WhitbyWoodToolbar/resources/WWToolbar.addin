@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Assembly>WWToolbar\WhitbyWoodToolbar.dll</Assembly>
+    <AddInId>604b1052-f742-5427-8576-c261d1993108</AddInId>
+    <FullClassName>WhitbyWoodToolbar.Toolbar</FullClassName>
+    <VendorId>Whitby Wood</VendorId>
+    <VendorDescription>Whitby Wood Structural Engineers</VendorDescription>
+  </AddIn>
+</RevitAddIns>
