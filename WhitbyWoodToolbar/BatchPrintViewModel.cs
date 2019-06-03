@@ -98,6 +98,35 @@ namespace WhitbyWoodToolbar
             }
         }
 
+        ICommand _generateThumbnailsCommand;
+
+        public ICommand GenerateThumbnailsCommand
+        {
+            get
+            {
+                return _generateThumbnailsCommand ?? (_generateThumbnailsCommand = new CommandHandler(() => generateThumbnails(), true));
+            }
+        }
+
+        private void generateThumbnails()
+        {
+            var doc = commandData.Application.ActiveUIDocument.Document;
+            var ieo = new ImageExportOptions();
+
+            foreach (var sheet in SheetInfo)
+            {
+                ieo.ExportRange = ExportRange.SetOfViews;
+                ieo.SetViewsAndSheets(new List<ElementId> { sheet.ElementID });
+                ieo.HLRandWFViewsFileType = ImageFileType.PNG;
+                string tempFilePath = Path.GetTempFileName();
+                ieo.FilePath = tempFilePath;
+                doc.ExportImage(ieo);
+                var files = Directory.GetFiles(Path.GetTempPath(), string.Format("{0}*.*", Path.GetFileNameWithoutExtension(tempFilePath)));
+                string imagePath = files[0] ?? "";
+                sheet.ImagePath = imagePath;
+            }
+        }
+
         bool _exportDWG = false;
         public bool ExportDWG
         {
@@ -187,6 +216,8 @@ namespace WhitbyWoodToolbar
             mySheets.AddRange(sheets.OfClass(typeof(ViewSheet)).ToElements());
             string output = "Sheets printed: " + Environment.NewLine;
             SheetInfo = new ObservableCollection<sheetVM>();
+            var ieo = new ImageExportOptions();
+
 
             foreach (var sheet in mySheets)
             {
@@ -195,6 +226,7 @@ namespace WhitbyWoodToolbar
                 string currentRev = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION).AsString();
                 string currentRevDate = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION_DATE).AsString();
                 string currentRevDescript = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION_DESCRIPTION).AsString();
+
                 SheetInfo.Add(
                     new sheetVM(this) {
                         Name = sheetName,
@@ -203,9 +235,9 @@ namespace WhitbyWoodToolbar
                         RevDate = currentRevDate,
                         RevDescript = currentRevDescript,
                         Sheet = sheet as ViewSheet,
-                        IncludeName =false,
-                        IncludeRev =false,
-                        ElementID = sheet.Id
+                        IncludeName = false,
+                        IncludeRev = false,
+                        ElementID = sheet.Id,
                     });
             }
         }
@@ -336,6 +368,20 @@ namespace WhitbyWoodToolbar
         public string RevDescript { get; set; }
         public ElementId ElementID { get; set; }
         BatchPrintViewModel parent;
+
+        string _imagePath = "";
+        public string ImagePath
+        {
+            get
+            {
+                return _imagePath;
+            }
+            set
+            {
+                _imagePath = value;
+                RaisePropertyChanged(nameof(ImagePath));
+            }
+        }
 
         bool _isHighlighted;
         public bool IsHighlighted

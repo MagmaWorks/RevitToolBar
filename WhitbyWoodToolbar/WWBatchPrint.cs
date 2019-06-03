@@ -23,7 +23,7 @@ namespace WhitbyWoodToolbar
             List<Element> mySheets = new List<Element>();
             FilteredElementCollector sheets = new FilteredElementCollector(doc);
             mySheets.AddRange(sheets.OfClass(typeof(ViewSheet)).ToElements());
-
+            
             foreach (var sheet in mySheets)
             {
                 string sheetName = sheet.get_Parameter(BuiltInParameter.SHEET_NAME).AsString();

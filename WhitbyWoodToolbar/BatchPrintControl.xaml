@@ -15,8 +15,8 @@
         </Grid.RowDefinitions>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Print to PDF" Command="{Binding PrintCommand}"/>
-                <TextBlock Text="Using Bluebeam PDF and A1 TO A1 settings" Margin="15 0 0 0"/>
+                <Button Content="Print to PDF" Command="{Binding PrintCommand}" ToolTip="Using Bluebeam PDF and A1 TO A1 settings"/>
+                <Button Content="Generate Thumbnails" Command="{Binding GenerateThumbnailsCommand}" Margin="15 0 0 0"/>
                 <!--<CheckBox Content="Include revision" IsChecked="{Binding IncludeRev}" Margin="15 0 0 0"/>
                 <CheckBox Content="Include name" IsChecked="{Binding IncludeName}" Margin="15 0 0 0"/>
                 <TextBlock Text="Prefix:" Margin="15 0 0 0"/>
@@ -88,6 +88,20 @@
                     <GridViewColumn Header="Date" DisplayMemberBinding="{Binding RevDate}"/>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding RevDescript}"/>
                     <GridViewColumn Header="File Path" DisplayMemberBinding="{Binding FilePath}"/>
+                    <GridViewColumn Header="Preview" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImagePath}" Height="50">
+                                    <Image.ToolTip>
+                                        <StackPanel>
+                                            <Image Source="{Binding ImagePath}" Height="300"/>
+                                        </StackPanel>
+                                    </Image.ToolTip>
+
+                                </Image>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.ItemContainerStyle>
