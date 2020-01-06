@@ -20,6 +20,7 @@ namespace WhitbyWoodToolbar
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
+
             List<Element> mySheets = new List<Element>();
             FilteredElementCollector sheets = new FilteredElementCollector(doc);
             mySheets.AddRange(sheets.OfClass(typeof(ViewSheet)).ToElements());

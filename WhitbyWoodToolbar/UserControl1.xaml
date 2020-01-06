@@ -1,0 +1,264 @@
+﻿<UserControl x:Class="WhitbyWoodToolbar.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:local="clr-namespace:WhitbyWoodToolbar"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="ElementSelectedTextStyle">
+            <Setter Property="Foreground" Value="Black"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementSelected}" Value="False">
+                    <Setter Property="Foreground" Value="LightGray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="ConcreteData">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Reinforcement density (kg/m3): "/>
+                    <TextBox Text="{Binding ICEMaterial.ReinforcementDensity}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox ItemsSource="{Binding ICEMaterial.Replacements}" SelectedItem="{Binding ICEMaterial.Replacement}"/>
+                    <ComboBox ItemsSource="{Binding ICEMaterial.Grades}" SelectedItem="{Binding ICEMaterial.Grade}"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="SteelData">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox ItemsSource="{Binding ICEMaterial.Materials}" SelectedItem="{Binding ICEMaterial.SteelMaterial}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="TimberData">
+            <StackPanel Orientation="Vertical">
+                <CheckBox IsChecked="{Binding ICEMaterial.IncludeCarbonFromBiomass}" Content="Include biomass"/>
+                <ComboBox ItemsSource="{Binding ICEMaterial.Materials}" SelectedItem="{Binding ICEMaterial.TimberMaterial}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="NoneData">
+
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel>
+                <TextBlock Text="Carbon Calculator"/>
+                <TextBlock Text="Elements are imported from Revit and can be filtered according to the Revit Category or Revit Material. Materials can be assigned to elements using data from the ICEv2 database and this data together with the volumes from Revit are used to calculate total embodied carbon." TextWrapping="Wrap" FontSize="10"/>
+                <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Total carbon: "/>
+                <TextBlock Text="{Binding TotalCarbon}"/>
+                <TextBlock Text="Tonnes"/>
+            </StackPanel>
+            </StackPanel>
+
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Image HorizontalAlignment="Left">
+                <Image.Source>
+                    <BitmapImage UriSource="/resources/MagmaWorks_logo.png"/>
+                </Image.Source>
+            </Image>
+            <TextBlock Text="Carbon calculator" FontSize="30"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
+                <GridSplitter Grid.Row="3" Height="5" HorizontalAlignment="Stretch"/>
+
+                <TabControl Grid.Row="4">
+                    <TabItem Header="Carbon by category">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>                            
+                            <TextBlock Text="Mass of embodied carbon for each Revit category" TextWrapping="Wrap"/>
+                            <lvc:PieChart Grid.Row="1" Series="{Binding CarbonVsCategory}" LegendLocation="Bottom"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Volume by category">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>                            
+                            <TextBlock Text="Volume of material for each Revit category" TextWrapping="Wrap"/>
+                            <lvc:PieChart Grid.Row="1" Series="{Binding VolumeVsCategory}" LegendLocation="Bottom"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Carbon by material">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>                            
+                            <TextBlock Text="Mass of embodied carbon for each Revit material" TextWrapping="Wrap"/>
+                            <lvc:PieChart Grid.Row="1" Series="{Binding CarbonVsMaterial}" LegendLocation="Bottom"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Volume by material">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>                            
+                            <TextBlock Text="Volume of each Revit material" TextWrapping="Wrap"/>
+                            <lvc:PieChart Grid.Row="1" Series="{Binding VolumeVsMaterial}" LegendLocation="Bottom"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Volume by assigned material">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Volume of assigned ICE material for each Revit category" TextWrapping="Wrap"/>
+                            <lvc:PieChart Grid.Row="1" Series="{Binding VolumeVsAssignedMaterial}" LegendLocation="Bottom"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <TextBlock Text="Revit category filter"/>
+                    <ScrollViewer  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Categories}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox IsChecked="{Binding IsSelected}"/>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Grid.Row="2">
+                    <TextBlock Text="Revit material filter"/>
+                    <ScrollViewer  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding RevitMaterials}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox IsChecked="{Binding IsSelected}"/>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+            </Grid>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="0 0 0 2" BorderBrush="Orange" HorizontalAlignment="Stretch" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock Text="" Width="20"/>
+                        <Border BorderThickness="1 0 1 0" BorderBrush="Orange">
+                            <TextBlock Text="Info from Revit" Width="400"/>
+                        </Border>
+                        <TextBlock Text="Carbon materials to apply"/>
+                    </StackPanel>
+                </Border>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding Elements}">
+                    <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Orange" BorderThickness="0 0 0 1">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <CheckBox IsChecked="{Binding ElementSelected}" Width="20"/>
+                                        <Border BorderThickness="1 0 1 0" BorderBrush="Orange">
+                                            <StackPanel Width="400" Height="50" VerticalAlignment="Top">
+                                                <TextBlock Text="{Binding LongName}" Width="400" TextWrapping="Wrap" Style="{StaticResource ElementSelectedTextStyle}" HorizontalAlignment="Left"/>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Volume: "/>
+                                                    <TextBlock Text="{Binding Volume}"/>
+                                                    <TextBlock Text="Carbon: " Margin="15 0 0 0"/>
+                                                    <TextBlock Text="{Binding EmbodiedCarbon}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <ComboBox ItemsSource="{Binding MaterialTypes}" SelectedItem="{Binding MaterialType}"/>
+                                                <TextBlock Text="{Binding ICEMaterial.Name}"/>
+                                            </StackPanel>
+                                            <ContentControl Content="{Binding}" IsTabStop="False">
+                                                <ContentControl.Style>
+                                                    <Style TargetType="{x:Type ContentControl}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding MaterialType}" Value="None">
+                                                                <Setter Property="ContentTemplate" Value="{StaticResource NoneData}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding MaterialType}" Value="Concrete">
+                                                                <Setter Property="ContentTemplate" Value="{StaticResource ConcreteData}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding MaterialType}" Value="Timber">
+                                                                <Setter Property="ContentTemplate" Value="{StaticResource TimberData}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding MaterialType}" Value="Steel">
+                                                                <Setter Property="ContentTemplate" Value="{StaticResource SteelData}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentControl.Style>
+                                            </ContentControl>
+                                            <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+                                                <TextBlock Text="Carbon density: "/>
+                                                <TextBlock Text="{Binding ICEMaterial.CarbonDensity}" Width="50"/>
+                                                <TextBlock Text="kg/m3"/>
+                                                <Button Command="{Binding CopyMaterialCommand}" Content="Copy to selected"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

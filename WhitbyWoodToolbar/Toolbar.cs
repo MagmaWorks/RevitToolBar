@@ -55,6 +55,18 @@ namespace WhitbyWoodToolbar
                 ToolTip = "Batch print",
                 LargeImage = new BitmapImage(dynamoCheckIcon)
             });
+
+            Uri carbonIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/dwgpdf.png");
+            panel1.AddItem(new PushButtonData(
+                "Carbon Counter",
+                "Carbon Counter",
+                assemblyPath,
+                "WhitbyWoodToolbar.CarbonCounter")
+            {
+                ToolTip = "Carbon Counter",
+                LargeImage = new BitmapImage(carbonIcon)
+            });
+
             return Result.Succeeded;
         }
 

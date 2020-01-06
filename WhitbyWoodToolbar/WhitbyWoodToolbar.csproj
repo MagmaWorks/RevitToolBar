@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -60,19 +66,33 @@
     </Compile>
     <Compile Include="BatchPrintViewModel.cs" />
     <Compile Include="CannotFindFileVM.cs" />
+    <Compile Include="CarbonCounter.cs" />
     <Compile Include="CheckDynamo.cs" />
     <Compile Include="CommandHandler.cs" />
+    <Compile Include="CommandHandlerWithParameter.cs" />
     <Compile Include="CommandHandlerWithString.cs" />
     <Compile Include="ContinueLooking.xaml.cs">
       <DependentUpon>ContinueLooking.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ElementCarbonVM.cs" />
+    <Compile Include="ICEMaterial.cs" />
+    <Compile Include="ICEMaterialConcrete.cs" />
+    <Compile Include="ICEMaterialNone.cs" />
+    <Compile Include="ICEMaterialSteel.cs" />
+    <Compile Include="ICEMaterialTimber.cs" />
+    <Compile Include="MaterialsVM.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RevitMaterial.cs" />
+    <Compile Include="RevitCategory.cs" />
     <Compile Include="Toolbar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="WWBatchPrint.cs" />
     <Compile Include="WWCheckDynamo.cs" />
@@ -108,6 +128,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\WhitbyWood.jpg" />
@@ -116,6 +140,9 @@
     <Resource Include="resources\dwgpdf.png" />
     <Resource Include="resources\DynamoCheck.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\MagmaWorks_logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)resources\WWToolbar.addin" "$(TargetDir)" /Y
@@ -123,6 +150,8 @@ xcopy "$(ProjectDir)resources\WWRevitToolbarInstaller.nsi" "$(TargetDir)" /Y
 mkdir "$(TargetDir)WWToolbar" /Y
 xcopy "$(TargetPath)" "$(TargetDir)WWToolbar" /Y
 xcopy "$(TargetDir)Newtonsoft.Json.dll" "$(TargetDir)WWToolbar" /Y
+xcopy "$(TargetDir)LiveCharts.Wpf.dll" "$(TargetDir)WWToolbar" /Y
+xcopy "$(TargetDir)LiveCharts.dll" "$(TargetDir)WWToolbar" /Y
 "C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)WWRevitToolbarInstaller.nsi"</PostBuildEvent>
   </PropertyGroup>
 </Project>
