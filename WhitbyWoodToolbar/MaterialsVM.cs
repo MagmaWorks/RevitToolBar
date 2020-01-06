@@ -9,11 +9,32 @@ using System.Windows.Input;
 using LiveCharts.Wpf;
 using LiveCharts;
 
-namespace WhitbyWoodToolbar
+namespace MagmaWorksToolbar
 {
     public class MaterialsVM : ViewModelBase
     {
-        public ObservableCollection<ElementCarbonVM> Elements { get; private set; }
+        public List<ElementCarbonVM> Elements { get; private set; }
+        ObservableCollection<ElementCarbonVM> _selectedElements;
+        public ObservableCollection<ElementCarbonVM> SelectedElements
+        {
+            get
+            {
+                if (_selectedElements == null)
+                {
+                    _selectedElements = new ObservableCollection<ElementCarbonVM>();
+                    foreach (var elem in Elements)
+                    {
+                        if (elem.IsSelected)
+                        {
+                            _selectedElements.Add(elem);
+                        }
+                    }
+                    return _selectedElements;
+                }
+                else
+                    return _selectedElements;
+            }
+        }
         public ObservableCollection<RevitCategory> Categories { get; private set; }
         public ObservableCollection<RevitMaterial> RevitMaterials { get; private set; }
 
@@ -94,7 +115,7 @@ namespace WhitbyWoodToolbar
 
         public MaterialsVM()
         {
-            Elements = new ObservableCollection<ElementCarbonVM>();
+            Elements = new List<ElementCarbonVM>();
             Categories = new ObservableCollection<RevitCategory>();
             RevitMaterials = new ObservableCollection<RevitMaterial>();
 
@@ -103,6 +124,7 @@ namespace WhitbyWoodToolbar
             updateVolumeVsAssignedMaterialChartValues();
             updateVolumeVsCategoryChartValues();
             updateVolumeVsMaterialChartValues();
+
         }
 
         void updateCarbonVsCategoryChartValues()
@@ -219,10 +241,19 @@ namespace WhitbyWoodToolbar
 
         public void selectionChanged()
         {
-            foreach (var item in Elements)
+            _selectedElements.Clear();
+            foreach (var elem in Elements)
             {
-                item.selectionUpdated();
+                if (elem.IsSelected)
+                {
+                    _selectedElements.Add(elem);
+                }
             }
+            RaisePropertyChanged(nameof(SelectedElements));
+            //foreach (var item in Elements)
+            //{
+            //    item.selectionUpdated();
+            //}
         }
 
         public void ChangeICEMaterial(ICEMaterial mat)
@@ -235,12 +266,12 @@ namespace WhitbyWoodToolbar
                 }
             }
             Updated();
-
         }
 
         public void Updated()
         {
             RaisePropertyChanged(nameof(TotalCarbon));
+            RaisePropertyChanged(nameof(TotalCarbonDisplay));
             _carbonVsCategory = null;
             RaisePropertyChanged(nameof(CarbonVsCategory));
             _carbonVsMaterial = null;
@@ -265,6 +296,43 @@ namespace WhitbyWoodToolbar
                 return returnVal / 1000;
             }
         }
+
+        public string TotalCarbonDisplay
+        {
+            get
+            {
+                double returnVal = 0;
+                foreach (var elem in Elements)
+                {
+                    returnVal += elem.Volume * elem.ICEMaterial.CarbonDensity;
+                }
+                return string.Format("{0:0.0}", returnVal / 1000) + " tonnes";
+            }
+        }
+
+        public int ElementsImported
+        {
+            get
+            {
+                return Elements.Count;
+            }
+        }
+
+        string _totalVolumeDisplay = "";
+        public string TotalVolumeDisplay
+        {
+            get
+            {
+                double totalVol = 0;
+                foreach (var elem in Elements)
+                {
+                    totalVol += elem.Volume;
+                }
+                _totalVolumeDisplay = string.Format("{0:0.0}", totalVol) + "m" + '\u00B3';
+                return _totalVolumeDisplay; 
+            }
+        }
+
 
         public List<string> MaterialTypes
         {

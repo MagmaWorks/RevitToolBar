@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhitbyWoodToolbar", "WhitbyWoodToolbar\WhitbyWoodToolbar.csproj", "{A6C93BB7-E581-47DD-B936-26245CF6F49E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagmaWorksToolbar", "WhitbyWoodToolbar\MagmaWorksToolbar.csproj", "{A6C93BB7-E581-47DD-B936-26245CF6F49E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolbarTests", "ToolbarTests\ToolbarTests.csproj", "{7156C56D-C2F6-4065-A9E9-7374E9577DFC}"
 EndProject

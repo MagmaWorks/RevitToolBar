@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="WhitbyWoodToolbar.BatchPrintControl"
+﻿<UserControl x:Class="MagmaWorksToolbar.BatchPrintControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WhitbyWoodToolbar"
+             xmlns:local="clr-namespace:MagmaWorksToolbar"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -124,7 +124,7 @@
             </ListView.ItemTemplate>-->
         </ListView>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Image HorizontalAlignment="Left" Source="pack://application:,,,/WhitbyWoodToolbar;component/resources/WhitbyWood.jpg"/>
+            <Image HorizontalAlignment="Left" Source="pack://application:,,,/MagmaWorksToolbar;component/resources/MagmaWorks_logo.png"/>
 
             <TextBlock Text="Batch Print Utility" VerticalAlignment="Center" Margin="30 0 0 0" FontSize="12" FontWeight="Bold"/>
         </StackPanel>

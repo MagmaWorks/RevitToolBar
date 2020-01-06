@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhitbyWoodToolbar;
+using MagmaWorksToolbar;
 
 namespace ToolbarTests
 {

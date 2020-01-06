@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+	<Name>MagmaWorksRevitToolbar</Name>
+    <Assembly>MagmaWorksToolbar\MagmaWorksToolbar.dll</Assembly>
+    <AddInId>604b1052-f742-5427-8576-c261d1993108</AddInId>
+    <FullClassName>MagmaWorksToolbar.Toolbar</FullClassName>
+    <VendorId>Magma Works</VendorId>
+    <VendorDescription>Magma Works</VendorDescription>
+  </AddIn>
+</RevitAddIns>

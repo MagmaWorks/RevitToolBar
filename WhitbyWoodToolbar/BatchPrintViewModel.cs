@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace WhitbyWoodToolbar
+namespace MagmaWorksToolbar
 {
     public class BatchPrintViewModel : ViewModelBase
     {

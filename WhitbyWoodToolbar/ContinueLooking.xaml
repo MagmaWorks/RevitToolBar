@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="WhitbyWoodToolbar.ContinueLooking"
+﻿<UserControl x:Class="MagmaWorksToolbar.ContinueLooking"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WhitbyWoodToolbar"
+             xmlns:local="clr-namespace:MagmaWorksToolbar"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="650">
     <Grid>

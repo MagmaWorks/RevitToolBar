@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WhitbyWoodToolbar
+namespace MagmaWorksToolbar
 {
     public class ElementCarbonVM : ViewModelBase
     {

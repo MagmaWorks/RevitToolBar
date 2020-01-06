@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WhitbyWoodToolbar
+namespace MagmaWorksToolbar
 {
     [Transaction(TransactionMode.Manual)]
     public class CarbonCounter : IExternalCommand

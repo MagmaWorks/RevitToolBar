@@ -55,9 +55,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WhitbyWoodToolbar\WhitbyWoodToolbar.csproj">
+    <ProjectReference Include="..\WhitbyWoodToolbar\MagmaWorksToolbar.csproj">
       <Project>{a6c93bb7-e581-47dd-b936-26245cf6f49e}</Project>
-      <Name>WhitbyWoodToolbar</Name>
+      <Name>MagmaWorksToolbar</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

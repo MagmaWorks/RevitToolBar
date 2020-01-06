@@ -12,10 +12,10 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace WhitbyWoodToolbar
+namespace MagmaWorksToolbar
 {
     [Transaction(TransactionMode.Manual)]
-    public class WWBatchPrint : IExternalCommand
+    public class BatchPrint : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

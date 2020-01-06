@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
-namespace WhitbyWoodToolbar
+namespace MagmaWorksToolbar
 {
     public class Toolbar : IExternalApplication
     {
@@ -31,37 +31,37 @@ namespace WhitbyWoodToolbar
             //This could check for Dynamo packages on start up
             //CheckDynamo.checkDynamoPackages(); 
 
-            application.CreateRibbonTab("Whitby Wood");
+            application.CreateRibbonTab("Magma Works");
 
-            Uri batchIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/dwgpdf.png");
-            var panel1 = application.CreateRibbonPanel("Whitby Wood", "General panel");
+            Uri batchIcon = new Uri("pack://application:,,,/MagmaWorksToolbar;component/resources/dwgpdf.png");
+            var panel1 = application.CreateRibbonPanel("Magma Works", "General panel");
             panel1.AddItem(new PushButtonData(
-                "WW Batch print",
+                "Batch print",
                 "Batch PDF",
                 assemblyPath,
-                "WhitbyWoodToolbar.WWBatchPrint")
+                "MagmaWorksToolbar.BatchPrint")
             {
                 ToolTip = "Batch print",
                 LargeImage = new BitmapImage(batchIcon)
             });
 
-            Uri dynamoCheckIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/DynamoCheck.png");
-            panel1.AddItem(new PushButtonData(
-                "Check Dynamo version and packages",
-                "Check Dynamo",
-                assemblyPath,
-                "WhitbyWoodToolbar.WWCheckDynamo")
-            {
-                ToolTip = "Batch print",
-                LargeImage = new BitmapImage(dynamoCheckIcon)
-            });
+            //Uri dynamoCheckIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/DynamoCheck.png");
+            //panel1.AddItem(new PushButtonData(
+            //    "Check Dynamo version and packages",
+            //    "Check Dynamo",
+            //    assemblyPath,
+            //    "WhitbyWoodToolbar.WWCheckDynamo")
+            //{
+            //    ToolTip = "Batch print",
+            //    LargeImage = new BitmapImage(dynamoCheckIcon)
+            //});
 
-            Uri carbonIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/dwgpdf.png");
+            Uri carbonIcon = new Uri("pack://application:,,,/MagmaWorksToolbar;component/resources/CarbonCalculator.png");
             panel1.AddItem(new PushButtonData(
                 "Carbon Counter",
                 "Carbon Counter",
                 assemblyPath,
-                "WhitbyWoodToolbar.CarbonCounter")
+                "MagmaWorksToolbar.CarbonCounter")
             {
                 ToolTip = "Carbon Counter",
                 LargeImage = new BitmapImage(carbonIcon)
