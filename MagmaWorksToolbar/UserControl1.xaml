@@ -201,12 +201,6 @@ All carbon figures are cradle to gate."
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Focusable" Value="false"/>
-                            <!--<Setter Property="Visibility" Value="Visible"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsSelected}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                </DataTrigger>
-                            </Style.Triggers>-->
                         </Style>
                             
                         </ListView.ItemContainerStyle>
@@ -217,7 +211,7 @@ All carbon figures are cradle to gate."
                                         <CheckBox IsChecked="{Binding ElementSelected}" Width="20"/>
                                         <Border BorderThickness="1 0 1 0" BorderBrush="Orange">
                                             <StackPanel Width="300" Height="50" VerticalAlignment="Top">
-                                                <TextBlock Text="{Binding LongName}" Width="400" TextWrapping="Wrap" Style="{StaticResource ElementSelectedTextStyle}" HorizontalAlignment="Left"/>
+                                                <TextBlock Text="{Binding LongName}" Width="300" TextWrapping="Wrap" Style="{StaticResource ElementSelectedTextStyle}" HorizontalAlignment="Left"/>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Volume: "/>
                                                     <TextBlock Text="{Binding Volume}"/>
