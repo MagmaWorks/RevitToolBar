@@ -38,6 +38,11 @@
             <StackPanel Orientation="Vertical">
                 <CheckBox IsChecked="{Binding ICEMaterial.IncludeCarbonFromBiomass}" Content="Include biomass"/>
                 <ComboBox ItemsSource="{Binding ICEMaterial.Materials}" SelectedItem="{Binding ICEMaterial.TimberMaterial}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Sequestered carbon: "/>
+                    <TextBlock Text="{Binding SequesteredCarbon}"/>
+                    <TextBlock Text="kg"/>
+                </StackPanel>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="NoneData">
@@ -65,6 +70,10 @@ All carbon figures are cradle to gate."
                     <TextBlock Text="{Binding ElementsImported}"/>
                     <TextBlock Text="Total carbon: " Margin="30 0 0 0"/>
                     <TextBlock Text="{Binding TotalCarbonDisplay}"/>
+                    <TextBlock Text="Total sequestered carbon: " Margin="30 0 0 0"/>
+                    <TextBlock Text="{Binding TotalSequesteredCarbonDisplay}"/>
+                    <TextBlock Text="Total net carbon: " Margin="30 0 0 0"/>
+                    <TextBlock Text="{Binding TotalNetCarbonDisplay}"/>
                     <TextBlock Text="Total volume of material: " Margin="30 0 0 0"/>
                     <TextBlock Text="{Binding TotalVolumeDisplay}" />
                 </StackPanel>

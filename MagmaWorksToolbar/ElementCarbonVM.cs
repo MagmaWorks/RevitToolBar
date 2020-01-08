@@ -20,6 +20,14 @@ namespace MagmaWorksToolbar
             }
         }
 
+        public double SequesteredCarbon
+        {
+            get
+            {
+                return _volume * ICEMaterial.SequesteredCarbonDensity;
+            }
+        }
+
         string _name;
         public string Name
         {
@@ -115,6 +123,7 @@ namespace MagmaWorksToolbar
                 RaisePropertyChanged(nameof(MaterialType));
                 RaisePropertyChanged(nameof(Category));
                 RaisePropertyChanged(nameof(EmbodiedCarbon));
+                RaisePropertyChanged(nameof(SequesteredCarbon));
                 _parent.Updated();
             }
         }
@@ -134,6 +143,7 @@ namespace MagmaWorksToolbar
             RaisePropertyChanged(nameof(MaterialType));
             RaisePropertyChanged(nameof(Category));
             RaisePropertyChanged(nameof(EmbodiedCarbon));
+            RaisePropertyChanged(nameof(SequesteredCarbon));
         }
 
         public void ICEMaterialUpdated()
@@ -141,6 +151,7 @@ namespace MagmaWorksToolbar
             RaisePropertyChanged(nameof(MaterialType));
             RaisePropertyChanged(nameof(Category));
             RaisePropertyChanged(nameof(EmbodiedCarbon));
+            RaisePropertyChanged(nameof(SequesteredCarbon));
             _parent.Updated();
         }
 

@@ -12,6 +12,8 @@ namespace MagmaWorksToolbar
 
         public override double CarbonDensity => 0;
 
+        public override double SequesteredCarbonDensity => 0;
+        
         public ICEMaterialNone(ElementCarbonVM parent)
         {
             Category = ICECategory.None;

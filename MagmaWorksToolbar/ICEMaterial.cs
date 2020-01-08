@@ -10,6 +10,7 @@ namespace MagmaWorksToolbar
     {
         public abstract string Name { get; }
         public abstract double CarbonDensity { get;  }
+        public abstract double SequesteredCarbonDensity { get;}
         public ICECategory Category { get; protected set; }
         public ElementCarbonVM Parent { get; protected set; }
         public string Info

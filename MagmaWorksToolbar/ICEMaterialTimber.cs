@@ -30,6 +30,48 @@ namespace MagmaWorksToolbar
             }
         }
 
+        double _carbonFraction = 0.5;
+        public double CarbonFraction
+        {
+            get
+            {
+                return _carbonFraction;
+            }
+            set
+            {
+                _carbonFraction = value;
+                RaisePropertyChanged(nameof(CarbonFraction));
+                RaisePropertyChanged(nameof(CarbonDensity));
+                RaisePropertyChanged(nameof(Name));
+                Parent.ICEMaterialUpdated();
+            }
+        }
+
+        double _moistureContent = 0.12;
+        public double MoistureContent
+        {
+            get
+            {
+                return _moistureContent;
+            }
+            set
+            {
+                _moistureContent = value;
+                RaisePropertyChanged(nameof(MoistureContent));
+                RaisePropertyChanged(nameof(CarbonDensity));
+                RaisePropertyChanged(nameof(Name));
+                Parent.ICEMaterialUpdated();
+            }
+        }
+
+        public override double SequesteredCarbonDensity
+        {
+            get
+            {
+                return (44d / 12d) * _carbonFraction * ((_massDensity) / (1 + _moistureContent));
+            }
+        }
+
         bool _includeCarbonFromBiomass;
         public bool IncludeCarbonFromBiomass
         {

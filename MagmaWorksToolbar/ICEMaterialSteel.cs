@@ -24,6 +24,8 @@ namespace MagmaWorksToolbar
             }
         }
 
+        public override double SequesteredCarbonDensity => 0;
+
         public List<string> Materials
         {
             get

@@ -270,8 +270,13 @@ namespace MagmaWorksToolbar
 
         public void Updated()
         {
+            _updateTotals();
             RaisePropertyChanged(nameof(TotalCarbon));
             RaisePropertyChanged(nameof(TotalCarbonDisplay));
+            RaisePropertyChanged(nameof(TotalSequesteredCarbon));
+            RaisePropertyChanged(nameof(TotalSequesteredCarbonDisplay));
+            RaisePropertyChanged(nameof(TotalNetCarbonDisplay));
+
             _carbonVsCategory = null;
             RaisePropertyChanged(nameof(CarbonVsCategory));
             _carbonVsMaterial = null;
@@ -284,16 +289,36 @@ namespace MagmaWorksToolbar
             RaisePropertyChanged(nameof(VolumeVsAssignedMaterial));
         }
 
+        void _updateTotals()
+        {
+            _totalCarbon = 0;
+            foreach (var elem in Elements)
+            {
+                _totalCarbon += elem.Volume * elem.ICEMaterial.CarbonDensity;
+            }
+
+            _sequesteredCarbon = 0;
+            foreach (var elem in Elements)
+            {
+                _sequesteredCarbon += elem.Volume * elem.ICEMaterial.SequesteredCarbonDensity;
+            }
+        }
+
+        double _totalCarbon;
         public double TotalCarbon
         {
             get
             {
-                double returnVal = 0;
-                foreach (var elem in Elements)
-                {
-                    returnVal += elem.Volume * elem.ICEMaterial.CarbonDensity;
-                }
-                return returnVal / 1000;
+                return _totalCarbon;
+            }
+        }
+
+        double _sequesteredCarbon;
+        public double TotalSequesteredCarbon
+        {
+            get
+            {
+                return _sequesteredCarbon;
             }
         }
 
@@ -301,12 +326,23 @@ namespace MagmaWorksToolbar
         {
             get
             {
-                double returnVal = 0;
-                foreach (var elem in Elements)
-                {
-                    returnVal += elem.Volume * elem.ICEMaterial.CarbonDensity;
-                }
-                return string.Format("{0:0.0}", returnVal / 1000) + " tonnes";
+                return string.Format("{0:0.0}", _totalCarbon / 1000) + " tonnes";
+            }
+        }
+
+        public string TotalSequesteredCarbonDisplay
+        {
+            get
+            {
+                return string.Format("{0:0.0}", _sequesteredCarbon / 1000) + " tonnes";
+            }
+        }
+
+        public string TotalNetCarbonDisplay
+        {
+            get
+            {
+                return string.Format("{0:0.0}", (_totalCarbon - _sequesteredCarbon) / 1000) + " tonnes";
             }
         }
 
