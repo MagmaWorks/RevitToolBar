@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>CarbonCalculatorWPF</id>
+    <version>0.1.2</version>
+    <title>Carbon Calculator Controls WPF</title>
+    <authors>Alex Baalham</authors>
+    <owners>Magma Works</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <description>WPF Controls for using Carbon Materials</description>
+    <releaseNotes>Minor updates. Material Editor control fixed.</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>Carbon</tags>
+	<repository url="https://github.com/magmaworks/revittoolbar" />
+  </metadata>
+</package>

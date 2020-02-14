@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="CarbonCalculator.MaterialSetControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarbonCalculatorControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2">
+            <Grid Grid.Row="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Material set:" Grid.Row="0" Margin="30 0 0 0"/>
+                    <TextBox Text="{Binding Name}" MinWidth="200"/>
+                </StackPanel>
+                <ItemsControl ItemsSource="{Binding Materials}" Grid.Row="1" Margin="30 0 0 0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" Grid.Column="2"/>
+                                <Button Content="Edit" Command="{Binding EditMaterialCommand}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                                <Button Content="Del" Command="{Binding DeleteMaterialCommand}" Grid.Column="1" Margin="0 0 10 0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="30 0 0 0">
+                    <Button Content="Add conc" Width="100" Command="{Binding AddConcreteCommand}" Grid.Row="1"/>
+                    <Button Content="Add steel" Width="100" Command="{Binding AddSteelCommand}" Grid.Row="1"/>
+                    <Button Content="Add timber" Width="100" Command="{Binding AddTimberCommand}" Grid.Row="1"/>
+                    <Button Content="Add EPD" Width="100" Command="{Binding AddGeneric}" Grid.Row="1"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

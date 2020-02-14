@@ -99,12 +99,79 @@ namespace MagmaWorksToolbar
                 }
             }
 
-            var userControl = new UserControl1();
+            CarbonCalculator.ElementSet myset = new CarbonCalculator.ElementSet("Category", "Material", "Level");
+
+            foreach (var cat in cats)
+            {
+                var counter = 0;
+
+                var catFilters = new List<ElementFilter> { new ElementCategoryFilter(cat) };
+
+                var revitCat = Category.GetCategory(doc, cat);
+
+                var filter = new LogicalOrFilter(catFilters);
+
+                var structures = new FilteredElementCollector(doc)
+                    .WherePasses(filter)
+                    .ToElements();
+
+                double vol = 0;
+                foreach (var item in structures)
+                {
+                    var mat = item.LookupParameter("Structural Material");
+                    if (mat == null)
+                    {
+                        var itemType = doc.GetElement(item.GetTypeId());
+                        if (itemType != null)
+                        {
+                            mat = itemType.LookupParameter("Structural Material");
+                        }
+                    }
+                    var volParam = item.LookupParameter("Volume");
+
+                    var elemType = item.GetTypeId();
+                    string name = "";
+                    var elemTy = doc.GetElement(elemType) as ElementType;
+                    if (elemTy != null)
+                    {
+                        name = elemTy.FamilyName + ": " + elemTy.Name;
+                    }
+
+                    string lvlstr = "";
+                    var lvl = item.LevelId;
+                    Level level = doc.GetElement(lvl) as Level;
+                    if (level != null)
+                    {
+                        lvlstr = level.Name;
+                    }
+
+                    string matName = "";
+                    if (volParam != null)
+                    {
+                        if (mat != null)
+                        {
+                            matName = mat.AsValueString();
+                        }
+
+                        double metricVol = volParam.AsDouble() * _cubicFtToM;
+
+
+                        myset.Elements.Add(new CarbonCalculator.Element(name, metricVol, "Revit" + counter, revitCat.Name, matName, lvlstr));
+                        
+                        myVM.AddElement(name, metricVol, matName, doc, cat);
+                    }
+                    counter++;
+
+                }
+            }
+
+            var control = new CarbonCalculator.UserControl1();
             Window carbonWindow = new Window()
             {
-                Content = userControl,
-                DataContext = myVM
+                Content = control,
+                DataContext = new CarbonCalculator.ModelVM(myset)
             };
+            
 
             carbonWindow.ShowDialog();
 

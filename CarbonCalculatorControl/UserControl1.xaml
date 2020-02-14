@@ -1,0 +1,301 @@
+﻿<UserControl x:Class="CarbonCalculator.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:local="clr-namespace:CarbonCalculatorControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="400" MinWidth="400"/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Elements" Grid.Row="0"/>
+                <Button Grid.Row="2" Command="{Binding OutputCSVCommand}" Content="Output csv..."/>
+                <ListView ItemsSource="{Binding Elements}" Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Focusable" Value="false"/>
+                            <Setter Property="BorderBrush" Value="Orange"/>
+                            <Setter Property="BorderThickness" Value="0 0 0 0.5"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name and ID" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="ID: "></TextBlock>
+                                                <TextBlock Text="{Binding UniqueID}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Properties">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding ElementFilters}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Selection set" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <RadioButton IsChecked="{Binding Include}" Content="Include" ToolTip="Override filters and include"/>
+                                            <RadioButton IsChecked="{Binding Exclude}" Content="Exclude" ToolTip="Override filters and exclude"/>
+                                            <RadioButton IsChecked="{Binding AsFilter, Mode=OneWay}" Content="As filter" ToolTip="Inclusion controlled by filters"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Mapped material" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Material.Name}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="A-C">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding AtoC}" Width="75">
+                                            <TextBlock.ToolTip>
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="A1-A3" Width="50"/>
+                                                            <TextBlock Text="{Binding A1toA3}"/>
+                                                        </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="A4" Width="50"/>
+                                                        <TextBlock Text="{Binding A4}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="A5" Width="50"/>
+                                                        <TextBlock Text="{Binding A5}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="B1-B7" Width="50"/>
+                                                        <TextBlock Text="{Binding B}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="C1" Width="50"/>
+                                                        <TextBlock Text="{Binding C1}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="C2" Width="50"/>
+                                                        <TextBlock Text="{Binding C2}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="C3" Width="50"/>
+                                                        <TextBlock Text="{Binding C3}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="C4" Width="50"/>
+                                                        <TextBlock Text="{Binding C4}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
+                <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch"/>
+                <GridSplitter Grid.Row="5" HorizontalAlignment="Stretch"/>
+                <GridSplitter Grid.Row="7" HorizontalAlignment="Stretch"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Material Sets" Grid.Row="0"/>
+                    <ComboBox ItemsSource="{Binding Materials}" SelectedIndex="{Binding SelectedMaterialIndex}" Grid.Row="1" DisplayMemberPath="Name"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2">
+                        <Grid Grid.Row="2" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Material set:" Grid.Row="0" Margin="30 0 0 0"/>
+                                <TextBox Text="{Binding SelectedMaterial.Name}" MinWidth="200"/>
+                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding SelectedMaterial.Materials}" Grid.Row="1" Margin="30 0 0 0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Name}" Grid.Column="2"/>
+                                            <Button Content="Edit" Command="{Binding EditMaterialCommand}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                                            <Button Content="Del" Command="{Binding DeleteMaterialCommand}" Grid.Column="1" Margin="0 0 10 0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="30 0 0 0">
+                                <Button Content="Add conc" Width="100" Command="{Binding SelectedMaterial.AddConcreteCommand}" Grid.Row="1"/>
+                                <Button Content="Add steel" Width="100" Command="{Binding SelectedMaterial.AddSteelCommand}" Grid.Row="1"/>
+                                <Button Content="Add timber" Width="100" Command="{Binding SelectedMaterial.AddTimberCommand}" Grid.Row="1"/>
+                                <Button Content="Add EPD" Width="100" Command="{Binding SelectedMaterial.AddGeneric}" Grid.Row="1"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 10 0 0">
+                                <Button Content="Add material set" Command="{Binding AddMaterialSetCommand}" Width="200" />
+                                <CheckBox IsChecked="{Binding IncludeSequestration}" Content="Include sequestration" Margin="15 0 0 0"/>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0">Properties to Filter</TextBlock>
+                    <ItemsControl ItemsSource="{Binding Filters}" Grid.Row="1" Margin="30 0 0 0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <ItemsControl ItemsSource="{Binding FilterItems}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <CheckBox IsChecked="{Binding IsSelected}" Margin="0 0 15 0"/>
+                                                    <TextBlock Text="{Binding Name}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Dynamic Selection Sets" ToolTip="The applied materials will update in accordance with the dynamic selection set. So, for example, if additional foundation elements are added these will be included in the relevant set automatically"/>
+                    <ItemsControl ItemsSource="{Binding SelectionSets}" Grid.Row="1" Margin="30 0 0 0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                            <Button Content="▲" Command="{Binding MoveUpCommand}"/>
+                                            <Button Content="▼" Command="{Binding MoveDownCommand}"/>
+                                            <CheckBox IsChecked="{Binding IsSelected}" Margin="0 0 15 0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Grid.Column="1"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 10 0 0">
+                        <Button Content="Create selection set" Command="{Binding AssignToSelectionCommand}" Width="200" ToolTip="Applies the selected material using the filters and element overrides"/>
+                        <Button Content="Delete selected selections!" Command="{Binding DeleteSelectedCommand}" Width="200" Margin="10 0 0 0" ToolTip="Deletes the selected selection sets"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" Grid.Row="6" >
+                    <TextBlock Text="Total Carbon: "/>
+                    <TextBlock Text="{Binding AtoCString}"/>
+                </StackPanel>
+                <TabControl Grid.Row="8">
+                    <TabItem Header="Proportions">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <ComboBox ItemsSource="{Binding FilterNames}" SelectedIndex="{Binding SelectedFilterForCharts}"/>
+                            </StackPanel>
+                            <lvc:PieChart Grid.Column="1" Series="{Binding CarbonVsCategory}" LegendLocation="Bottom"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="By Stage">
+                        <lvc:CartesianChart Grid.Row="8" Series="{Binding Waterfall}">
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Stage" Labels="{Binding Labels}">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator IsEnabled="False" Step="1"></lvc:Separator>
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="CO2e (tonnes)"/>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </TabItem>
+                </TabControl>        
+            </Grid>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Image Source="pack://application:,,/CarbonCalculatorWPF;Component/resources/MagmaWorks_logo.png"/>
+            <TextBlock Text="Carbon calculator" FontSize="30"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

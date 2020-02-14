@@ -1,0 +1,190 @@
+﻿<UserControl x:Class="CarbonCalculator.MaterialEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarbonCalculator"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ConcreteData">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Reinforcement density (kg/m3): "/>
+                    <TextBox Text="{Binding ConcreteReinforcementDensity}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox ItemsSource="{Binding Grades}" SelectedItem="{Binding ConcreteGrade}"/>
+                    <ComboBox ItemsSource="{Binding Replacements}" SelectedItem="{Binding ConcreteReplacement}"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="SteelData">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox ItemsSource="{Binding SteelMaterials}" SelectedItem="{Binding SteelMaterial}"/>
+                <TextBlock Text="Mass density: "/>
+                <TextBox Text="{Binding MassDensity}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="TimberData">
+            <StackPanel Orientation="Vertical">
+                <CheckBox IsChecked="{Binding IncludeCarbonFromBiomass}" Content="Include biomass"/>
+                <ComboBox ItemsSource="{Binding Materials}" SelectedItem="{Binding TimberMaterial}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Sequestered carbon: "/>
+                    <TextBlock Text="{Binding SequesteredCarbon}"/>
+                    <TextBlock Text="kg"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="NoneData">
+
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+            <TextBlock Text="A1 to A3"/>
+            <ContentControl Content="{Binding}" IsTabStop="False">
+                <ContentControl.Style>
+                    <Style TargetType="{x:Type ContentControl}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Category}" Value="None">
+                                <Setter Property="ContentTemplate" Value="{StaticResource NoneData}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Category}" Value="Concrete">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ConcreteData}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Category}" Value="Timber">
+                                <Setter Property="ContentTemplate" Value="{StaticResource TimberData}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Category}" Value="Steel">
+                                <Setter Property="ContentTemplate" Value="{StaticResource SteelData}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding A1toA3}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+            <TextBlock Text="A4"/>
+            <TextBlock Text="{Binding A4}"/>
+            <ListView ItemsSource="{Binding TransportToSiteDefinitions}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox ItemsSource="{Binding Label1Options}" SelectedItem="{Binding Label1}" Width="100"/>
+                            <ComboBox ItemsSource="{Binding Label2Options}" SelectedItem="{Binding Label2}" Width="100"/>
+                            <ComboBox ItemsSource="{Binding Label3Options}" SelectedItem="{Binding Label3}" Width="100"/>
+                            <ComboBox ItemsSource="{Binding Label4Options}" SelectedItem="{Binding Label4}" Width="100"/>
+                            <TextBlock Text="Distance: "/>
+                            <TextBox Text="{Binding TransportDistance}" Width="50"/>
+                            <TextBlock Text=" km."/>
+                            <TextBlock Text="Carbon: " Margin="15 0 0 0"/>
+                            <TextBlock Text="{Binding CarbonPerKG}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="Add transport" Command="{Binding AddTransportToSiteCommand}" Width="200"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding A4}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+
+            <TextBlock Text="A5 Construction" ToolTip="RICS suggests 1400kg CO2e / £100k construction cost"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Construction factor: "/>
+                <TextBox Text="{Binding ConstructionFactor}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding A5}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+
+            <TextBlock Text="B1 In Use"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="in use factor: "/>
+                <TextBox Text="{Binding InUseFactor}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding B1}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+
+            <TextBlock Text="B2 not used"/>
+            <TextBlock Text="B3 not used"/>
+            <TextBlock Text="B4 not used"/>
+            <TextBlock Text="B5 not used"/>
+            <TextBlock Text="B6 not used"/>
+            <TextBlock Text="B7 not used"/>
+
+            <TextBlock Text="C1 Deconstruction" ToolTip="RICS suggests 3.4kg CO2e / m2 GIA"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Deconstruction factor: "/>
+                <TextBox Text="{Binding DeConstructionFactor}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding C1}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+
+            <TextBlock Text="C2 Transport to disposal"/>
+            <ListView ItemsSource="{Binding TransportToDisposalDefinitions}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox ItemsSource="{Binding Label1Options}" SelectedItem="{Binding Label1}" Width="100"/>
+                            <ComboBox ItemsSource="{Binding Label2Options}" SelectedItem="{Binding Label2}" Width="100"/>
+                            <ComboBox ItemsSource="{Binding Label3Options}" SelectedItem="{Binding Label3}" Width="100"/>
+                            <ComboBox ItemsSource="{Binding Label4Options}" SelectedItem="{Binding Label4}" Width="100"/>
+                            <TextBlock Text="Distance: "/>
+                            <TextBox Text="{Binding TransportDistance}" Width="50"/>
+                            <TextBlock Text=" km."/>
+                            <TextBlock Text="Carbon: " Margin="15 0 0 0"/>
+                            <TextBlock Text="{Binding CarbonPerKG}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="Add transport" Command="{Binding AddTransportToDisposalCommand}" Width="200"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding C2}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+
+            <TextBlock Text="C3 Recycling and Reuse" ToolTip="Include any emissions associated with re-use or recycling"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Recycling and reuse factor: "/>
+                <TextBox Text="{Binding RecyclingReuseFactor}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding C3}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+
+            <TextBlock Text="C4 Disposal emissions" ToolTip="RICS suggests 0.013 kg CO2e / kg waste"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Carbon: "/>
+                <TextBlock Text="{Binding C4}"/>
+                <TextBlock Text="kg CO2e / m3"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Total: "/>
+                <TextBlock Text="{Binding TotalCarbon}"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

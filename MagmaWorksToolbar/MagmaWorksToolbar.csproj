@@ -75,6 +75,7 @@
       <DependentUpon>ContinueLooking.xaml</DependentUpon>
     </Compile>
     <Compile Include="ElementCarbonVM.cs" />
+    <Compile Include="GWPMaterial.cs" />
     <Compile Include="ICEMaterial.cs" />
     <Compile Include="ICEMaterialConcrete.cs" />
     <Compile Include="ICEMaterialNone.cs" />
@@ -147,6 +148,12 @@
   <ItemGroup>
     <Resource Include="resources\CarbonCalculator.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CarbonCalculatorControl\CarbonCalculatorControl.csproj">
+      <Project>{9f128452-fc8e-4dea-a2de-f23ef82f3819}</Project>
+      <Name>CarbonCalculatorControl</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)resources\MagmaWorksToolbar.addin" "$(TargetDir)" /Y
@@ -157,6 +164,9 @@ xcopy "$(TargetPath)" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)Newtonsoft.Json.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)LiveCharts.Wpf.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)LiveCharts.dll" "$(TargetDir)MagmaWorksToolbar" /Y
+xcopy "$(TargetDir)CarbonCalculatorControl.dll" "$(TargetDir)MagmaWorksToolbar" /Y
+xcopy "$(TargetDir)CarbonMaterials.dll" "$(TargetDir)MagmaWorksToolbar" /Y
+xcopy "$(TargetDir)Resources\FreightCarbonCoefficients.csv" "$(TargetDir)MagmaWorksToolbar\resources" /Y
 "C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)MagmaWorksRevitToolbarInstaller2018.nsi"
 "C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)MagmaWorksRevitToolbarInstaller2019.nsi"</PostBuildEvent>
   </PropertyGroup>

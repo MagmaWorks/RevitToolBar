@@ -7,6 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagmaWorksToolbar", "MagmaW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolbarTests", "ToolbarTests\ToolbarTests.csproj", "{7156C56D-C2F6-4065-A9E9-7374E9577DFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonCalculator", "CarbonCalculator\CarbonCalculator.csproj", "{FB8BAA3A-138A-428D-B7F9-749BF63B9083}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonMaterials", "CarbonMaterials\CarbonMaterials.csproj", "{53CA2B70-3C52-43D1-BF1E-8E33850F406B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonCalculatorControl", "CarbonCalculatorControl\CarbonCalculatorControl.csproj", "{9F128452-FC8E-4DEA-A2DE-F23EF82F3819}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonCalculatorStandalone", "CarbonCalculatorStandalone\CarbonCalculatorStandalone.csproj", "{E07CE759-CC5A-405F-B63E-82192FCD670A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonMaterialEditorStandalone", "CarbonMaterialEditorStandalone\CarbonMaterialEditorStandalone.csproj", "{03AA3D82-BE82-47CB-89B1-443CE8ED2657}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +31,26 @@ Global
 		{7156C56D-C2F6-4065-A9E9-7374E9577DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7156C56D-C2F6-4065-A9E9-7374E9577DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7156C56D-C2F6-4065-A9E9-7374E9577DFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB8BAA3A-138A-428D-B7F9-749BF63B9083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8BAA3A-138A-428D-B7F9-749BF63B9083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8BAA3A-138A-428D-B7F9-749BF63B9083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8BAA3A-138A-428D-B7F9-749BF63B9083}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53CA2B70-3C52-43D1-BF1E-8E33850F406B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53CA2B70-3C52-43D1-BF1E-8E33850F406B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53CA2B70-3C52-43D1-BF1E-8E33850F406B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53CA2B70-3C52-43D1-BF1E-8E33850F406B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F128452-FC8E-4DEA-A2DE-F23EF82F3819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F128452-FC8E-4DEA-A2DE-F23EF82F3819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F128452-FC8E-4DEA-A2DE-F23EF82F3819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F128452-FC8E-4DEA-A2DE-F23EF82F3819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E07CE759-CC5A-405F-B63E-82192FCD670A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E07CE759-CC5A-405F-B63E-82192FCD670A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E07CE759-CC5A-405F-B63E-82192FCD670A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E07CE759-CC5A-405F-B63E-82192FCD670A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03AA3D82-BE82-47CB-89B1-443CE8ED2657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03AA3D82-BE82-47CB-89B1-443CE8ED2657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03AA3D82-BE82-47CB-89B1-443CE8ED2657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03AA3D82-BE82-47CB-89B1-443CE8ED2657}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
