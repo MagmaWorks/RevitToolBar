@@ -6,13 +6,19 @@ using Newtonsoft.Json;
 
 namespace CarbonMaterials
 {
-    [JsonObject(MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn, IsReference = true)]
     public class GWPMaterialSet
     {
         [JsonProperty]
         public string Name { get; set; }
+
         [JsonProperty]
-        public List<GWPMaterial> Materials { get; }
+        public List<GWPMaterial> Materials { get; private set; }
+
+        private GWPMaterialSet()
+        {
+
+        }
 
         public GWPMaterialSet(string name)
         {

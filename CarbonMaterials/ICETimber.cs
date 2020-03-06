@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CarbonMaterials
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class ICETimber : ICEMaterial
     {
         public override string Name
@@ -17,6 +19,7 @@ namespace CarbonMaterials
             }
         }
 
+        [JsonProperty(PropertyName = "CarbonFraction")]
         double _carbonFraction = 0.5;
         public double CarbonFraction
         {
@@ -30,6 +33,7 @@ namespace CarbonMaterials
             }
         }
 
+        [JsonProperty(PropertyName = "MoistureContent")]
         double _moistureContent = 0.12;
         public double MoistureContent
         {
@@ -54,6 +58,7 @@ namespace CarbonMaterials
             }
         }
 
+        [JsonProperty(PropertyName = "IncludeCarbonFromBiomass")]
         bool _includeCarbonFromBiomass;
         public bool IncludeCarbonFromBiomass
         {
@@ -75,6 +80,7 @@ namespace CarbonMaterials
             }
         }
 
+        [JsonProperty(PropertyName = "TimberMaterial")]
         string _timberMaterial;
         public string TimberMaterial
         {

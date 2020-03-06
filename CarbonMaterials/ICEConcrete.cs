@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
-using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace CarbonMaterials
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class ICEConcrete : ICEMaterial
     {
+        [JsonProperty(PropertyName ="Grade")]
         string _grade;
         public string Grade
         {
@@ -30,6 +33,7 @@ namespace CarbonMaterials
             }
         }
 
+        [JsonProperty(PropertyName = "Replacement")]
         string _replacement;
         public string Replacement
         {
@@ -43,6 +47,7 @@ namespace CarbonMaterials
             }
         }
 
+        [JsonProperty(PropertyName ="ReinforcementDensity")]
         double _rebar;
         public double ReinforcementDensity
         {

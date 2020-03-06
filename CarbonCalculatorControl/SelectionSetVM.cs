@@ -4,14 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json;
 
 namespace CarbonCalculator
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class SelectionSetVM : ViewModelBase
     {
+        [JsonProperty]
         public List<FilterSelection> SelectedFilterValues { get; }
-        public List<string> ElementsIdsToInclude { get; }
-        public List<string> ElementsIdsToExclude { get; }
+        [JsonProperty]
+        public List<string> ElementsIdsToInclude { get; private set; }
+        [JsonProperty]
+        public List<string> ElementsIdsToExclude { get; private set; }
+        [JsonProperty]
         public int SelectedMaterial { get; set; }
         bool _isSelected = false;
         public bool IsSelected
@@ -28,6 +34,11 @@ namespace CarbonCalculator
         }
 
         ModelVM _parent;
+
+        public void setParent(ModelVM parent)
+        {
+            _parent = parent;
+        }
 
         public SelectionSetVM(int selectedMaterial, ModelVM parent)
         {
@@ -103,10 +114,14 @@ namespace CarbonCalculator
         }
     }
 
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class FilterSelection : ViewModelBase
     {
-        public string FilterName { get; }
-        public string FilterValue { get; }
+        [JsonProperty]
+        public string FilterName { get; private set; }
+        [JsonProperty]
+        public string FilterValue { get; private set; }
+
         public FilterSelection(string name, string value)
         {
             FilterName = name;

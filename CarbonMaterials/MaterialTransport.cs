@@ -10,6 +10,7 @@ namespace CarbonMaterials
     {
         [JsonProperty]
         public TransportDefinition Definition { get; set; }
+
         [JsonProperty]
         public double Distance { get; set; }
 

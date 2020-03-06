@@ -4,12 +4,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CarbonCalculator
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class FilterSetVM : ViewModelBase
     {
-        public string Name { get; }
+        [JsonProperty]
+        public string Name { get; private set; }
+        [JsonProperty]
         public ObservableCollection<FilterItemVM> FilterItems { get; }
 
         public FilterSetVM(string name, params string[] filters)

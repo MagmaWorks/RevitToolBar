@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace CarbonMaterials
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class GWPGeneric : GWPMaterial
     {
+        [JsonProperty(PropertyName ="Name")]
         string _name;
         public override string Name => _name;
 
@@ -44,6 +47,7 @@ namespace CarbonMaterials
         public override GWPValue C3 => _c3;
         public override GWPValue C4 => _c4;
 
+        [JsonProperty(PropertyName ="LinkReference")]
         string _linkReference;
 
         public string LinkReference => _linkReference;

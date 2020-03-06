@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using CarbonMaterials;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace CarbonCalculator
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Element
     {
+        [JsonProperty(PropertyName = "Volume")]
         double _volume;
         public double Volume
         {
@@ -23,11 +28,27 @@ namespace CarbonCalculator
                     _volume = value;
             }
         }
+
+        [JsonProperty]
         public bool VolumeIsReadOnly { get; private set; }
+
+        [JsonProperty]
         public string[] Filters { get; }
-        public string Name { get; }
-        public string UniqueID { get; }
+
+        [JsonProperty]
+        public string Name { get; private set; }
+
+        [JsonProperty]
+        public string UniqueID { get; private set; }
+
+        [JsonProperty]
         public GWPMaterialSet Material { get; set; }
+
+        private Element()
+        {
+
+        }
+
         public Element(string name, double vol, string uniqueID, params string[] filters)
         {
             _volume = vol;
@@ -61,8 +82,5 @@ namespace CarbonCalculator
         public double TotalA => Material.TotalA * Volume;
         public double TotalB => Material.TotalB* Volume;
         public double TotalC => Material.TotalC * Volume;
-
-
-
     }
 }

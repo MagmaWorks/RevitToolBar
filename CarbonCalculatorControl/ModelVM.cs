@@ -11,16 +11,38 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using System.IO;
 using Newtonsoft.Json;
+using System.IO.Compression;
+using System.Windows;
 
 namespace CarbonCalculator
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class ModelVM : ViewModelBase, IViewModelParent
     {
+        [JsonProperty(PropertyName = "ElementSet")]
         ElementSet _elementSet;
-        public ObservableCollection<ElementVM> Elements { get; }
-        public List<FilterSetVM> Filters { get; }
-        public ObservableCollection<SelectionSetVM> SelectionSets { get; }
-        ObservableCollection<MaterialSetVM> _materials;
+        public ElementSet ElementSet { get => _elementSet; }
+
+        public ObservableCollection<ElementVM> Elements { get; private set; }
+        public List<FilterSetVM> Filters { get; private set; }
+        [JsonProperty(PropertyName = "SelectionSets")]
+        public ObservableCollection<SelectionSetVM> SelectionSets { get; private set; }
+        ObservableCollection<MaterialSetVM> _materials = new ObservableCollection<MaterialSetVM>();
+
+        string _filePath = "";
+        public string FilePath
+        {
+            get
+            {
+                return _filePath;
+            }
+            set
+            {
+                _filePath = value;
+                RaisePropertyChanged(nameof(FilePath));
+            }
+        }
+
         int _selectedMaterialIndex;
         public int SelectedMaterialIndex
         {
@@ -34,8 +56,6 @@ namespace CarbonCalculator
                 RaisePropertyChanged(nameof(SelectedMaterial));
             }
         }
-
-
 
         public double A1toA3
         {
@@ -72,6 +92,7 @@ namespace CarbonCalculator
             }
         }
 
+        [JsonProperty(PropertyName = "IncludeSequestration")]
         bool _includeSequestration = true;
         public bool IncludeSequestration
         {
@@ -101,11 +122,28 @@ namespace CarbonCalculator
             }
         }
 
+        public List<CarbonMaterials.GWPMaterialSet> MaterialSets
+        {
+            get
+            {
+                var returnList = _materials.Select(a => a.GWPMaterial).ToList();
+                return returnList;
+            }
+        }
+
+
         public MaterialSetVM SelectedMaterial
         {
             get
             {
-                return _materials[_selectedMaterialIndex];
+                if (_selectedMaterialIndex >= 0)
+                {
+                    return _materials[_selectedMaterialIndex];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -121,35 +159,55 @@ namespace CarbonCalculator
 
         void addMaterialSet()
         {
-            _materials.Add(new MaterialSetVM("None", new CarbonMaterials.GWPMaterialSet("None"), this));
+            var newSet = new CarbonMaterials.GWPMaterialSet("None");
+            _elementSet.MaterialSets.Add(newSet);
+            _materials.Add(new MaterialSetVM("None", newSet, this));
         }
 
+        public ModelVM()
+        {
+        }
 
         public ModelVM(ElementSet elementSet)
         {
-            _materials = new ObservableCollection<MaterialSetVM>
-            {
-                new MaterialSetVM(new CarbonMaterials.GWPMaterialSet("None"), this),
-                new MaterialSetVM(CarbonMaterials.GWPMaterialSet.GetDefaultGWPConcreteSetSeparateSteel(), this),
-                new MaterialSetVM(CarbonMaterials.GWPMaterialSet.GetDefaultGWPConcreteSet(), this),
-                new MaterialSetVM(CarbonMaterials.GWPMaterialSet.GetDefaultFoundationRC(), this),
-                new MaterialSetVM(CarbonMaterials.GWPMaterialSet.GetDefaultGlulam(), this),
-                new MaterialSetVM(CarbonMaterials.GWPMaterialSet.GetDefaultStructuralSteel(), this),
-            };
-
             _elementSet = elementSet;
-            Elements = new ObservableCollection<ElementVM>();
-            foreach (var elem in elementSet.Elements)
+            initialise();
+            SelectionSets = new ObservableCollection<SelectionSetVM>();
+            updateCarbonVsCategoryChartValues();
+        }
+
+        public void initialise()
+        {
+            _materials.Clear();
+            foreach (var matSet in _elementSet.MaterialSets)
             {
-                elem.Material = _materials[0].GWPMaterial;
+                _materials.Add(new MaterialSetVM(matSet, this));
+            }
+
+            Elements = new ObservableCollection<ElementVM>();
+            foreach (var elem in _elementSet.Elements)
+            {
                 Elements.Add(new ElementVM(elem, this));
             }
-            Filters = new List<FilterSetVM>();
-            for (int i = 0; i < elementSet.FilterNames.Count(); i++)
+            initFilters();
+            if (SelectionSets != null)
             {
-                var filter = elementSet.FilterNames[i];
+                foreach (var set in SelectionSets)
+                {
+                    set.setParent(this);
+                }
+            }
+
+        }
+
+        public void initFilters()
+        {
+            Filters = new List<FilterSetVM>();
+            for (int i = 0; i < _elementSet.FilterNames.Count(); i++)
+            {
+                var filter = _elementSet.FilterNames[i];
                 var newFilterSet = new FilterSetVM(filter);
-                var filterValues = elementSet.Elements.Select(a => a.Filters[i])
+                var filterValues = _elementSet.Elements.Select(a => a.Filters[i])
                     .Distinct()
                     .ToList();
                 foreach (var item in filterValues)
@@ -157,19 +215,6 @@ namespace CarbonCalculator
                     newFilterSet.FilterItems.Add(new FilterItemVM(item, newFilterSet));
                 }
                 Filters.Add(newFilterSet);
-            }
-
-            SelectionSets = new ObservableCollection<SelectionSetVM>();
-            updateCarbonVsCategoryChartValues();
-
-            var serialiser = new JsonSerializer();
-            serialiser.Formatting = Formatting.Indented;
-            using (StreamWriter sw = new StreamWriter(@"C:\Users\Alex Baalham\Documents\test.json"))
-            {
-                using (JsonWriter writer = new JsonTextWriter(sw))
-                {
-                    serialiser.Serialize(writer, _materials[0].GWPMaterial);
-                }
             }
         }
 
@@ -291,49 +336,6 @@ namespace CarbonCalculator
             UpdateAll();
         }
 
-        ICommand _outputCSVCommand;
-
-        public ICommand OutputCSVCommand
-        {
-            get
-            {
-                return _outputCSVCommand ?? (_outputCSVCommand = new CommandHandler(() => outputToCSV(), true));
-            }
-        }
-
-        void outputToCSV()
-        {
-            var save = new Microsoft.Win32.SaveFileDialog();
-            save.AddExtension = true;
-            save.DefaultExt = "csv";
-            save.Filter = @"CSV files | *.csv";
-            if (save.ShowDialog() == true)
-            {
-                using (var w = new StreamWriter(save.FileName))
-                {
-                    w.WriteLine("ID, Name, Material, A1-A3, A4, A5, B1-B7, C1, C2, C3, C4");
-                    foreach (var elem in _elementSet.Elements)
-                    {
-                        string newLine = "";
-                        newLine += elem.UniqueID + ",";
-                        newLine += elem.Name + ",";
-                        newLine += elem.Material.Name + ",";
-                        newLine += elem.A1toA3 + ",";
-                        newLine += elem.A4 + ",";
-                        newLine += elem.A5 + ",";
-                        newLine += elem.TotalB + ",";
-                        newLine += elem.C1 + ",";
-                        newLine += elem.C2 + ",";
-                        newLine += elem.C3 + ",";
-                        newLine += elem.C4;
-                        w.WriteLine(newLine);
-                        w.Flush();
-                    }
-                }
-            }
-            
-        }
-
         public void UpdateAll()
         {
             updateCarbonVsCategoryChartValues();
@@ -377,8 +379,7 @@ namespace CarbonCalculator
             }
         }
 
-
-        void updateCarbonVsCategoryChartValues()
+        public void updateCarbonVsCategoryChartValues()
         {
             SeriesCollection series = new SeriesCollection();
             var CategoryFilters = Filters[_selectedFilterForCharts].FilterItems;
@@ -404,6 +405,22 @@ namespace CarbonCalculator
             {
                 return _waterfall;
             }
+        }
+
+        public void changeElementSet(ElementSet newSet)
+        {
+            _elementSet = newSet;
+            Elements.Clear();
+            foreach (var elem in _elementSet.Elements)
+            {
+                Elements.Add(new ElementVM(elem, this));
+            }
+            initFilters();
+            foreach (var set in SelectionSets)
+            {
+                processSelectionSet(set);
+            }
+            UpdateAll();
         }
 
         public string[] Labels { get; } = { "", "A1 to A3", "A4", "A5", "B", "C1", "C2", "C3", "C4" };

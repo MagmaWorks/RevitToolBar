@@ -164,7 +164,7 @@ xcopy "$(TargetPath)" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)Newtonsoft.Json.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)LiveCharts.Wpf.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)LiveCharts.dll" "$(TargetDir)MagmaWorksToolbar" /Y
-xcopy "$(TargetDir)CarbonCalculatorControl.dll" "$(TargetDir)MagmaWorksToolbar" /Y
+xcopy "$(TargetDir)CarbonCalculatorWPF.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)CarbonMaterials.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)Resources\FreightCarbonCoefficients.csv" "$(TargetDir)MagmaWorksToolbar\resources" /Y
 "C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)MagmaWorksRevitToolbarInstaller2018.nsi"

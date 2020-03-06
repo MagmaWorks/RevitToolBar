@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CarbonMaterials
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class ICESteel : ICEMaterial
     {
         public override string Name
@@ -32,6 +34,7 @@ namespace CarbonMaterials
             }
         }
 
+        [JsonProperty(PropertyName ="SteelMaterial")]
         string _steelMaterial;
 
         public string SteelMaterial

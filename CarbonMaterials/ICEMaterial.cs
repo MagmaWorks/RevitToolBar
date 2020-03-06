@@ -16,6 +16,7 @@ namespace CarbonMaterials
 
         public static List<string> MaterialTypes = new List<string> { "None", "Concrete", "Steel", "Timber" };
 
+        [JsonProperty(PropertyName = "TransportsToSite")]
         List<MaterialTransport> _transportsToSite = new List<MaterialTransport>();
         public List<MaterialTransport> TransportsToSite
         {
@@ -25,7 +26,7 @@ namespace CarbonMaterials
             }
         }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "TransportsToDisposal")]
         List<MaterialTransport> _transportsToDisposal = new List<MaterialTransport>();
         public List<MaterialTransport> TransportsToDispoal
         {
@@ -35,7 +36,7 @@ namespace CarbonMaterials
             }
         }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "ConstructionFactor")]
         double _constructionFactor = 0;
         public double ConstructionFactor
         {
@@ -65,7 +66,7 @@ namespace CarbonMaterials
             }
         }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "InUseFactor")]
         double _inUseFactor = 0;
         public double InUseFactor
         {
@@ -87,7 +88,7 @@ namespace CarbonMaterials
             }
         }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "DeConsteuctionFactor")]
         double _deConstructionFactor = 0;
         public double DeConstructionFactor
         {
@@ -118,7 +119,7 @@ namespace CarbonMaterials
             }
         }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "RecyclingReuseFactor")]
         double _recyclingReuseFactor = 0;
         public double RecyclingReuseFactor
         {
@@ -140,17 +141,21 @@ namespace CarbonMaterials
             }
         }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "C4Value")]
         GWPValue _c4Value;
         public override GWPValue C4 => (_c4Value = new GWPValue(0.013 * MassDensity)); // RICS recommend 0.013 default
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "MassDensity")]
         protected double _massDensity;
         public override double MassDensity
         {
             get
             {
                 return _massDensity;
+            }
+            protected set
+            {
+                _massDensity = value;
             }
         }
 

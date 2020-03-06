@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json;
 
 namespace CarbonCalculator
 {
     public class FilterItemVM :ViewModelBase
     {
+        [JsonProperty]
         public string Name { get; set; }
-        bool _isSelected;
+
+        bool _isSelected = false;
         public bool IsSelected
         {
             get
@@ -23,6 +26,7 @@ namespace CarbonCalculator
                 RaisePropertyChanged(nameof(IsSelected));
             }
         }
+
         public FilterItemVM(string name, FilterSetVM parent)
         {
             Name = name;

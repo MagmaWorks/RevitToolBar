@@ -38,7 +38,7 @@ namespace CarbonMaterials
         public abstract string Name { get; }
         
 
-        public virtual double MassDensity { get; }
+        public virtual double MassDensity { get; protected set; }
         public abstract double SequesteredCarbonDensity { get; }
         public abstract GWPMaterialType GWPMaterialType { get; }
         public abstract GWPMaterial getCopy();

@@ -21,7 +21,8 @@ namespace CarbonMaterials
         [JsonProperty]
         public string Level4 { get; }
         [JsonProperty]
-        public double CarbonConversionFactor { get; }
+        public double CarbonConversionFactor { get; private set; }
+
         static List<TransportDefinition> _definitions;
         public static List<TransportDefinition> Definitions
         {

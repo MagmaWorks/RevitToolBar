@@ -155,8 +155,7 @@ namespace MagmaWorksToolbar
 
                         double metricVol = volParam.AsDouble() * _cubicFtToM;
 
-
-                        myset.Elements.Add(new CarbonCalculator.Element(name, metricVol, "Revit" + counter, revitCat.Name, matName, lvlstr));
+                        myset.AddElement(new CarbonCalculator.Element(name, metricVol, "Revit" + counter, revitCat.Name, matName, lvlstr));
                         
                         myVM.AddElement(name, metricVol, matName, doc, cat);
                     }
@@ -169,7 +168,7 @@ namespace MagmaWorksToolbar
             Window carbonWindow = new Window()
             {
                 Content = control,
-                DataContext = new CarbonCalculator.ModelVM(myset)
+                DataContext = new CarbonCalculator.AppVM(myset)
             };
             
 
