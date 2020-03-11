@@ -13,13 +13,13 @@ namespace CarbonMaterials
     public class TransportDefinition
     {
         [JsonProperty]
-        public string Level1 { get; }
+        public string Level1 { get; private set; }
         [JsonProperty]
-        public string Level2 { get; }
+        public string Level2 { get; private set; }
         [JsonProperty]
-        public string Level3 { get; }
+        public string Level3 { get; private set; }
         [JsonProperty]
-        public string Level4 { get; }
+        public string Level4 { get; private set; }
         [JsonProperty]
         public double CarbonConversionFactor { get; private set; }
 
@@ -34,6 +34,11 @@ namespace CarbonMaterials
                 }
                 return _definitions;
             }
+        }
+
+        public TransportDefinition()
+        {
+
         }
 
 

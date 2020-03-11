@@ -295,6 +295,7 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel>
                                         <ComboBox ItemsSource="{Binding FilterNames}" SelectedIndex="{Binding SelectedFilterForCharts}"/>
+                                        <ComboBox ItemsSource="{Binding PropertiesToDisplay}" SelectedValue="{Binding PropToDisplay}"/>
                                     </StackPanel>
                                     <lvc:PieChart Grid.Column="1" Series="{Binding CarbonVsCategory}" LegendLocation="Bottom"/>
                                 </Grid>

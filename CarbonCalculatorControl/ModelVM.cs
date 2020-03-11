@@ -379,6 +379,25 @@ namespace CarbonCalculator
             }
         }
 
+        public string[] PropertiesToDisplay { get; } = new string[] { "Embodied Carbon", "Material Quantity" };
+
+        string _propToDisplay = "Embodied Carbon";
+
+        public string PropToDisplay
+        {
+            get
+            {
+                return _propToDisplay;
+            }
+            set
+            {
+                _propToDisplay = value;
+                updateCarbonVsCategoryChartValues();
+                RaisePropertyChanged(nameof(CarbonVsCategory));
+                RaisePropertyChanged(nameof(PropToDisplay));
+            }
+        }
+
         public void updateCarbonVsCategoryChartValues()
         {
             SeriesCollection series = new SeriesCollection();
@@ -390,7 +409,14 @@ namespace CarbonCalculator
                 {
                     if (elem.Filters[_selectedFilterForCharts] == item.Name)
                     {
-                        catCarbon += elem.TotalAtoC;
+                        if (_propToDisplay == "Embodied Carbon")
+                        {
+                            catCarbon += elem.TotalAtoC;
+                        }
+                        else
+                        {
+                            catCarbon += elem.Volume;
+                        }
                     }
                 }
                 series.Add(new PieSeries { Values = new ChartValues<double> { catCarbon }, Title = item.Name });

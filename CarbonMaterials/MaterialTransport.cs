@@ -24,7 +24,7 @@ namespace CarbonMaterials
 
         public MaterialTransport()
         {
-            Definition = TransportDefinition.Definitions[0];
+            
         }
 
         public static MaterialTransport DefaultDieselRigidHGV()
