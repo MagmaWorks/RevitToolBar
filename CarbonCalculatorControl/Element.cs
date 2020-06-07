@@ -36,7 +36,7 @@ namespace CarbonCalculator
         public string[] Filters { get; }
 
         [JsonProperty]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [JsonProperty]
         public string UniqueID { get; private set; }

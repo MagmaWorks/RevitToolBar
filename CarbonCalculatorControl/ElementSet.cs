@@ -34,12 +34,17 @@ namespace CarbonCalculator
             _elements = new List<Element>();
             MaterialSets = new List<CarbonMaterials.GWPMaterialSet>
             {
-                new CarbonMaterials.GWPMaterialSet("None"), 
-                CarbonMaterials.GWPMaterialSet.GetDefaultGWPConcreteSetSeparateSteel(), 
-                CarbonMaterials.GWPMaterialSet.GetDefaultGWPConcreteSet(), 
-                CarbonMaterials.GWPMaterialSet.GetDefaultFoundationRC(), 
-                CarbonMaterials.GWPMaterialSet.GetDefaultGlulam(), 
-                CarbonMaterials.GWPMaterialSet.GetDefaultStructuralSteel()
+                new CarbonMaterials.GWPMaterialSet("None"),
+                CarbonMaterials.GWPMaterialSet.GetDefaultGWPConcreteSetSeparateSteel(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultGWPConcreteSet(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultFoundationRC(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultGlulam(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultStructuralSteel(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultRC2025(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultRC3240(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultRC3240GGBS20(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultRC4050(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultRC4050GGBS20()
             };
         }
 

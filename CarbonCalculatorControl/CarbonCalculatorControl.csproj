@@ -45,18 +45,27 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppVM.cs" />
+    <Compile Include="CementControl.xaml.cs">
+      <DependentUpon>CementControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CementVM.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="CommandHandler.cs" />
     <Compile Include="CommandHandlerWithParameter.cs" />
+    <Compile Include="ConstituentVM.cs" />
     <Compile Include="Element.cs" />
+    <Compile Include="ElementFilterVM.cs" />
     <Compile Include="ElementSet.cs" />
     <Compile Include="ElementVM.cs" />
     <Compile Include="EPDMaterialEditor.xaml.cs">
@@ -65,6 +74,13 @@
     <Compile Include="FilterItemVM.cs" />
     <Compile Include="FilterSetVM.cs" />
     <Compile Include="GWPGenericMaterialVM.cs" />
+    <Compile Include="ICEMaterialVMBase.cs" />
+    <Compile Include="ICENoneVM.cs" />
+    <Compile Include="ICEv3GeneralVM.cs" />
+    <Compile Include="ICEv3ConcreteVM.cs" />
+    <Compile Include="ICEv2TimberVM.cs" />
+    <Compile Include="ICEv2SteelVM.cs" />
+    <Compile Include="ICEv2ConcreteVM.cs" />
     <Compile Include="ICEMaterialVM.cs" />
     <Compile Include="IViewModelParent.cs" />
     <Compile Include="MaterialEditor.xaml.cs">
@@ -73,8 +89,10 @@
     <Compile Include="MaterialSetControl.xaml.cs">
       <DependentUpon>MaterialSetControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MaterialSetVM2.cs" />
     <Compile Include="MaterialSetVM.cs" />
     <Compile Include="MaterialVM.cs" />
+    <Compile Include="MenuItemVM.cs" />
     <Compile Include="ModelView.xaml.cs">
       <DependentUpon>ModelView.xaml</DependentUpon>
     </Compile>
@@ -88,6 +106,14 @@
     <Compile Include="ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EPDMaterialEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

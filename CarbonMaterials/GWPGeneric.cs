@@ -118,7 +118,8 @@ namespace CarbonMaterials
         static Dictionary<string, GWPGeneric> EPDLibrary = new Dictionary<string, GWPGeneric>
         {
             { "KLH CLT", new GWPGeneric("KLH CLT", @"http://www.klhuk.com/media/33498/klh_component%20catalogue%20for%20environmental%20product%20declaration.pdf", -601.29, 70.38, 20.69, 0,9.28,4.02, 808.39, 0) },
-            { "Generic Readymix", new GWPGeneric("Generic Ready Mix concrete", @"https://www.concretecentre.com/TCC/media/TCCMediaLibrary/PDF%20attachments/Generic-ready-mixed-concrete.pdf", 246, 2.01, 0.19, -19.9, -0.84, 8.27, -18.9, 1.98) }
+            { "Generic Readymix", new GWPGeneric("Generic Ready Mix concrete", @"https://www.concretecentre.com/TCC/media/TCCMediaLibrary/PDF%20attachments/Generic-ready-mixed-concrete.pdf", 246, 2.01, 0.19, -19.9, -0.84, 8.27, -18.9, 1.98) },
+            { "Delta Beam", new GWPGeneric("Peikko Delta Beam", "", 22638, 0, 0, 0, 444.29, 118.58, 120.89, 8.162 )}
         };
     }
 }

@@ -24,12 +24,17 @@ namespace CarbonMaterials
 
         public MaterialTransport()
         {
-            
+            Definition = TransportDefinition.DefaultDieselRigidHGV();
         }
 
         public static MaterialTransport DefaultDieselRigidHGV()
         {
             return new MaterialTransport() { Distance = 15, Definition = TransportDefinition.DefaultDieselRigidHGV() };
+        }
+
+        public static MaterialTransport Default33THGV()
+        {
+            return new MaterialTransport() { Distance = 50, Definition = TransportDefinition.DefaultDiesel33THGV() };
         }
     }
 }

@@ -8,6 +8,22 @@
              d:DesignHeight="600" d:DesignWidth="400">
 
     <UserControl.Resources>
+        <DataTemplate x:Key="GeneralConstituent">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox ItemsSource="{Binding ConstituentNames}" SelectedItem="{Binding Name}" Width="200"/>
+                <TextBlock Text="Proportion in mix by mass: " Margin="15 0 0 0"/>
+                <TextBox Text="{Binding Proportion}" Width="100"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="CementConstituent">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Width="200"/>
+                <TextBlock Text="Proportion in mix by mass: " Margin="15 0 0 0"/>
+                <TextBox Text="{Binding Proportion}" Width="100"/>
+                <Button Content="Edit" Command="{Binding EditCementCommand}"/>
+            </StackPanel>
+        </DataTemplate>
+
         <DataTemplate x:Key="ConcreteData">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Embodied carbon figures for stage A1 to A3 from ICE v2 database."/>
@@ -24,6 +40,46 @@
                     <TextBlock Text="Replacement: " Width="120"/>
                     <ComboBox ItemsSource="{Binding Replacements}" SelectedItem="{Binding ConcreteReplacement}" Width="100"/>
                 </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ConcreteV3Data">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Embodied carbon figures for stage A1 to A3 from ICE v3 database."/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Reinforcement density: " Width="120"/>
+                    <TextBox Text="{Binding ConcreteReinforcementDensity}" Width="100"/>
+                    <TextBlock Text="kg/m3"/>
+                </StackPanel>
+                <!--<StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Grade: " Width="120"/>
+                    <ComboBox ItemsSource="{Binding Grades}" SelectedItem="{Binding ConcreteGrade}" Width="100"/>
+                </StackPanel>-->
+                <!--<StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Replacement: " Width="120"/>
+                    <ComboBox ItemsSource="{Binding Replacements}" SelectedItem="{Binding ConcreteReplacement}" Width="100"/>
+                </StackPanel>-->
+                <ItemsControl ItemsSource="{Binding Constituents}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}" IsTabStop="False">
+                                <ContentControl.Style>
+                                    <Style TargetType="{x:Type ContentControl}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ConType}" Value="GENERAL">
+                                                <Setter Property="ContentTemplate" Value="{StaticResource GeneralConstituent}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ConType}" Value="CEMENT">
+                                                <Setter Property="ContentTemplate" Value="{StaticResource CementConstituent}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="Add" Command="{Binding AddConstituentCommand}"/>
+
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SteelData">
@@ -61,6 +117,7 @@
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -95,6 +152,9 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Category}" Value="Concrete">
                                         <Setter Property="ContentTemplate" Value="{StaticResource ConcreteData}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Category}" Value="ConcreteV3">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource ConcreteV3Data}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Category}" Value="Timber">
                                         <Setter Property="ContentTemplate" Value="{StaticResource TimberData}"/>
@@ -248,10 +308,10 @@
                 <TextBlock Text="Total: "/>
                 <TextBlock Text="{Binding TotalCarbon}"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="0 15 0 0">
+            <!--<StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="0 15 0 0">
                 <Button   Command="{Binding AcceptAndCloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="OK" Width="150"/>
                 <Button  Margin="15 0 0 0" Command="{Binding CancelAndCloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Cancel" Width="150"/>
-            </StackPanel>
+            </StackPanel>-->
         </StackPanel>
     </Grid>
 </UserControl>

@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Linq;
 
 namespace CarbonCalculator
 {
@@ -39,6 +40,7 @@ namespace CarbonCalculator
             var settings = new JsonSerializerSettings();
             settings.Formatting = Formatting.Indented;
             settings.TypeNameHandling = TypeNameHandling.Auto;
+            vm.SaveChartColors();
             var output = JsonConvert.SerializeObject(vm, settings);
 
             string filePath = "";
@@ -84,6 +86,7 @@ namespace CarbonCalculator
             var settings = new JsonSerializerSettings();
             settings.Formatting = Formatting.Indented;
             settings.TypeNameHandling = TypeNameHandling.Auto;
+            vm.SaveChartColors();
             var output = JsonConvert.SerializeObject(vm, settings);
 
             string filePath = "";
@@ -149,6 +152,7 @@ namespace CarbonCalculator
                     output = JsonConvert.DeserializeObject<ModelVM>(reader.ReadToEnd(), settings);
                 }
                 output.initialise();
+                output.SetChartColors();
                 output.updateCarbonVsCategoryChartValues();
                 outputOK = true;
             }
@@ -164,6 +168,30 @@ namespace CarbonCalculator
                 RaisePropertyChanged(nameof(Model));
             }
         }
+
+        ICommand _addElementCommand;
+
+        public ICommand AddElementCommand
+        {
+            get
+            {
+                return _addElementCommand ?? (_addElementCommand = new CommandHandler(() => addElement(), true));
+            }
+        }
+
+        void addElement()
+        {
+            string[] filterVals = new string[Model.Filters.Count];
+            for (int i = 0; i < Model.Filters.Count; i++)
+            {
+                filterVals[i] = "";
+            }
+            Model.ElementSet.AddElement(new Element("User element", 0, "User" + _userelem.ToString("0000"), filterVals));
+            Model.Elements.Add(new ElementVM(Model.ElementSet.Elements.Last(), Model));
+            _userelem++;
+        }
+
+        int _userelem = 0;
 
         ICommand _outputCSVCommand;
 

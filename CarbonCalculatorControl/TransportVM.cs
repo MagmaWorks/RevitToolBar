@@ -10,7 +10,7 @@ namespace CarbonCalculator
     public class TransportVM : ViewModelBase
     {
         MaterialTransport _transport;
-        ICEMaterialVM _parent;
+        IViewModelParent _parent;
 
         public double TransportDistance
         {
@@ -23,11 +23,11 @@ namespace CarbonCalculator
                 _transport.Distance = value;
                 RaisePropertyChanged(nameof(TransportDistance));
                 RaisePropertyChanged(nameof(CarbonPerKG));
-                _parent.Update();
+                _parent.UpdateAll();
             }
         }
 
-        public TransportVM(MaterialTransport transport, ICEMaterialVM parent)
+        public TransportVM(MaterialTransport transport, IViewModelParent parent)
         {
             _transport = transport;
             _parent = parent;
@@ -67,7 +67,7 @@ namespace CarbonCalculator
                 RaisePropertyChanged(nameof(Label3Options));
                 RaisePropertyChanged(nameof(Label4Options));
                 RaisePropertyChanged(nameof(CarbonPerKG));
-                _parent.Update();
+                _parent.UpdateAll();
 
             }
         }
@@ -98,7 +98,7 @@ namespace CarbonCalculator
                 RaisePropertyChanged(nameof(Label3Options));
                 RaisePropertyChanged(nameof(Label4Options));
                 RaisePropertyChanged(nameof(CarbonPerKG));
-                _parent.Update();
+                _parent.UpdateAll();
 
             }
         }
@@ -126,7 +126,7 @@ namespace CarbonCalculator
                 RaisePropertyChanged(nameof(Label4));
                 RaisePropertyChanged(nameof(Label4Options));
                 RaisePropertyChanged(nameof(CarbonPerKG));
-                _parent.Update();
+                _parent.UpdateAll();
 
             }
         }
@@ -151,7 +151,7 @@ namespace CarbonCalculator
                 _transport.Definition = TransportDefinition.GetDefinition(_label1, _label2, _label3, _label4);
                 RaisePropertyChanged(nameof(Label4));
                 RaisePropertyChanged(nameof(CarbonPerKG));
-                _parent.Update();
+                _parent.UpdateAll();
 
             }
         }

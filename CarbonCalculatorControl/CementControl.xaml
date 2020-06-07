@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="CarbonCalculator.CementControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarbonCalculator"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="500">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left" Width="500">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Constituents}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox ItemsSource="{Binding ConstituentNames}" SelectedItem="{Binding Name}" Width="200"/>
+                                <TextBlock Text="Proportion in mix by mass: " Margin="15 0 0 0"/>
+                                <TextBox Text="{Binding Proportion}" Width="100"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button Content="Add" Command="{Binding AddConstituentCommand}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Total proportion: "/>
+                <TextBlock Text="{Binding TotalProportion}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Embodied carbon CO2e / kg: "/>
+                <TextBlock Text="{Binding TotalCarbon}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="0 15 0 0">
+                <Button   Command="{Binding AcceptAndCloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="OK" Width="150"/>
+                <Button  Margin="15 0 0 0" Command="{Binding CancelAndCloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Cancel" Width="150"/>
+            </StackPanel>
+        </StackPanel>
+            
+    </Grid>
+</UserControl>

@@ -22,6 +22,33 @@ namespace CarbonCalculator
                 return _materialVMs;
             }
         }
+
+        int _selectedMaterialIndex = 0;
+        public int SelectedMaterialIndex
+        {
+            get
+            {
+                return _selectedMaterialIndex;
+            }
+            set
+            {
+                _selectedMaterialIndex = value;
+                RaisePropertyChanged(nameof(SelectedMaterialIndex));
+                RaisePropertyChanged(nameof(SelectedMaterial));
+            }
+        }
+
+        public MaterialVM SelectedMaterial
+        {
+            get
+            {
+                if (Materials.Count > 0)
+                    return Materials[Math.Max(_selectedMaterialIndex, 0)];
+                else
+                    return null;
+            }
+        }
+
         IViewModelParent _parent;
         public IViewModelParent Parent
         {
@@ -81,6 +108,10 @@ namespace CarbonCalculator
             {
                 _materials.Materials.Remove(mat.Material);
                 _materialVMs.Remove(mat);
+                if (_selectedMaterialIndex >= Materials.Count)
+                {
+                    _selectedMaterialIndex = Materials.Count - 1;
+                }
             }
             _parent.UpdateAll();
         }
@@ -156,6 +187,25 @@ namespace CarbonCalculator
         void addGeneric()
         {
             var newMat = new GWPGeneric();
+            _materials.Materials.Add(newMat);
+            _materialVMs.Add(new MaterialVM(newMat, this));
+            _parent.UpdateAll();
+
+        }
+
+        ICommand _addConcreteV3Command;
+
+        public ICommand AddConcreteV3Command
+        {
+            get
+            {
+                return _addConcreteV3Command ?? (_addConcreteV3Command = new CommandHandler(() => addConcreteV3(), true));
+            }
+        }
+
+        void addConcreteV3()
+        {
+            var newMat = new ICE3ConcreteModel();
             _materials.Materials.Add(newMat);
             _materialVMs.Add(new MaterialVM(newMat, this));
             _parent.UpdateAll();

@@ -1,0 +1,102 @@
+[
+ {
+   "Name": "Clinker",
+   "EmbodiedCarbon": 0.97,
+   "Notes": "Extrapolated from EPD for average UK cement. EN 15804 EPD number EPD-MPA-20170159-CAG1-EN"
+ },
+ {
+   "Name": "Gypsum",
+   "EmbodiedCarbon": 0.002536,
+   "Notes": "Source: Oekobaudat - Gypsum stone (CaSO4-Dihydrate); grinded and purified product"
+ },
+ {
+   "Name": "Limestone",
+   "EmbodiedCarbon": 0.01577,
+   "Notes": "Source: Oekobaudat - Crushed stone 0/2; grain size 0/2"
+ },
+ {
+   "Name": "Aggregates",
+   "EmbodiedCarbon": 0.00747,
+   "Notes": "ICE V3.0. Weighted average of aggregates."
+ },
+ {
+   "Name": "GGBS",
+   "EmbodiedCarbon": 0.0416,
+   "Notes": "EN 15804 EPD, number: MRPI code 20.1.00033.005"
+ },
+ {
+   "Name": "Fly ash",
+   "EmbodiedCarbon": 0.004,
+   "Notes": "Based upon 2 data points."
+ },
+ {
+   "Name": "Water",
+   "EmbodiedCarbon": 0.000344,
+   "Notes": "Defra 2018. Water supply only, e.g. excludes water treatment, considering the water ends up in the product."
+ },
+ {
+   "Name": "Admixture",
+   "EmbodiedCarbon": 0,
+   "Notes": "Average of 6 EPDs, see calcs further below. "
+ },
+ {
+   "Name": "MAC",
+   "EmbodiedCarbon": 0.002536,
+   "Notes": "Minor additional constituents, used in cement. Assumed same impact as gypsum"
+ },
+ {
+   "Name": "Cement, OPC",
+   "EmbodiedCarbon": 0.912,
+   "Notes": "Modelled with 94% clinker, 5% gypsum, 1% MAC"
+ },
+ {
+   "Name": "Limestone fines",
+   "EmbodiedCarbon": 0.01577,
+   "Notes": "Source: Oekobaudat - Crushed stone 0/2; grain size 0/2"
+ },
+ {
+   "Name": "Natural pozzolanic ash",
+   "EmbodiedCarbon": 0.00747,
+   "Notes": "e.g. volcanic ash. There was no carbon footprint data. However, the production process is comparable to aggregates and sand, being extraction and crushing. Therefore, it was assumed to have the same impact as aggregates."
+ },
+ {
+   "Name": "Lime, Hydrated",
+   "EmbodiedCarbon": 0.891,
+   "Notes": "Generally used in mortars. Source EuLa, LCI of European lime production."
+ },
+ {
+   "Name": "Lime, Quicklime",
+   "EmbodiedCarbon": 1.136,
+   "Notes": "Generally used in cements. Source EuLa, LCI of European lime production."
+ },
+ {
+   "Name": "Air entrainers",
+   "EmbodiedCarbon": 0.53,
+   "Notes": "Declaration number EPD-EFC-20150086-IAG1-EN  \nwww.ibu-epd.com / https://epd-online.com"
+ },
+ {
+   "Name": "Hardening Accelerators",
+   "EmbodiedCarbon": 2.28,
+   "Notes": "Declaration number EPD-EFC-20150089-IAG1-EN\nwww.ibu-epd.com / https://epd-online.com"
+ },
+ {
+   "Name": "Plasticisers and Superplasticisers",
+   "EmbodiedCarbon": 1.88,
+   "Notes": "Declaration number EPD-EFC-20150091-IAG1-EN\nwww.ibu-epd.com / https://epd-online.com"
+ },
+ {
+   "Name": "Retarders",
+   "EmbodiedCarbon": 1.31,
+   "Notes": "Declaration number EPD-EFC-20150087-IAG1-EN\nwww.ibu-epd.com / https://epd-online.com"
+ },
+ {
+   "Name": "Set Accelerators",
+   "EmbodiedCarbon": 1.33,
+   "Notes": "Declaration number EPD-EFC-20150087-IAG1-EN\nwww.ibu-epd.com / https://epd-online.com"
+ },
+ {
+   "Name": "Water Resisting Admixtures",
+   "EmbodiedCarbon": 2.67,
+   "Notes": "Declaration number EPD-EFC-20150090-IAG2-EN\nwww.ibu-epd.com / https://epd-online.com"
+ }
+]

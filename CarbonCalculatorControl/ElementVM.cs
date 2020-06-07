@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,20 @@ namespace CarbonCalculator
             }
         }
 
-        public string Name => _element.Name;
+        public string Name
+        {
+            get
+            {
+                return _element.Name;
+            }
+            set
+            {
+                _element.Name = value;
+                RaisePropertyChanged(nameof(Name));
+            }
+        }
+
+
 
         public Element Element => _element;
 
@@ -97,6 +111,21 @@ namespace CarbonCalculator
                 _element.Volume = value;
                 RaisePropertyChanged(nameof(Volume));
                 RaisePropertyChanged(nameof(A1toA3));
+                _parent.UpdateAll();                
+            }
+        }
+
+        bool _display;
+        public bool Display
+        {
+            get
+            {
+                return _display;
+            }
+            set
+            {
+                _display = value;
+                RaisePropertyChanged(nameof(Display));
             }
         }
 
@@ -121,6 +150,15 @@ namespace CarbonCalculator
                     returnStr += _parent.FilterNames[i] + ": " + filter + Environment.NewLine;
                 }
                 return returnStr;
+            }
+        }
+
+        List<ElementFilterVM> _filters;
+        public List<ElementFilterVM> Filters
+        {
+            get
+            {
+                return _filters;
             }
         }
 
@@ -160,6 +198,12 @@ namespace CarbonCalculator
         {
             _element = element;
             _parent = parent;
+            _filters = new List<ElementFilterVM>();
+            for (int i = 0; i < _element.Filters.Length; i++)
+            {
+                var item = _element.Filters[i];
+                _filters.Add(new ElementFilterVM(this, _parent, i));
+            }
         }
 
         public void UpdateAll()

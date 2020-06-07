@@ -10,7 +10,7 @@ using CarbonMaterials;
 
 namespace CarbonCalculator
 {
-    public class ICEMaterialVM : ViewModelBase
+    public class ICEMaterialVM : ViewModelBase, IViewModelParent
     {
         ICEMaterial _material;
 
@@ -64,7 +64,53 @@ namespace CarbonCalculator
             RaisePropertyChanged(nameof(A4));
             RaisePropertyChanged(nameof(C2));
             RaisePropertyChanged(nameof(TotalCarbon));
+        }
 
+        ObservableCollection<ConstituentVM> _constituents;
+        public ObservableCollection<ConstituentVM> Constituents
+        {
+            get
+            {
+                if (!(_material is ICE3ConcreteModel))
+                {
+                    return null;
+                }
+                if (_constituents == null)
+                {
+                    _constituents = new ObservableCollection<ConstituentVM>();
+                    foreach (var item in (_material as ICE3ConcreteModel).Constituents)
+                    {
+                        _constituents.Add(new ConstituentVM(item, this));
+                    }
+                }
+                return _constituents;
+            }
+        }
+
+        ICommand _addConstituentCommand;
+
+        public ICommand AddConstituentCommand
+        {
+            get
+            {
+                return _addConstituentCommand ?? (_addConstituentCommand = new CommandHandler(() => addConstituent(), true));
+            }
+        }
+
+        void addConstituent()
+        {
+            var constit = new CarbonMaterials.CementAndConcreteConstituent
+            {
+                Material = _constituents[0].Material.AllConstituents["Aggregates"],
+                Proportion = 0
+            };
+            (_material as CarbonMaterials.ICE3ConcreteModel).Constituents.Add(constit);
+            _constituents.Add(new ConstituentVM(constit, this));
+        }
+
+        public void UpdateAll()
+        {
+            RaisePropertyChanged("");
         }
 
         void setTransportToSite()
@@ -297,17 +343,29 @@ namespace CarbonCalculator
             {
                 if (_material is ICEConcrete)
                     return (_material as ICEConcrete).ReinforcementDensity;
+                else if (_material is ICE3ConcreteModel)
+                    return (_material as ICE3ConcreteModel).ReinforcementDensity;
                 else
                     return 0;                
             }
             set
             {
-                (_material as ICEConcrete).ReinforcementDensity = value;
-                RaisePropertyChanged(nameof(TotalCarbon));
-                RaisePropertyChanged(nameof(ConcreteReinforcementDensity));
-                RaisePropertyChanged(nameof(A1toA3));
-                RaisePropertyChanged(nameof(Name));
-
+                if (_material is ICEConcrete)
+                {
+                    (_material as ICEConcrete).ReinforcementDensity = value;
+                    RaisePropertyChanged(nameof(TotalCarbon));
+                    RaisePropertyChanged(nameof(ConcreteReinforcementDensity));
+                    RaisePropertyChanged(nameof(A1toA3));
+                    RaisePropertyChanged(nameof(Name));
+                }
+                else if (_material is ICE3ConcreteModel)
+                {
+                    (_material as ICE3ConcreteModel).ReinforcementDensity = value;
+                    RaisePropertyChanged(nameof(TotalCarbon));
+                    RaisePropertyChanged(nameof(ConcreteReinforcementDensity));
+                    RaisePropertyChanged(nameof(A1toA3));
+                    RaisePropertyChanged(nameof(Name));
+                }
             }
         }
 
@@ -440,7 +498,6 @@ namespace CarbonCalculator
             var matTrans = new MaterialTransport();
             _material.TransportsToDispoal.Add(matTrans);
             TransportToDisposalDefinitions.Add(new TransportVM(matTrans, this));
-
         }
 
         bool _accepted = false;

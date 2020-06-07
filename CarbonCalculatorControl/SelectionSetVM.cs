@@ -55,7 +55,7 @@ namespace CarbonCalculator
             {
                 //return string.Format(@"Material {3}: {4}, {0} filters, {1} inclusions, {2} exclusions", SelectedFilterValues.Count, ElementsIdsToInclude.Count, ElementsIdsToExclude.Count, SelectedMaterial, _parent.Materials[SelectedMaterial].Name);
                 string retStr = "";
-                retStr = string.Format(@"Material {0}: {1}. ", SelectedMaterial, _parent.Materials[SelectedMaterial].Name);
+                retStr = string.Format(@"Material {0}: {1}. ", SelectedMaterial, "" /*_parent.Materials[SelectedMaterial].Name*/);
                 foreach (var item in SelectedFilterValues)
                 {
                     retStr += item.FilterName + "=" + item.FilterValue + "; ";

@@ -136,5 +136,90 @@ namespace CarbonMaterials
                     conc
                 });
         }
+
+        public static GWPMaterialSet GetDefaultRC4050()
+        {
+            var conc = ICE3ConcreteModel.DefaultRC4050Concrete();
+            conc.ReinforcementDensity = 150;
+            conc.TransportsToSite.Clear();
+            conc.TransportsToSite.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.TransportsToDispoal.Clear();
+            conc.TransportsToDispoal.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.ConstructionFactor = 2;
+            conc.DeConstructionFactor = 1;
+            return new GWPMaterialSet("RC 40/50",
+                new List<GWPMaterial>
+                {
+                    conc
+                });
+        }
+
+        public static GWPMaterialSet GetDefaultRC4050GGBS20()
+        {
+            var conc = ICE3ConcreteModel.DefaultRC4050ConcreteGGBS20();
+            conc.ReinforcementDensity = 150;
+            conc.TransportsToSite.Clear();
+            conc.TransportsToSite.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.TransportsToDispoal.Clear();
+            conc.TransportsToDispoal.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.ConstructionFactor = 2;
+            conc.DeConstructionFactor = 1;
+            return new GWPMaterialSet(@"RC 40/50, 20% GGBS",
+                new List<GWPMaterial>
+                {
+                    conc
+                });
+        }
+
+        public static GWPMaterialSet GetDefaultRC3240()
+        {
+            var conc = ICE3ConcreteModel.DefaultRC3240Concrete();
+            conc.ReinforcementDensity = 150;
+            conc.TransportsToSite.Clear();
+            conc.TransportsToSite.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.TransportsToDispoal.Clear();
+            conc.TransportsToDispoal.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.ConstructionFactor = 2;
+            conc.DeConstructionFactor = 1;
+            return new GWPMaterialSet("RC 32/40",
+                new List<GWPMaterial>
+                {
+                    conc
+                });
+        }
+
+        public static GWPMaterialSet GetDefaultRC3240GGBS20()
+        {
+            var conc = ICE3ConcreteModel.DefaultRC3240ConcreteGGBS20();
+            conc.ReinforcementDensity = 150;
+            conc.TransportsToSite.Clear();
+            conc.TransportsToSite.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.TransportsToDispoal.Clear();
+            conc.TransportsToDispoal.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.ConstructionFactor = 2;
+            conc.DeConstructionFactor = 1;
+            return new GWPMaterialSet(@"RC 32/40, 20% GGBS",
+                new List<GWPMaterial>
+                {
+                    conc
+                });
+        }
+
+        public static GWPMaterialSet GetDefaultRC2025()
+        {
+            var conc = ICE3ConcreteModel.DefaultRC2025oncrete();
+            conc.ReinforcementDensity = 150;
+            conc.TransportsToSite.Clear();
+            conc.TransportsToSite.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.TransportsToDispoal.Clear();
+            conc.TransportsToDispoal.Add(MaterialTransport.DefaultDieselRigidHGV());
+            conc.ConstructionFactor = 2;
+            conc.DeConstructionFactor = 1;
+            return new GWPMaterialSet("RC 20/25",
+                new List<GWPMaterial>
+                {
+                    conc
+                });
+        }
     }
 }

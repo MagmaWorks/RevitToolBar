@@ -61,6 +61,16 @@ namespace CarbonMaterials {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CementConstituents {
+            get {
+                object obj = ResourceManager.GetObject("CementConstituents", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Level 1,Level 2,Level 3,Level 4,UOM,GHG,GHG Conversion Factor 2019
         ///Freighting goods,HGV refrigerated (all diesel),All artics,0% Laden,tonne.km,kg CO2e,
         ///Freighting goods,HGV refrigerated (all diesel),All artics,50% Laden,tonne.km,kg CO2e,0.112721052
@@ -71,6 +81,16 @@ namespace CarbonMaterials {
         internal static string FreightCarbonCoefficients {
             get {
                 return ResourceManager.GetString("FreightCarbonCoefficients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ICEv3 {
+            get {
+                object obj = ResourceManager.GetObject("ICEv3", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

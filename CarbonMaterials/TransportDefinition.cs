@@ -121,15 +121,36 @@ namespace CarbonMaterials
 
         public static TransportDefinition GetDefinition(string level1, string level2, string level3, string level4)
         {
+            var returnValue1 = Definitions
+                .Where(a => (a.Level1 == level1) && (a.Level2 == level2));
+
+            var returnValue2 = Definitions
+                .Where(a => (a.Level1 == "Freighting goods") && (a.Level2 == "HGV (all diesel)") && (a.Level3 == "Rigid (>7.5 tonnes-17 tonnes)") && (a.Level4 == "50% Laden"));
+
             var returnValue = Definitions
-                .Where(a => (a.Level1 == level1) && (a.Level2 == level2) && (a.Level3 == level3) && (a.Level4 == level4))
-                .First();
-            return returnValue;
+                .Where(a => (a.Level1 == level1) && (a.Level2 == level2) && (a.Level3 == level3) && (a.Level4 == level4));
+
+            if (returnValue.Count() > 0)
+            {
+                var retVal = returnValue.First();
+                return new TransportDefinition(retVal.Level1, retVal.Level2, retVal.Level3, retVal.Level4, retVal.CarbonConversionFactor);
+            }
+            else
+            {
+                var retVal = Definitions[0];
+                return new TransportDefinition(retVal.Level1, retVal.Level2, retVal.Level3, retVal.Level4, retVal.CarbonConversionFactor);
+            }
+
         }
 
         public static TransportDefinition DefaultDieselRigidHGV()
         {
             return GetDefinition("Freighting goods", "HGV (all diesel)", "Rigid (>7.5 tonnes-17 tonnes)", "50% Laden");
+        }
+
+        public static TransportDefinition DefaultDiesel33THGV()
+        {
+            return GetDefinition("Freighting goods", "HGV (all diesel)", "Articulated (>33t)", "50% Laden");
         }
     }
 }

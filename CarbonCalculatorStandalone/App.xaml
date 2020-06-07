@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:CarbonCalculatorStandalone"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--<Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+        </Style>-->
     </Application.Resources>
 </Application>

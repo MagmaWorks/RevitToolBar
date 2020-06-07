@@ -16,25 +16,13 @@ using System.Windows.Shapes;
 namespace CarbonCalculator
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for CementControl.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class CementControl : UserControl
     {
-        public UserControl1()
+        public CementControl()
         {
             InitializeComponent();
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Window myWIn = new Window
-            {
-                Title = "Material Set Editor",
-                Content = new MaterialSetControl(),
-                DataContext = this.DataContext
-            };
-
-            myWIn.ShowDialog();
         }
     }
 }

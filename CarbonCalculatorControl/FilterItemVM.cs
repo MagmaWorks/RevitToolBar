@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using Newtonsoft.Json;
 
 namespace CarbonCalculator
@@ -12,6 +13,40 @@ namespace CarbonCalculator
     {
         [JsonProperty]
         public string Name { get; set; }
+
+        [JsonProperty]
+        string _color = "#FFDFD991";
+
+        public string Color
+        {
+            get
+            {
+                return _color;
+            }
+            set
+            {
+                try
+                {
+                    ColorConverter.ConvertFromString(value);
+                    _color = value;
+                }
+                catch (Exception)
+                {
+                }               
+                RaisePropertyChanged(nameof(Color));
+                RaisePropertyChanged(nameof(FillColor));
+                _parent.FilterUpdated();
+            }
+        }
+
+        public Brush FillColor
+        {
+            get
+            {
+                var col =  (Color)ColorConverter.ConvertFromString(_color);
+                return new SolidColorBrush(col);
+            }
+        }
 
         bool _isSelected = false;
         public bool IsSelected
@@ -24,6 +59,7 @@ namespace CarbonCalculator
             {
                 _isSelected = value;
                 RaisePropertyChanged(nameof(IsSelected));
+                _parent.FilterUpdated();
             }
         }
 

@@ -5,8 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:local="clr-namespace:CarbonCalculatorControl"
+
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontFamily" Value="Franklin Gothic Book"/>
+            </Style>
+    </UserControl.Style>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+        </ResourceDictionary>
+        
+    </UserControl.Resources>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -17,6 +35,12 @@
                 <MenuItem Header="Import Selection Set..." IsEnabled="False"/>
                 <MenuItem Header="Output results to CSV..." Command="{Binding OutputCSVCommand}"/>
             </MenuItem>
+            <MenuItem Header="Elements">
+                <MenuItem Header="Add" Command="{Binding AddElementCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Material Sets">
+                <MenuItem Header="Edit sets" Click="MenuItem_Click"/>
+            </MenuItem>
         </Menu>
         
         <Grid DockPanel.Dock="Top">
@@ -26,7 +50,6 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal">
-
                 </StackPanel>
             </Grid>
 
@@ -39,7 +62,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="400" MinWidth="400"/>
+                        <ColumnDefinition Width="550" MinWidth="550"/>
                     </Grid.ColumnDefinitions>
                     <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
                     <Grid>
@@ -49,14 +72,15 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Elements" Grid.Row="0"/>
+                            <TextBlock Text="Elements" FontSize="18" Grid.Row="0"/>
                         </StackPanel>
-                        <ListView ItemsSource="{Binding Elements}" Grid.Row="1">
+                        <ListView ItemsSource="{Binding FilteredElements}" Grid.Row="1">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
                                     <Setter Property="BorderBrush" Value="Orange"/>
                                     <Setter Property="BorderThickness" Value="0 0 0 0.5"/>
+                                    <Setter Property="Visibility" Value="{Binding Display, Converter={StaticResource BoolToVisConverter}, FallbackValue=Hidden}"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.View>
@@ -65,10 +89,18 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <TextBlock Text="{Binding Name}"/>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="Name: "/>
+                                                        <TextBox Text="{Binding Name}"/>
+                                                    </StackPanel>
+                                                    <TextBox Text="{Binding Name}"/>
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="ID: "></TextBlock>
                                                         <TextBlock Text="{Binding UniqueID}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="Volume: "/>
+                                                        <TextBox Text="{Binding Volume}"/>
                                                     </StackPanel>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -77,8 +109,19 @@
                                     <GridViewColumn Header="Properties">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock TextWrapping="Wrap" Text="{Binding ElementFilters}"/>
+                                                <!--<TextBlock TextWrapping="Wrap" Text="{Binding ElementFilters}"/>-->
+                                                <ItemsControl ItemsSource="{Binding Filters}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding Name}" MinWidth="50"/>
+                                                                <TextBox Text="{Binding Value}" MinWidth="50"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
                                             </DataTemplate>
+                                            
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Selection set" Width="100">
@@ -150,143 +193,123 @@
 
                     <Grid Grid.Column="2">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
                             <RowDefinition />
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="200"/>
                         </Grid.RowDefinitions>
                         <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
-                        <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch"/>
-                        <GridSplitter Grid.Row="5" HorizontalAlignment="Stretch"/>
-                        <GridSplitter Grid.Row="7" HorizontalAlignment="Stretch"/>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="Material Sets" Grid.Row="0"/>
-                            <ComboBox ItemsSource="{Binding Materials}" SelectedIndex="{Binding SelectedMaterialIndex}" Grid.Row="1" DisplayMemberPath="Name"/>
-                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="2">
-                                <Grid Grid.Row="2" >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Material set:" Grid.Row="0" Margin="30 0 0 0"/>
-                                        <TextBox Text="{Binding SelectedMaterial.Name}" MinWidth="200"/>
-                                    </StackPanel>
-                                    <ItemsControl ItemsSource="{Binding SelectedMaterial.Materials}" Grid.Row="1" Margin="30 0 0 0">
+                            <StackPanel Grid.Row="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Material Mapping" FontSize="18" ToolTip="Select material set, choose filters and add to mapping selection sets to apply materials to elements."/>
+                                </StackPanel>
+                                <TextBlock Text="Material set to map"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Style="{StaticResource EditButton}" 
+                                        Click="MenuItem_Click" 
+                                        ToolTip="Edit material sets"/>
+                                    <ComboBox ItemsSource="{Binding MaterialSetNames}" 
+                                              SelectedIndex="{Binding SelectedMaterialSetIndex}" 
+                                              DisplayMemberPath="Name"
+                                              Grid.Column="1"/>
+                                </Grid>
+                            </StackPanel>
+                            <TextBlock Grid.Row="1">Mapping filters</TextBlock>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2">
+                                <ItemsControl ItemsSource="{Binding Filters}"  Margin="30 0 0 0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="{Binding Name}"/>
+                                                <ItemsControl ItemsSource="{Binding FilterItems}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <CheckBox IsChecked="{Binding IsSelected}" Margin="0 0 15 0"/>
+                                                                <TextBlock Text="{Binding Name}" Width="200"/>
+                                                                <TextBlock Text="Chart colour" Margin="0 0 15 0"/>
+                                                                <TextBox Text="{Binding Color}"/>
+                                                                <Canvas Height="20" Width="100">
+                                                                    <Rectangle Width="100" Height="20" Fill="{Binding FillColor}"/>
+                                                                </Canvas>
+                                                                
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </ScrollViewer>
+                            <Grid Grid.Row="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="Mapping selection sets" ToolTip="The applied materials will update in accordance with the dynamic selection set. So, for example, if additional foundation elements are added these will be included in the relevant set automatically"/>
+                                <ScrollViewer Grid.Row="1">
+                                    <ItemsControl ItemsSource="{Binding SelectionSets}" Margin="30 0 0 0">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition Width="auto"/>
                                                         <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="{Binding Name}" Grid.Column="2"/>
-                                                    <Button Content="Edit" Command="{Binding EditMaterialCommand}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
-                                                    <Button Content="Del" Command="{Binding DeleteMaterialCommand}" Grid.Column="1" Margin="0 0 10 0"/>
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="auto"/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                                            <Button Style="{StaticResource UpButton}" Command="{Binding MoveUpCommand}"/>
+                                                            <Button Style="{StaticResource DownButton}" Command="{Binding MoveDownCommand}"/>
+                                                            <CheckBox IsChecked="{Binding IsSelected}" Margin="0 0 15 0"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Grid.Column="1"/>
                                                 </Grid>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <WrapPanel Orientation="Horizontal" Grid.Row="2" Margin="30 0 0 0">
-                                        <Button Content="Add conc" Width="100" Command="{Binding SelectedMaterial.AddConcreteCommand}" Grid.Row="1"/>
-                                        <Button Content="Add steel" Width="100" Command="{Binding SelectedMaterial.AddSteelCommand}" Grid.Row="1"/>
-                                        <Button Content="Add timber" Width="100" Command="{Binding SelectedMaterial.AddTimberCommand}" Grid.Row="1"/>
-                                        <Button Content="Add EPD" Width="100" Command="{Binding SelectedMaterial.AddGeneric}" Grid.Row="1"/>
-                                    </WrapPanel>
-                                    <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 10 0 0">
-                                        <Button Content="Add material set" Command="{Binding AddMaterialSetCommand}" Width="200" />
-                                        <CheckBox IsChecked="{Binding IncludeSequestration}" Content="Include sequestration" Margin="15 0 0 0"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ScrollViewer>
-                        </Grid>
+                                </ScrollViewer>
+                            </Grid>
 
-                        <Grid Grid.Row="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="0 10 0 0">
+                                <Button Style="{StaticResource AddButton}" 
+                                        Command="{Binding AssignToSelectionCommand}" 
+                                        ToolTip="Applies the selected material using the filters and element overrides"/>
+                                <Button Style="{StaticResource TrashButton}" 
+                                        Command="{Binding DeleteSelectedCommand}" 
+                                        ToolTip="Deletes the selected selection sets"/>
+                                <Button Style="{StaticResource ResetPieColors}" 
+                                        Command="{Binding ResetColorsCommand}" 
+                                        ToolTip="Resets pie chart colours"/>
+                            </StackPanel>
 
-                            <TextBlock Grid.Row="0">Properties to Filter</TextBlock>
-                            <ItemsControl ItemsSource="{Binding Filters}" Grid.Row="1" Margin="30 0 0 0">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{Binding Name}"/>
-                                            <ItemsControl ItemsSource="{Binding FilterItems}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <CheckBox IsChecked="{Binding IsSelected}" Margin="0 0 15 0"/>
-                                                            <TextBlock Text="{Binding Name}"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <StackPanel Orientation="Horizontal" Grid.Row="2">
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" >
+                                <TextBlock Text="Total Carbon: "/>
+                                <TextBlock Text="{Binding AtoCString}"/>
                             </StackPanel>
                         </Grid>
 
-                        <Grid Grid.Row="4">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Grid.Row="0" Text="Dynamic Selection Sets" ToolTip="The applied materials will update in accordance with the dynamic selection set. So, for example, if additional foundation elements are added these will be included in the relevant set automatically"/>
-                            <ItemsControl ItemsSource="{Binding SelectionSets}" Grid.Row="1" Margin="30 0 0 0">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto"/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition/>
-                                                </Grid.RowDefinitions>
-                                                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                                    <Button Content="▲" Command="{Binding MoveUpCommand}"/>
-                                                    <Button Content="▼" Command="{Binding MoveDownCommand}"/>
-                                                    <CheckBox IsChecked="{Binding IsSelected}" Margin="0 0 15 0"/>
-                                                </StackPanel>
-                                            </Grid>
-                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Grid.Column="1"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 10 0 0">
-                                <Button Content="Create selection set" Command="{Binding AssignToSelectionCommand}" Width="200" ToolTip="Applies the selected material using the filters and element overrides"/>
-                                <Button Content="Delete selected selections!" Command="{Binding DeleteSelectedCommand}" Width="200" Margin="10 0 0 0" ToolTip="Deletes the selected selection sets"/>
-                            </StackPanel>
-                        </Grid>
-                        <StackPanel Orientation="Horizontal" Grid.Row="6" >
-                            <TextBlock Text="Total Carbon: "/>
-                            <TextBlock Text="{Binding AtoCString}"/>
-                        </StackPanel>
-                        <TabControl Grid.Row="8">
+                        <TabControl Grid.Row="2">
                             <TabItem Header="Proportions">
                                 <Grid>
                                     <Grid.ColumnDefinitions>

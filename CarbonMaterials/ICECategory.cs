@@ -9,6 +9,7 @@ namespace CarbonMaterials
         None,
         Steel,
         Concrete,
-        Timber
+        Timber,
+        ConcreteV3
     }
 }
