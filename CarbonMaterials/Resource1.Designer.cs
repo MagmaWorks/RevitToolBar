@@ -87,6 +87,16 @@ namespace CarbonMaterials {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ICEv2 {
+            get {
+                object obj = ResourceManager.GetObject("ICEv2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ICEv3 {
             get {
                 object obj = ResourceManager.GetObject("ICEv3", resourceCulture);

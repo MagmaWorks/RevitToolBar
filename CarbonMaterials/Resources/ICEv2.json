@@ -1,0 +1,261 @@
+[
+ {
+   "Reference": "Insulation General Insulation",
+   "MaterialFamily": "Insulation",
+   "Material": "General Insulation",
+   "EmbodiedCarbon": 1.86,
+   "Notes": ""
+ },
+ {
+   "Reference": "Insulation Cork",
+   "MaterialFamily": "Insulation",
+   "Material": "Cork",
+   "EmbodiedCarbon": 0.19,
+   "Notes": "Ref. 55."
+ },
+ {
+   "Reference": "Insulation Fibreglass (Glasswool)",
+   "MaterialFamily": "Insulation",
+   "Material": "Fibreglass (Glasswool)",
+   "EmbodiedCarbon": 1.35,
+   "Notes": "Poor data difficult to select appropriate value"
+ },
+ {
+   "Reference": "Insulation Flax (Insulation)",
+   "MaterialFamily": "Insulation",
+   "Material": "Flax (Insulation)",
+   "EmbodiedCarbon": 1.7,
+   "Notes": "Ref. 2. 5.97 MJ/kg Feedstock Energy  (Included)"
+ },
+ {
+   "Reference": "Insulation Mineral wool",
+   "MaterialFamily": "Insulation",
+   "Material": "Mineral wool",
+   "EmbodiedCarbon": 1.28,
+   "Notes": ""
+ },
+ {
+   "Reference": "Insulation Paper wool",
+   "MaterialFamily": "Insulation",
+   "Material": "Paper wool",
+   "EmbodiedCarbon": 0.63,
+   "Notes": "Ref. 2"
+ },
+ {
+   "Reference": "Insulation Rockwool",
+   "MaterialFamily": "Insulation",
+   "Material": "Rockwool",
+   "EmbodiedCarbon": 1.12,
+   "Notes": "Cradle to Grave"
+ },
+ {
+   "Reference": "Insulation Woodwool (Board)",
+   "MaterialFamily": "Insulation",
+   "Material": "Woodwool (Board)",
+   "EmbodiedCarbon": 0.98,
+   "Notes": "Ref. 55."
+ },
+ {
+   "Reference": "Iron General",
+   "MaterialFamily": "Iron",
+   "Material": "General",
+   "EmbodiedCarbon": 2.03,
+   "Notes": "It was difficult to estimate the embodied energy and carbon of iron with the data available."
+ },
+ {
+   "Reference": "Lead General",
+   "MaterialFamily": "Lead",
+   "Material": "General",
+   "EmbodiedCarbon": 1.67,
+   "Notes": "Allocated (divided) on a mass basis, assumes recycling rate of 61%"
+ },
+ {
+   "Reference": "Lead Virgin",
+   "MaterialFamily": "Lead",
+   "Material": "Virgin",
+   "EmbodiedCarbon": 3.37,
+   "Notes": ""
+ },
+ {
+   "Reference": "Lead Recycled",
+   "MaterialFamily": "Lead",
+   "Material": "Recycled",
+   "EmbodiedCarbon": 0.58,
+   "Notes": "Scrap batteries are a main feedstock for recycled lead"
+ },
+ {
+   "Reference": "Plaster General (Gypsum)",
+   "MaterialFamily": "Plaster",
+   "Material": "General (Gypsum)",
+   "EmbodiedCarbon": 0.13,
+   "Notes": "Problems selecting good value, inconsistent figures, West et al believe this is because of past aggregation of EE with cement"
+ },
+ {
+   "Reference": "Plaster Plasterboard",
+   "MaterialFamily": "Plaster",
+   "Material": "Plasterboard",
+   "EmbodiedCarbon": 0.39,
+   "Notes": "See Ref [WRAP] for further info on GWP data, including disposal impacts which are significant for Plasterboard."
+ },
+ {
+   "Reference": "Plastics General",
+   "MaterialFamily": "Plastics",
+   "Material": "General",
+   "EmbodiedCarbon": 3.31,
+   "Notes": "35.6 MJ/kg Feedstock Energy  (Included). Determined by the average use of each type of plastic used in the European construction industry."
+ },
+ {
+   "Reference": "Plastics ABS",
+   "MaterialFamily": "Plastics",
+   "Material": "ABS",
+   "EmbodiedCarbon": 3.76,
+   "Notes": "48.6 MJ/kg Feedstock Energy  (Included)"
+ },
+ {
+   "Reference": "Plastics General Polyethylene",
+   "MaterialFamily": "Plastics",
+   "Material": "General Polyethylene",
+   "EmbodiedCarbon": 2.54,
+   "Notes": "54.4 MJ/kg Feedstock Energy  (Included). Based on average consumption of types of polyethylene in European construction"
+ },
+ {
+   "Reference": "Plastics High Density Polyethylene (HDPE) Resin",
+   "MaterialFamily": "Plastics",
+   "Material": "High Density Polyethylene (HDPE) Resin",
+   "EmbodiedCarbon": 1.93,
+   "Notes": "54.3 MJ/kg Feedstock Energy  (Included). Doesn’t include the final fabrication."
+ },
+ {
+   "Reference": "Plastics HDPE Pipe",
+   "MaterialFamily": "Plastics",
+   "Material": "HDPE Pipe",
+   "EmbodiedCarbon": 2.52,
+   "Notes": "55.1 MJ/kg Feedstock Energy  (Included)"
+ },
+ {
+   "Reference": "Plastics Low Density Polyethylene (LDPE) Resin",
+   "MaterialFamily": "Plastics",
+   "Material": "Low Density Polyethylene (LDPE) Resin",
+   "EmbodiedCarbon": 2.08,
+   "Notes": "51.6 MJ/kg Feedstock Energy  (Included). Doesn't include the final fabrication"
+ },
+ {
+   "Reference": "Plastics LDPE Film",
+   "MaterialFamily": "Plastics",
+   "Material": "LDPE Film",
+   "EmbodiedCarbon": 2.6,
+   "Notes": "55.2 MJ/kg Feedstock Energy (Included)"
+ },
+ {
+   "Reference": "Plastics Nylon (Polyamide) 6 Polymer",
+   "MaterialFamily": "Plastics",
+   "Material": "Nylon (Polyamide) 6 Polymer",
+   "EmbodiedCarbon": 9.14,
+   "Notes": "38.6 MJ/kg Feedstock Energy  (Included). Doesn’t include final fabrication. Plastics Europe state that two thirds of nylon is used as fibres (textiles, carpets…etc) in Europe and that most of the remainder as injection mouldings. Dinitrogen monoxide and methane emissions are very significant contributors to GWP."
+ },
+ {
+   "Reference": "Plastics Nylon (polyamide) 6,6 Polymer",
+   "MaterialFamily": "Plastics",
+   "Material": "Nylon (polyamide) 6,6 Polymer",
+   "EmbodiedCarbon": 7.92,
+   "Notes": "50.7 MJ/kg Feedstock Energy  (Included). Doesn’t include final fabrication (i.e. injection moulding). See comments for Nylon 6 polymer."
+ },
+ {
+   "Reference": "Plastics Polycarbonate",
+   "MaterialFamily": "Plastics",
+   "Material": "Polycarbonate",
+   "EmbodiedCarbon": 7.62,
+   "Notes": "36.7 MJ/kg Feedstock Energy  (Included). Doesn’t include final fabrication."
+ },
+ {
+   "Reference": "Plastics Polypropylene, Orientated Film",
+   "MaterialFamily": "Plastics",
+   "Material": "Polypropylene, Orientated Film",
+   "EmbodiedCarbon": 3.43,
+   "Notes": "55.7 MJ/kg Feedstock Energy  (Included)."
+ },
+ {
+   "Reference": "Plastics Polypropylene, Injection Moulding",
+   "MaterialFamily": "Plastics",
+   "Material": "Polypropylene, Injection Moulding",
+   "EmbodiedCarbon": 4.49,
+   "Notes": "54 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO2 may reduce to 3.85 kgCO2/kg, and GWP down to 4.41 kg CO2e/kg."
+ },
+ {
+   "Reference": "Plastics Expanded Polystyrene",
+   "MaterialFamily": "Plastics",
+   "Material": "Expanded Polystyrene",
+   "EmbodiedCarbon": 3.29,
+   "Notes": "46.2 MJ/kg Feedstock Energy  (Included)"
+ },
+ {
+   "Reference": "Plastics General Purpose Polystyrene",
+   "MaterialFamily": "Plastics",
+   "Material": "General Purpose Polystyrene",
+   "EmbodiedCarbon": 3.43,
+   "Notes": "46.3 MJ/kg Feedstock Energy  (Included)"
+ },
+ {
+   "Reference": "Plastics High Impact Polystyrene",
+   "MaterialFamily": "Plastics",
+   "Material": "High Impact Polystyrene",
+   "EmbodiedCarbon": 3.42,
+   "Notes": "46.4 MJ/kg Feedstock Energy  (Included)"
+ },
+ {
+   "Reference": "Plastics Thermoformed Expanded Polystyrene",
+   "MaterialFamily": "Plastics",
+   "Material": "Thermoformed Expanded Polystyrene",
+   "EmbodiedCarbon": 4.39,
+   "Notes": "49.7 MJ/kg Feedstock Energy  (Included)"
+ },
+ {
+   "Reference": "Plastics Polyurethane Flexible Foam",
+   "MaterialFamily": "Plastics",
+   "Material": "Polyurethane Flexible Foam",
+   "EmbodiedCarbon": 4.84,
+   "Notes": "33.47 MJ/kg Feedstock Energy  (Included). Poor data availability for feedstock energy"
+ },
+ {
+   "Reference": "Plastics Polyurethane Rigid Foam",
+   "MaterialFamily": "Plastics",
+   "Material": "Polyurethane Rigid Foam",
+   "EmbodiedCarbon": 4.26,
+   "Notes": "37.07 MJ/kg Feedstock Energy  (Included). Poor data availability for feedstock energy"
+ },
+ {
+   "Reference": "Plastics PVC General",
+   "MaterialFamily": "Plastics",
+   "Material": "PVC General",
+   "EmbodiedCarbon": 3.1,
+   "Notes": "28.1 MJ/kg Feedstock Energy  (Included). Based on market average consumption of types of PVC in the European construction industry"
+ },
+ {
+   "Reference": "Plastics PVC Pipe",
+   "MaterialFamily": "Plastics",
+   "Material": "PVC Pipe",
+   "EmbodiedCarbon": 3.23,
+   "Notes": "24.4 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO2 may reduce to 2.51 kgCO2/kg, and GWP down to 3.23 kg CO2e/kg."
+ },
+ {
+   "Reference": "Plastics Calendered Sheet PVC",
+   "MaterialFamily": "Plastics",
+   "Material": "Calendered Sheet PVC",
+   "EmbodiedCarbon": 3.19,
+   "Notes": "24.4 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO2 may reduce to 2.56 kgCO2/kg, and GWP down to 3.15 kg CO2e/kg."
+ },
+ {
+   "Reference": "Plastics PVC Injection Moulding",
+   "MaterialFamily": "Plastics",
+   "Material": "PVC Injection Moulding",
+   "EmbodiedCarbon": 3.3,
+   "Notes": "35.1 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO2 may reduce to 2.23 kgCO2/kg, and GWP down to 2.84 kg CO2e/kg."
+ },
+ {
+   "Reference": "Plastics UPVC Film",
+   "MaterialFamily": "Plastics",
+   "Material": "UPVC Film",
+   "EmbodiedCarbon": 3.16,
+   "Notes": "25.3 MJ/kg Feedstock Energy  (Included)"
+ }
+]

@@ -10,6 +10,8 @@ namespace CarbonMaterials
         Steel,
         Concrete,
         Timber,
-        ConcreteV3
+        ConcreteV3,
+        GeneralV3,
+        GeneralV2
     }
 }

@@ -22,8 +22,7 @@
                 <ResourceDictionary Source="Dictionary1.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
-        </ResourceDictionary>
-        
+        </ResourceDictionary>        
     </UserControl.Resources>
 
     <DockPanel>
@@ -33,6 +32,7 @@
                 <MenuItem Header="Save" Command="{Binding SaveToFileCommand}"/>
                 <MenuItem Header="Save As..." Command="{Binding SaveAsToFileCommand}"/>
                 <MenuItem Header="Import Selection Set..." IsEnabled="False"/>
+                <MenuItem Header="Import Material Sets..." Command="{Binding ImportMaterialsCommand}"/>
                 <MenuItem Header="Output results to CSV..." Command="{Binding OutputCSVCommand}"/>
             </MenuItem>
             <MenuItem Header="Elements">
@@ -240,7 +240,7 @@
                                                                 <CheckBox IsChecked="{Binding IsSelected}" Margin="0 0 15 0"/>
                                                                 <TextBlock Text="{Binding Name}" Width="200"/>
                                                                 <TextBlock Text="Chart colour" Margin="0 0 15 0"/>
-                                                                <TextBox Text="{Binding Color}"/>
+                                                                <TextBox Text="{Binding Color}" Width="80"/>
                                                                 <Canvas Height="20" Width="100">
                                                                     <Rectangle Width="100" Height="20" Fill="{Binding FillColor}"/>
                                                                 </Canvas>
@@ -301,6 +301,7 @@
                                 <Button Style="{StaticResource ResetPieColors}" 
                                         Command="{Binding ResetColorsCommand}" 
                                         ToolTip="Resets pie chart colours"/>
+                                <CheckBox Content="Include sequestration" IsChecked="{Binding IncludeSequestration}" VerticalAlignment="Center" Margin="10 0 0 0"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="5" >

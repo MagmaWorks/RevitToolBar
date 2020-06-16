@@ -116,6 +116,43 @@
                 <TextBlock Text="Blank material"/>
             </StackPanel>
         </DataTemplate>
+
+        <DataTemplate x:Key="Generalv3Data">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Embodied carbon figures for stage A1 to A3 from ICE v3 database."/>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox ItemsSource="{Binding MaterialNames}" SelectedValue="{Binding SelectedMaterialName}" Width="200"/>
+                    <ComboBox ItemsSource="{Binding SubMaterialNames}" SelectedValue="{Binding SelectedSubMaterialName}" DisplayMemberPath="ICEv3DBName" Width="300"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="ICE v3 database comments: " Width="180"/>
+                    <TextBlock Text="{Binding ICEv3Notes}" Width="500" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Mass density: "/>
+                    <TextBox Text="{Binding MassDensity}"/>
+                    <TextBlock Text="kg/m3"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Generalv2Data">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Embodied carbon figures for stage A1 to A3 from ICE v2 database."/>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox ItemsSource="{Binding Materials}" SelectedValue="{Binding SelectedMaterial}" DisplayMemberPath="Reference" Width="200"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="ICE v2 database comments: " Width="180"/>
+                    <TextBlock Text="{Binding ICEv2Notes}" Width="500" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Mass density: "/>
+                    <TextBox Text="{Binding MassDensity}"/>
+                    <TextBlock Text="kg/m3"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
@@ -161,6 +198,12 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Category}" Value="Steel">
                                         <Setter Property="ContentTemplate" Value="{StaticResource SteelData}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Category}" Value="GeneralV3">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource Generalv3Data}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Category}" Value="GeneralV2">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource Generalv2Data}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

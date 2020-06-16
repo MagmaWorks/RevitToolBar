@@ -590,6 +590,7 @@ namespace CarbonCalculator
             {
                 elem.UpdateAll();
             }
+            updateMatNames();
         }
 
         public void UpdateFilteredElements()

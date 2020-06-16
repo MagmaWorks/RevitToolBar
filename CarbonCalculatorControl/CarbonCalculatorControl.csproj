@@ -76,6 +76,7 @@
     <Compile Include="GWPGenericMaterialVM.cs" />
     <Compile Include="ICEMaterialVMBase.cs" />
     <Compile Include="ICENoneVM.cs" />
+    <Compile Include="ICEv2GeneralVM.cs" />
     <Compile Include="ICEv3GeneralVM.cs" />
     <Compile Include="ICEv3ConcreteVM.cs" />
     <Compile Include="ICEv2TimberVM.cs" />

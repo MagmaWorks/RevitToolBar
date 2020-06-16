@@ -28,6 +28,8 @@
                 <MenuItem Header="Add Steel (ICE v2)" Command="{Binding SelectedMaterialSet.AddSteelCommand}"/>
                 <MenuItem Header="Add Timber (ICE v2)" Command="{Binding SelectedMaterialSet.AddTimberCommand}"/>
                 <MenuItem Header="Add Concrete (ICE v3)" Command="{Binding SelectedMaterialSet.AddConcreteV3Command}"/>
+                <MenuItem Header="Add General (ICE v3)" Command="{Binding SelectedMaterialSet.AddGeneralCommand}"/>
+                <MenuItem Header="Add General (ICE v2)" Command="{Binding SelectedMaterialSet.AddGeneralv2Command}"/>
                 <MenuItem Header="Add EPD" Command="{Binding SelectedMaterialSet.AddGeneric}"/>
             </MenuItem>
         </Menu>

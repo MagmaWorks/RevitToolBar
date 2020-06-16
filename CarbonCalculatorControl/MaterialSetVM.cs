@@ -70,7 +70,7 @@ namespace CarbonCalculator
                 _parent.UpdateAll();
             }
         }
-        public List<string> MaterialNames { get; }
+        public ObservableCollection<string> MaterialNames { get; }
 
 
         public MaterialSetVM(string name, GWPMaterialSet materialSet, IViewModelParent parent)
@@ -78,7 +78,7 @@ namespace CarbonCalculator
             _materials = materialSet;
             _parent = parent;
             _materialVMs = new ObservableCollection<MaterialVM>();
-            MaterialNames = new List<string>();
+            MaterialNames = new ObservableCollection<string>();
             foreach (var item in materialSet.Materials)
             {
                 MaterialNames.Add(item.Name);
@@ -93,7 +93,7 @@ namespace CarbonCalculator
             _materials = materialSet;
             _parent = parent;
             _materialVMs = new ObservableCollection<MaterialVM>();
-            MaterialNames = new List<string>();
+            MaterialNames = new ObservableCollection<string>();
             foreach (var item in materialSet.Materials)
             {
                 MaterialNames.Add(item.Name);
@@ -102,19 +102,19 @@ namespace CarbonCalculator
 
         }
 
-        public void deleteItem(MaterialVM mat)
-        {
-            if (_materials.Materials.Count > 0)
-            {
-                _materials.Materials.Remove(mat.Material);
-                _materialVMs.Remove(mat);
-                if (_selectedMaterialIndex >= Materials.Count)
-                {
-                    _selectedMaterialIndex = Materials.Count - 1;
-                }
-            }
-            _parent.UpdateAll();
-        }
+        //public void deleteItem(MaterialVM mat)
+        //{
+        //    if (_materials.Materials.Count > 0)
+        //    {
+        //        _materials.Materials.Remove(mat.Material);
+        //        _materialVMs.Remove(mat);
+        //        if (_selectedMaterialIndex >= Materials.Count)
+        //        {
+        //            _selectedMaterialIndex = Materials.Count - 1;
+        //        }
+        //    }
+        //    _parent.UpdateAll();
+        //}
 
 
         ICommand _addConcreteCommand;
@@ -132,6 +132,7 @@ namespace CarbonCalculator
             var newMat = new ICEConcrete();
             _materials.Materials.Add(newMat);
             _materialVMs.Add(new MaterialVM(newMat, this));
+            MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
         }
@@ -151,8 +152,48 @@ namespace CarbonCalculator
             var newMat = new ICESteel();
             _materials.Materials.Add(newMat);
             _materialVMs.Add(new MaterialVM(newMat, this));
+            MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
+        }
+
+        ICommand _addGeneralCommand;
+
+        public ICommand AddGeneralCommand
+        {
+            get
+            {
+                return _addGeneralCommand ?? (_addGeneralCommand = new CommandHandler(() => addGeneral(), true));
+            }
+        }
+
+        void addGeneral()
+        {
+            var newMat = new ICEv3General();
+            _materials.Materials.Add(newMat);
+            _materialVMs.Add(new MaterialVM(newMat, this));
+            MaterialNames.Add(newMat.Name);
+            _parent.UpdateAll();
+
+        }
+
+        ICommand _addGeneralv2Command;
+
+        public ICommand AddGeneralv2Command
+        {
+            get
+            {
+                return _addGeneralv2Command ?? (_addGeneralv2Command = new CommandHandler(() => addGeneralv2(), true));
+            }
+        }
+
+        void addGeneralv2()
+        {
+            var newMat = new ICEv2General();
+            _materials.Materials.Add(newMat);
+            _materialVMs.Add(new MaterialVM(newMat, this));
+            MaterialNames.Add(newMat.Name);
+            _parent.UpdateAll();
         }
 
         ICommand _addTimberCommand;
@@ -170,6 +211,7 @@ namespace CarbonCalculator
             var newMat = new ICETimber();
             _materials.Materials.Add(newMat);
             _materialVMs.Add(new MaterialVM(newMat, this));
+            MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
         }
@@ -189,6 +231,7 @@ namespace CarbonCalculator
             var newMat = new GWPGeneric();
             _materials.Materials.Add(newMat);
             _materialVMs.Add(new MaterialVM(newMat, this));
+            MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
         }
@@ -208,6 +251,7 @@ namespace CarbonCalculator
             var newMat = new ICE3ConcreteModel();
             _materials.Materials.Add(newMat);
             _materialVMs.Add(new MaterialVM(newMat, this));
+            MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
         }

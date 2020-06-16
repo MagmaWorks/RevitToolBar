@@ -73,10 +73,12 @@ namespace CarbonCalculator
                     return new ICEv2TimberVM(mat as ICETimber);
                 case ICE3ConcreteModel m:
                     return new ICEv3ConcreteVM(mat as ICE3ConcreteModel);
-                case ICEGeneral m:
-                    return new ICEv3GeneralVM(mat as ICEGeneral);
+                case ICEv3General m:
+                    return new ICEv3GeneralVM(mat as ICEv3General);
                 case ICENone m:
                     return new ICENoneVM(mat as ICENone);
+                case ICEv2General m:
+                    return new ICEv2GeneralVM(mat as ICEv2General);
                 default:
                     return new ICEMaterialVMBase();
             }

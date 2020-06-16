@@ -243,5 +243,57 @@ namespace CarbonCalculator
 
 
         }
+
+        ICommand _importMaterialsCommand;
+
+        public ICommand ImportMaterialsCommand
+        {
+            get
+            {
+                return _importMaterialsCommand ?? (_importMaterialsCommand = new CommandHandler(() => importMaterials(), true));
+            }
+        }
+
+        void importMaterials()
+        {
+            bool outputOK = false;
+            ModelVM output = new ModelVM();
+            string filePath = vm.FilePath;
+
+            try
+            {
+                var openDialog = new OpenFileDialog();
+                openDialog.Filter = @"Carbon model files |*.JSON";
+                openDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                openDialog.Multiselect = false;
+                if (openDialog.ShowDialog() != DialogResult.OK) return;
+                filePath = openDialog.FileName;
+                using (var reader = File.OpenText(openDialog.FileName))
+                {
+                    var settings = new JsonSerializerSettings();
+                    settings.Formatting = Formatting.Indented;
+                    settings.TypeNameHandling = TypeNameHandling.Auto;
+                    output = JsonConvert.DeserializeObject<ModelVM>(reader.ReadToEnd(), settings);
+                }
+                output.initialise();
+                output.SetChartColors();
+                output.updateCarbonVsCategoryChartValues();
+                outputOK = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("oops..." + Environment.NewLine + ex.Message);
+            }
+            if (outputOK)
+            {
+                foreach (var item in output.MaterialSets)
+                {
+                    vm.ElementSet.MaterialSets.Add(item);
+                }
+                vm.initialise();
+                vm.UpdateAll();
+                RaisePropertyChanged(nameof(Model));
+            }
+        }
     }
 }
