@@ -37,6 +37,9 @@
             </MenuItem>
             <MenuItem Header="Elements">
                 <MenuItem Header="Add" Command="{Binding AddElementCommand}"/>
+                <MenuItem Header="Delete" Command="{Binding DeleteElementCommand}"/>
+                <MenuItem Header="Use Volume" Command="{Binding ChangeToVolumeCommand}"/>
+                <MenuItem Header="Use Area" Command="{Binding ChangeToAreaCommand}"/>
             </MenuItem>
             <MenuItem Header="Material Sets">
                 <MenuItem Header="Edit sets" Click="MenuItem_Click"/>
@@ -74,17 +77,25 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Elements" FontSize="18" Grid.Row="0"/>
                         </StackPanel>
-                        <ListView ItemsSource="{Binding FilteredElements}" Grid.Row="1">
+                        <ListView ItemsSource="{Binding FilteredElements}" Grid.Row="1" SelectionMode="Extended">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
-                                    <Setter Property="Focusable" Value="false"/>
+                                    <!--<Setter Property="Focusable" Value="false"/>-->
                                     <Setter Property="BorderBrush" Value="Orange"/>
                                     <Setter Property="BorderThickness" Value="0 0 0 0.5"/>
                                     <Setter Property="Visibility" Value="{Binding Display, Converter={StaticResource BoolToVisConverter}, FallbackValue=Hidden}"/>
+                                    <Setter Property="IsSelected" Value="{Binding IsHighlighted}"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
+                                    <GridViewColumn Header="" Width="30">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding IsSelected}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn Header="Name and ID" Width="150">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -93,14 +104,15 @@
                                                         <TextBlock Text="Name: "/>
                                                         <TextBox Text="{Binding Name}"/>
                                                     </StackPanel>
-                                                    <TextBox Text="{Binding Name}"/>
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="ID: "></TextBlock>
                                                         <TextBlock Text="{Binding UniqueID}"/>
                                                     </StackPanel>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="Volume: "/>
-                                                        <TextBox Text="{Binding Volume}"/>
+                                                        <TextBlock Text="Quantity: "/>
+                                                        <TextBox Text="{Binding Quantity}"/>
+                                                        <TextBlock Text=" "/>
+                                                        <TextBlock Text="{Binding Dimensions}"/>
                                                     </StackPanel>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -114,8 +126,8 @@
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
                                                             <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Text="{Binding Name}" MinWidth="50"/>
-                                                                <TextBox Text="{Binding Value}" MinWidth="50"/>
+                                                                <TextBlock Text="{Binding Name}" MinWidth="90"/>
+                                                                <TextBox Text="{Binding Value}" MinWidth="200"/>
                                                             </StackPanel>
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>

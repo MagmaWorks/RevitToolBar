@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="CarbonCalculator.ImportOptions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarbonCalculator"
+             mc:Ignorable="d" 
+             d:DesignHeight="120" d:DesignWidth="300">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Import Options:"/>
+            <CheckBox IsChecked="{Binding ExplodeWalls}" Content="Explode walls into component parts"/>
+            <CheckBox IsChecked="{Binding ExplodeFloors}" Content="Explode floors into component parts"/>
+            <Button Width="100" Content="OK" Command="{Binding CloseWindowCommand}" Margin="0 30 0 0"/>
+        </StackPanel>            
+    </Grid>
+</UserControl>

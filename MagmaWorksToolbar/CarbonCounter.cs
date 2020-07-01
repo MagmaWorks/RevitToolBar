@@ -17,6 +17,7 @@ namespace MagmaWorksToolbar
         const double _footToMm = 12 * _inchesToMm;
         const double _footToM = _footToMm / 1000;
         const double _cubicFtToM = _footToM * _footToM * _footToM;
+        const double _squareFtToM = _footToM * _footToM;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -30,7 +31,11 @@ namespace MagmaWorksToolbar
                 BuiltInCategory.OST_StructuralColumns,
                 BuiltInCategory.OST_Floors,
                 BuiltInCategory.OST_EdgeSlab,
-                BuiltInCategory.OST_Walls
+                BuiltInCategory.OST_Walls,
+                BuiltInCategory.OST_Ramps,
+                BuiltInCategory.OST_Stairs,
+                BuiltInCategory.OST_Windows,
+                BuiltInCategory.OST_Doors
             };
 
 
@@ -99,7 +104,15 @@ namespace MagmaWorksToolbar
                 }
             }
 
-            CarbonCalculator.ElementSet myset = new CarbonCalculator.ElementSet("Category", "Material", "Level");
+            CarbonCalculator.ElementSet myset = new CarbonCalculator.ElementSet("Category", "Material", "Level", "Phase", "Design Option");
+
+            Window optionsWindow = new Window();
+            ImportOptionsVM optionsVM = new ImportOptionsVM(optionsWindow);
+            optionsWindow.Content = new CarbonCalculator.ImportOptions();
+            optionsWindow.DataContext = optionsVM;
+            optionsWindow.Width = 300;
+            optionsWindow.Height = 250;
+            optionsWindow.ShowDialog();
 
             foreach (var cat in cats)
             {
@@ -115,6 +128,12 @@ namespace MagmaWorksToolbar
                     .WherePasses(filter)
                     .ToElements();
 
+                List<Element> AllElem = new FilteredElementCollector(doc)
+                    .WhereElementIsViewIndependent()
+                    .WhereElementIsNotElementType()
+                    .Where(e => e.IsPhysicalElement())
+                    .ToList<Element>();
+
                 double vol = 0;
                 foreach (var item in structures)
                 {
@@ -127,6 +146,7 @@ namespace MagmaWorksToolbar
                             mat = itemType.LookupParameter("Structural Material");
                         }
                     }
+
                     var volParam = item.LookupParameter("Volume");
 
                     var elemType = item.GetTypeId();
@@ -145,21 +165,79 @@ namespace MagmaWorksToolbar
                         lvlstr = level.Name;
                     }
 
-                    string matName = "";
-                    if (volParam != null)
+                    string phaseName = "";
+                    Autodesk.Revit.DB.Phase phaseCreated = doc.GetElement(item.CreatedPhaseId) as Phase;
+                    if (phaseCreated == null)
+                        phaseName = "";
+                    else
+                        phaseName = phaseCreated.Name;
+
+                    string designOptionName = "";
+                    Autodesk.Revit.DB.DesignOption designOption = null;
+                    if (item.DesignOption != null)
                     {
-                        if (mat != null)
-                        {
-                            matName = mat.AsValueString();
-                        }
-
-                        double metricVol = volParam.AsDouble() * _cubicFtToM;
-
-                        myset.AddElement(new CarbonCalculator.Element(name, metricVol, "Revit" + counter, revitCat.Name, matName, lvlstr));
-                        
-                        myVM.AddElement(name, metricVol, matName, doc, cat);
+                        designOption = doc.GetElement(item.DesignOption.Id) as DesignOption;
+                    }                    
+                    if (designOption == null)
+                    {
+                        designOptionName = "Main";
                     }
-                    counter++;
+                    else
+                        designOptionName = designOption.Name;
+
+                    var mats = item.GetMaterialIds(false);
+                    if (mats.Count > 1 && ((optionsVM.ExplodeFloors && cat == BuiltInCategory.OST_Floors) || (optionsVM.ExplodeWalls && cat == BuiltInCategory.OST_Walls)))
+                    {
+                        foreach (var material in mats)
+                        {
+                            var materialName = (doc.GetElement(material) as Material).Name;
+                            var materialVol = item.GetMaterialVolume(material);
+                            var materialArea = item.GetMaterialArea(material, false);
+                            double metricVol = materialVol * _cubicFtToM;
+                            double metricArea = materialArea * _squareFtToM;
+                            myset.AddElement(new CarbonCalculator.Element(name + " " + materialName, metricVol, metricArea, "Revit" + counter, revitCat.Name, materialName, lvlstr, phaseName, designOptionName));
+                            counter++;
+                        }
+                    }
+                    else if (mats.Count == 1)
+                    {
+                        var material = mats.First();
+                        var materialName = (doc.GetElement(material) as Material).Name;
+                        var materialVol = item.GetMaterialVolume(material);
+                        var materialArea = item.GetMaterialArea(material, false);
+                        double metricVol = materialVol * _cubicFtToM;
+                        double metricArea = materialArea * _squareFtToM;
+                        myset.AddElement(new CarbonCalculator.Element(name, metricVol, metricArea, "Revit" + counter, revitCat.Name, materialName, lvlstr, phaseName, designOptionName));
+                        counter++;
+                    }
+                    else if (mats.Count > 1)
+                    {
+                        var material = mats.First();
+                        var materialName = (doc.GetElement(material) as Material).Name;
+                        double metricVol = 0;
+                        if (volParam != null)
+                        {
+                            metricVol = volParam.AsDouble() * _cubicFtToM;
+                        }
+                        var materialArea = item.GetMaterialArea(material, false); 
+                        double metricArea = materialArea * _squareFtToM;
+                        myset.AddElement(new CarbonCalculator.Element(name, metricVol, metricArea, "Revit" + counter, revitCat.Name, "Mixed materials", lvlstr, phaseName, designOptionName));
+                        counter++;
+                    }
+
+                    //string matName = "";
+                    //if (volParam != null)
+                    //{
+                    //    if (mat != null)
+                    //    {
+                    //        matName = mat.AsValueString();
+                    //    }
+
+                    //    double metricVol = volParam.AsDouble() * _cubicFtToM;
+
+                    //    myset.AddElement(new CarbonCalculator.Element(name, metricVol, "Revit" + counter, revitCat.Name, matName, lvlstr, phaseName, designOptionName));
+                    //}
+                    //counter++;
 
                 }
             }
@@ -175,6 +253,19 @@ namespace MagmaWorksToolbar
             carbonWindow.ShowDialog();
 
             return Result.Succeeded;
+        }
+    }
+
+    public static class Extensions
+    {
+        public static bool IsPhysicalElement(this Element e)
+        {
+            if (e.Category == null) return false;
+            if (e.ViewSpecific) return false;
+            // exclude specific unwanted categories
+            if (((BuiltInCategory)e.Category.Id.IntegerValue) == BuiltInCategory.OST_HVAC_Zones) return false;
+            //
+            return e.Category.CategoryType == CategoryType.Model && e.Category.CanAddSubcategory;
         }
     }
 }

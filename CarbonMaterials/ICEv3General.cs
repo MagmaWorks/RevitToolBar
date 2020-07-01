@@ -39,7 +39,7 @@ namespace CarbonMaterials
                 }
                 else
                 {
-                    return new GWPValue((_embodiedCarbon + _sequesteredCarbonDensity) * MassDensity);
+                    return new GWPValue((_embodiedCarbon - _sequesteredCarbonDensity) * MassDensity);
                 }
             }
         }
@@ -64,6 +64,17 @@ namespace CarbonMaterials
         [JsonProperty(PropertyName = "SubMaterial")]
         string _subMaterial;
 
+        public override GWPValue C3
+        {
+            get
+            {
+                if (IncludeSequesteredCarbon)
+                    return new GWPValue(RecyclingReuseFactor - _sequesteredCarbonDensity * MassDensity);
+                else
+                    return new GWPValue(RecyclingReuseFactor);
+            }
+        }
+
         public ICEv3General(string material, string submaterial, double embodiedCarbon, double sequesteredCarbon, double massDensity, string guid)
         {
             _material = material;
@@ -79,9 +90,10 @@ namespace CarbonMaterials
         {
             _material = "AggregateSand";
             _subMaterial = "AggregateSand, General aggregate and sand";
-            _embodiedCarbon = 0;
+            _embodiedCarbon = 0.0075;
             _sequesteredCarbonDensity = 0;
-            _massDensity = 0;
+            _massDensity = 1600;
+            _guid = "52bdfeb3-979f-4fcd-b4eb-6ffbda643c52";
             Category = ICECategory.GeneralV3;
         }
 
@@ -106,6 +118,34 @@ namespace CarbonMaterials
             public string IsSequestrationIncluded { get; set; }
             public double SequesteredCarbon { get; set; }
             public double EmbodiedCarbonPerMass { get; set; }
+        }
+
+        public static ICEv3General GetBlockwork100mm()
+        {
+            var dBase = ReadICEv3Materials().Where(a => a.GUID == "37da3732-82a2-4e71-8e6d-3842e99103f0").First();
+            var returnMat = new ICEv3General(dBase.Material, dBase.SubMaterial, dBase.EmbodiedCarbonPerMass, dBase.SequesteredCarbon, dBase.MaterialDensity * 0.1, dBase.GUID);
+            var siteTrans = MaterialTransport.DefaultDieselRigidHGV();
+            siteTrans.Distance = 20;
+            returnMat.TransportsToSite.Add(siteTrans);
+            var dispTrans = MaterialTransport.DefaultDieselRigidHGV();
+            dispTrans.Distance = 50;
+            returnMat.TransportsToSite.Add(dispTrans);
+
+            return returnMat;
+        }
+
+        public static ICEv3General GetSteelStud20kg()
+        {
+            var dBase = ReadICEv3Materials().Where(a => a.GUID == "6db285f8-2ce3-4414-93b0-4bbd893bef76").First();
+            var returnMat = new ICEv3General(dBase.Material, dBase.SubMaterial, dBase.EmbodiedCarbonPerMass, dBase.SequesteredCarbon, 5, dBase.GUID);
+            var siteTrans = MaterialTransport.DefaultDieselRigidHGV();
+            siteTrans.Distance = 20;
+            returnMat.TransportsToSite.Add(siteTrans);
+            var dispTrans = MaterialTransport.DefaultDieselRigidHGV();
+            dispTrans.Distance = 50;
+            returnMat.TransportsToSite.Add(dispTrans);
+
+            return returnMat;
         }
     }
 }

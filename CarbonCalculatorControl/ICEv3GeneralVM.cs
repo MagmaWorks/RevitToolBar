@@ -79,7 +79,7 @@ namespace CarbonCalculator
             }
         }
 
-        public double MassDensity
+        new public double MassDensity
         {
             get
             {
@@ -113,14 +113,17 @@ namespace CarbonCalculator
             }
         }
 
-        public ICEv3GeneralVM(ICEv3General material)
+        public ICEv3GeneralVM(ICEv3General material, Measurement measure)
         {
+            _measure = measure;
+
             generalMaterials = ICEv3General.ReadICEv3Materials();
             _materialNames = new List<string>(generalMaterials.Select(a => a.Material).Distinct());
-            _selectedSubMaterialName = generalMaterials.Where(a => a.GUID == material.Guid).FirstOrDefault();
 
             _genMat = material;
             _material = material;
+
+            _selectedSubMaterialName = generalMaterials.Where(a => a.GUID == material.Guid).FirstOrDefault();
 
             if (_selectedSubMaterialName != null)
             {
@@ -137,8 +140,7 @@ namespace CarbonCalculator
                     .ToList();
             }
 
-            RaisePropertyChanged(nameof(MaterialNames));
-            RaisePropertyChanged(nameof(SubMaterialNames));
+            ICEv3Notes = _selectedSubMaterialName.Comments;
 
             setTransportToSite();
             setTransportToDisposal();

@@ -26,7 +26,29 @@ namespace CarbonCalculator
                 RaisePropertyChanged(nameof(MassDensity));
                 Update();
             }
-        }          
+        }
+
+        protected Measurement _measure = Measurement.Volume;
+
+        public string Units
+        {
+            get
+            {
+                switch (_measure)
+                {
+                    case Measurement.Volume:
+                        return "m³";
+                    case Measurement.Area:
+                        return "m²";
+                    case Measurement.Length:
+                        return "m";
+                    case Measurement.Item:
+                        return "item";
+                    default:
+                        return "";
+                }
+            }
+        }
 
         public ICECategory Category
         {
@@ -45,6 +67,7 @@ namespace CarbonCalculator
             RaisePropertyChanged(nameof(A4));
             RaisePropertyChanged(nameof(C2));
             RaisePropertyChanged(nameof(TotalCarbon));
+            RaisePropertyChanged(nameof(Units));
         }
 
         public void UpdateAll()
@@ -211,7 +234,7 @@ namespace CarbonCalculator
         {
             get
             {
-                return string.Format("{0:0.00}", _material.TotalAtoC) + "kg / m3";
+                return string.Format("{0:0.00}", _material.TotalAtoC) + "kg / " + Units;
             }
         }
 
@@ -219,7 +242,7 @@ namespace CarbonCalculator
         {
             get
             {
-                return string.Format("{0:0.00}", _material.SequesteredCarbonDensity + "kg / m3");
+                return string.Format("{0:0.00}", _material.SequesteredCarbonDensity + "kg / " + Units);
             }
         }
 

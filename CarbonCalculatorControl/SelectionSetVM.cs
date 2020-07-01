@@ -12,13 +12,15 @@ namespace CarbonCalculator
     public class SelectionSetVM : ViewModelBase
     {
         [JsonProperty]
-        public List<FilterSelection> SelectedFilterValues { get; }
+        public List<FilterSelection> SelectedFilterValues { get; private set; }
         [JsonProperty]
         public List<string> ElementsIdsToInclude { get; private set; }
         [JsonProperty]
         public List<string> ElementsIdsToExclude { get; private set; }
         [JsonProperty]
         public int SelectedMaterial { get; set; }
+        [JsonProperty]
+        public string SelectedMaterialSetName { get; set; } = "";
         bool _isSelected = false;
         public bool IsSelected
         {
@@ -35,9 +37,18 @@ namespace CarbonCalculator
 
         ModelVM _parent;
 
-        public void setParent(ModelVM parent)
+        public void setParentandCheckMaterialName(ModelVM parent)
         {
             _parent = parent;
+            if (SelectedMaterialSetName == "")
+            {
+                SelectedMaterialSetName = _parent.MaterialSets[SelectedMaterial].Name;
+            }
+        }
+
+        SelectionSetVM()
+        {
+
         }
 
         public SelectionSetVM(int selectedMaterial, ModelVM parent)
@@ -47,6 +58,16 @@ namespace CarbonCalculator
             ElementsIdsToInclude = new List<string>();
             ElementsIdsToExclude = new List<string>();
             SelectedMaterial = selectedMaterial;
+            SelectedMaterialSetName = _parent.MaterialSets[Math.Max(selectedMaterial, 0)].Name;
+        }
+
+        public SelectionSetVM(string selectedMaterialSetName, ModelVM parent)
+        {
+            _parent = parent;
+            SelectedFilterValues = new List<FilterSelection>();
+            ElementsIdsToInclude = new List<string>();
+            ElementsIdsToExclude = new List<string>();
+            SelectedMaterialSetName = selectedMaterialSetName;
         }
 
         public string Name
@@ -55,7 +76,7 @@ namespace CarbonCalculator
             {
                 //return string.Format(@"Material {3}: {4}, {0} filters, {1} inclusions, {2} exclusions", SelectedFilterValues.Count, ElementsIdsToInclude.Count, ElementsIdsToExclude.Count, SelectedMaterial, _parent.Materials[SelectedMaterial].Name);
                 string retStr = "";
-                retStr = string.Format(@"Material {0}: {1}. ", SelectedMaterial, "" /*_parent.Materials[SelectedMaterial].Name*/);
+                retStr = string.Format(@"Material: {0}. ", SelectedMaterialSetName /*_parent.Materials[SelectedMaterial].Name*/);
                 foreach (var item in SelectedFilterValues)
                 {
                     retStr += item.FilterName + "=" + item.FilterValue + "; ";

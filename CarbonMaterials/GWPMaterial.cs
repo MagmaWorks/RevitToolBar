@@ -36,7 +36,6 @@ namespace CarbonMaterials
         public double TotalAtoC => TotalA + TotalB + TotalC;
 
         public abstract string Name { get; }
-        
 
         public virtual double MassDensity { get; protected set; }
         public abstract double SequesteredCarbonDensity { get; }

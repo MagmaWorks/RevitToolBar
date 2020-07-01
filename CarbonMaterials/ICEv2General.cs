@@ -91,5 +91,20 @@ namespace CarbonMaterials
             public string Notes { get; set; }
             public double EmbodiedCarbon { get; set; }
         }
+
+        public static ICEv2General GetInsulation()
+        {
+            var dBase = ReadICEv2Materials().Where(a => a.Reference == "Insulation Rockwool").First();
+            var returnMat = new ICEv2General(dBase.MaterialFamily, dBase.Material, dBase.EmbodiedCarbon, dBase.Reference);
+            returnMat.MassDensity = 2.2;
+            var siteTrans = MaterialTransport.DefaultDieselRigidHGV();
+            siteTrans.Distance = 20;
+            returnMat.TransportsToSite.Add(siteTrans);
+            var dispTrans = MaterialTransport.DefaultDieselRigidHGV();
+            dispTrans.Distance = 50;
+            returnMat.TransportsToSite.Add(dispTrans);
+
+            return returnMat;
+        }
     }
 }

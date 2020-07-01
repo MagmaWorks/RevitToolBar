@@ -30,7 +30,8 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Reinforcement density: " Width="120"/>
                     <TextBox Text="{Binding ConcreteReinforcementDensity}" Width="100"/>
-                    <TextBlock Text="kg/m3"/>
+                    <TextBlock Text="kg/"/>
+                    <TextBlock Text="{Binding Units}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Grade: " Width="120"/>
@@ -48,16 +49,15 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Reinforcement density: " Width="120"/>
                     <TextBox Text="{Binding ConcreteReinforcementDensity}" Width="100"/>
-                    <TextBlock Text="kg/m3"/>
+                    <TextBlock Text="kg/"/>
+                    <TextBlock Text="{Binding Units}"/>
                 </StackPanel>
-                <!--<StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Grade: " Width="120"/>
-                    <ComboBox ItemsSource="{Binding Grades}" SelectedItem="{Binding ConcreteGrade}" Width="100"/>
-                </StackPanel>-->
-                <!--<StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Replacement: " Width="120"/>
-                    <ComboBox ItemsSource="{Binding Replacements}" SelectedItem="{Binding ConcreteReplacement}" Width="100"/>
-                </StackPanel>-->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Mass density: "/>
+                    <TextBox Text="{Binding MassDensity}" Width="100"/>
+                    <TextBlock Text="kg/"/>
+                    <TextBlock Text="{Binding Units}"/>
+                </StackPanel>
                 <ItemsControl ItemsSource="{Binding Constituents}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -89,7 +89,8 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Mass density: "/>
                     <TextBox Text="{Binding MassDensity}" Width="100"/>
-                    <TextBlock Text="kg/m3"/>
+                    <TextBlock Text="kg/"/>
+                    <TextBlock Text="{Binding Units}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -102,7 +103,8 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Mass density: "/>
                     <TextBox Text="{Binding MassDensity}" Width="100"/>
-                    <TextBlock Text="kg/m3"/>
+                    <TextBlock Text="kg/"/>
+                    <TextBlock Text="{Binding Units}"/>
                 </StackPanel>
                 <TextBlock Text="{Binding SequesteredCarbonComment}"/>
                 <StackPanel Orientation="Horizontal">
@@ -119,7 +121,7 @@
 
         <DataTemplate x:Key="Generalv3Data">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="Embodied carbon figures for stage A1 to A3 from ICE v3 database."/>
+                <TextBlock Text="Embodied carbon figures for stage A1 to A3 from ICE v3 database 2019."/>
                 <StackPanel Orientation="Horizontal">
                     <ComboBox ItemsSource="{Binding MaterialNames}" SelectedValue="{Binding SelectedMaterialName}" Width="200"/>
                     <ComboBox ItemsSource="{Binding SubMaterialNames}" SelectedValue="{Binding SelectedSubMaterialName}" DisplayMemberPath="ICEv3DBName" Width="300"/>
@@ -130,8 +132,9 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Mass density: "/>
-                    <TextBox Text="{Binding MassDensity}"/>
-                    <TextBlock Text="kg/m3"/>
+                    <TextBox Text="{Binding MassDensity}" Width="100"/>
+                    <TextBlock Text="kg/"/>
+                    <TextBlock Text="{Binding Units}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -148,8 +151,9 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Mass density: "/>
-                    <TextBox Text="{Binding MassDensity}"/>
-                    <TextBlock Text="kg/m3"/>
+                    <TextBox Text="{Binding MassDensity}" Width="100"/>
+                    <TextBlock Text="kg/"/>
+                    <TextBlock Text="{Binding Units}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -212,7 +216,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding A1toA3}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -240,7 +245,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding A4}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -254,7 +260,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding A5}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -268,7 +275,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding B1}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -288,7 +296,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding C1}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -316,7 +325,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding C2}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -330,7 +340,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding C3}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -340,7 +351,8 @@
                     <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                         <TextBlock Text="Carbon: "/>
                         <TextBlock Text="{Binding C4}"/>
-                        <TextBlock Text="kg CO2e / m3"/>
+                        <TextBlock Text="kg CO2e / "/>
+                        <TextBlock Text="{Binding Units}"/>
                     </StackPanel>
                 </StackPanel>
 

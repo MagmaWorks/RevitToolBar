@@ -19,8 +19,10 @@ namespace CarbonCalculator
 
         }
 
-        public ICEv2ConcreteVM(ICEConcrete material)
+        public ICEv2ConcreteVM(ICEConcrete material, Measurement measure)
         {
+            _measure = measure;
+
             _material = material;
             _concMat = material;
             

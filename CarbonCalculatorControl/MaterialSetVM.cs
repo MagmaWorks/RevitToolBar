@@ -14,14 +14,14 @@ namespace CarbonCalculator
         GWPMaterialSet _materials;
         public GWPMaterialSet GWPMaterial => _materials;
 
-        ObservableCollection<MaterialVM> _materialVMs;
-        public ObservableCollection<MaterialVM> Materials
-        {
-            get
-            {
-                return _materialVMs;
-            }
-        }
+        //ObservableCollection<MaterialVM> _materialVMs;
+        //public ObservableCollection<MaterialVM> Materials
+        //{
+        //    get
+        //    {
+        //        return _materialVMs;
+        //    }
+        //}
 
         int _selectedMaterialIndex = 0;
         public int SelectedMaterialIndex
@@ -42,12 +42,45 @@ namespace CarbonCalculator
         {
             get
             {
-                if (Materials.Count > 0)
-                    return Materials[Math.Max(_selectedMaterialIndex, 0)];
+                if (_materials.Materials.Count > 0 && _selectedMaterialIndex >= 0 && _selectedMaterialIndex < _materials.Materials.Count)
+                    return new MaterialVM(_materials.Materials[_selectedMaterialIndex], _materials.SpatialDimensions); 
                 else
                     return null;
             }
         }
+
+        //public List<string> Measurements { get; set; } = new List<string> { "Volume", "Area" };
+
+        //public string Measurement
+        //{
+        //    get
+        //    {
+        //        return _materials.SpatialDimensions.ToString();
+        //    }
+        //    set
+        //    {
+        //        _materials.SpatialDimensions = (Measurement)Enum.Parse(typeof(Measurement), value);
+        //        RaisePropertyChanged(nameof(Measurement));
+        //        RaisePropertyChanged("");
+        //        _parent.UpdateAll();
+        //    }
+        //}
+
+        //int _selectedMeasurementIndex = 0;
+        //public int SelectedMeasurementIndex
+        //{
+        //    get
+        //    {
+        //        return _selectedMeasurementIndex;
+        //    }
+        //    set
+        //    {
+        //        _selectedMeasurementIndex = value;
+        //        RaisePropertyChanged(nameof(SelectedMeasurementIndex));
+        //    }
+        //}
+
+
 
         IViewModelParent _parent;
         public IViewModelParent Parent
@@ -57,6 +90,7 @@ namespace CarbonCalculator
                 return _parent;
             }
         }
+
         public string Name
         {
             get
@@ -77,12 +111,12 @@ namespace CarbonCalculator
         {
             _materials = materialSet;
             _parent = parent;
-            _materialVMs = new ObservableCollection<MaterialVM>();
+            //_materialVMs = new ObservableCollection<MaterialVM>();
             MaterialNames = new ObservableCollection<string>();
             foreach (var item in materialSet.Materials)
             {
                 MaterialNames.Add(item.Name);
-                _materialVMs.Add(new MaterialVM(item, this));
+                //_materialVMs.Add(new MaterialVM(item, this));
             }
 
         }
@@ -92,12 +126,12 @@ namespace CarbonCalculator
         {
             _materials = materialSet;
             _parent = parent;
-            _materialVMs = new ObservableCollection<MaterialVM>();
+            //_materialVMs = new ObservableCollection<MaterialVM>();
             MaterialNames = new ObservableCollection<string>();
             foreach (var item in materialSet.Materials)
             {
                 MaterialNames.Add(item.Name);
-                _materialVMs.Add(new MaterialVM(item, this));
+                //_materialVMs.Add(new MaterialVM(item, this));
             }
 
         }
@@ -131,7 +165,7 @@ namespace CarbonCalculator
         {
             var newMat = new ICEConcrete();
             _materials.Materials.Add(newMat);
-            _materialVMs.Add(new MaterialVM(newMat, this));
+            //_materialVMs.Add(new MaterialVM(newMat, this));
             MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
@@ -151,7 +185,7 @@ namespace CarbonCalculator
         {
             var newMat = new ICESteel();
             _materials.Materials.Add(newMat);
-            _materialVMs.Add(new MaterialVM(newMat, this));
+            //_materialVMs.Add(new MaterialVM(newMat, this));
             MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
@@ -171,7 +205,7 @@ namespace CarbonCalculator
         {
             var newMat = new ICEv3General();
             _materials.Materials.Add(newMat);
-            _materialVMs.Add(new MaterialVM(newMat, this));
+            //_materialVMs.Add(new MaterialVM(newMat, this));
             MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
@@ -191,7 +225,7 @@ namespace CarbonCalculator
         {
             var newMat = new ICEv2General();
             _materials.Materials.Add(newMat);
-            _materialVMs.Add(new MaterialVM(newMat, this));
+            //_materialVMs.Add(new MaterialVM(newMat, this));
             MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
         }
@@ -210,7 +244,7 @@ namespace CarbonCalculator
         {
             var newMat = new ICETimber();
             _materials.Materials.Add(newMat);
-            _materialVMs.Add(new MaterialVM(newMat, this));
+            //_materialVMs.Add(new MaterialVM(newMat, this));
             MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
@@ -230,7 +264,7 @@ namespace CarbonCalculator
         {
             var newMat = new GWPGeneric();
             _materials.Materials.Add(newMat);
-            _materialVMs.Add(new MaterialVM(newMat, this));
+            //_materialVMs.Add(new MaterialVM(newMat, this));
             MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 
@@ -250,7 +284,7 @@ namespace CarbonCalculator
         {
             var newMat = new ICE3ConcreteModel();
             _materials.Materials.Add(newMat);
-            _materialVMs.Add(new MaterialVM(newMat, this));
+            //_materialVMs.Add(new MaterialVM(newMat, this));
             MaterialNames.Add(newMat.Name);
             _parent.UpdateAll();
 

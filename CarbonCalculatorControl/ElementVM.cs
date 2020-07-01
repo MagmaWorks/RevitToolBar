@@ -39,7 +39,41 @@ namespace CarbonCalculator
             }
         }
 
+        bool _isSelected = false;
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                _isSelected = value;
+                _parent.UpdateSelection(value);
+                RaisePropertyChanged(nameof(IsSelected));
+            }
+        }
 
+        public void setSelection(bool isSelected)
+        {
+            _isSelected = isSelected;
+            
+            RaisePropertyChanged(nameof(IsSelected));
+        }
+
+        bool _isHighlighted = false;
+        public bool IsHighlighted
+        {
+            get
+            {
+                return _isHighlighted;
+            }
+            set
+            {
+                _isHighlighted = value;
+                RaisePropertyChanged(nameof(IsHighlighted));
+            }
+        }
 
         public Element Element => _element;
 
@@ -100,18 +134,34 @@ namespace CarbonCalculator
 
         public string UniqueID => _element.UniqueID;
 
-        public double Volume
+        public double Quantity
         {
             get
             {
-                return _element.Volume;
+                return _element.Quantity;
             }
             set
             {
-                _element.Volume = value;
-                RaisePropertyChanged(nameof(Volume));
+                _element.Quantity = value;
+                RaisePropertyChanged(nameof(Quantity));
                 RaisePropertyChanged(nameof(A1toA3));
                 _parent.UpdateAll();                
+            }
+        }
+
+        public string Dimensions
+        {
+            get
+            {
+                if (_element.SpatialDimensions == Measurement.Volume)
+                {
+                    return "m3 (volume)";
+                }
+                else if (_element.SpatialDimensions == Measurement.Area)
+                {
+                    return "m2 (area)";
+                }
+                return "";
             }
         }
 

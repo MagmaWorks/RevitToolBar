@@ -81,6 +81,7 @@
     <Compile Include="ICEMaterialNone.cs" />
     <Compile Include="ICEMaterialSteel.cs" />
     <Compile Include="ICEMaterialTimber.cs" />
+    <Compile Include="ImportOptionsVM.cs" />
     <Compile Include="MaterialsVM.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

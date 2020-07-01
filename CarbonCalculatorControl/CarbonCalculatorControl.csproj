@@ -83,6 +83,9 @@
     <Compile Include="ICEv2SteelVM.cs" />
     <Compile Include="ICEv2ConcreteVM.cs" />
     <Compile Include="ICEMaterialVM.cs" />
+    <Compile Include="ImportOptions.xaml.cs">
+      <DependentUpon>ImportOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IViewModelParent.cs" />
     <Compile Include="MaterialEditor.xaml.cs">
       <DependentUpon>MaterialEditor.xaml</DependentUpon>
@@ -116,6 +119,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="EPDMaterialEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImportOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

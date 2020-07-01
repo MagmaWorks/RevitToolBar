@@ -56,7 +56,7 @@ namespace CarbonCalculator
             }
         }
 
-        public double MassDensity
+        new public double MassDensity
         {
             get
             {
@@ -71,13 +71,16 @@ namespace CarbonCalculator
             }
         }
 
-        public ICEv2GeneralVM(ICEv2General material)
+        public ICEv2GeneralVM(ICEv2General material, Measurement measure)
         {
+            _measure = measure;
+
             _materials = ICEv2General.ReadICEv2Materials();
             _selectedMaterial = _materials.Where(a => a.Reference == material.Reference).FirstOrDefault();
             _genMat = material;
             _material = material;
             RaisePropertyChanged(nameof(Materials));
+            RaisePropertyChanged(nameof(SelectedMaterial));
 
             _genMat.UpdateValues(_selectedMaterial.MaterialFamily, _selectedMaterial.Material, _selectedMaterial.EmbodiedCarbon, _selectedMaterial.Reference);
             

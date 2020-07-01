@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.IO.Compression;
 using System.Windows;
 using System.Windows.Data;
+using CarbonMaterials;
 
 namespace CarbonCalculator
 {
@@ -93,6 +94,7 @@ namespace CarbonCalculator
                 updateMatNames();
                 RaisePropertyChanged(nameof(SelectedMaterial));
                 RaisePropertyChanged(nameof(SelectedMaterialSetName));
+                RaisePropertyChanged(nameof(Measurement));
             }
         }
 
@@ -111,6 +113,27 @@ namespace CarbonCalculator
                 {
                     return null;
                 }
+            }
+        }
+
+        public List<string> Measurements { get; set; } = new List<string> { "Volume", "Area" };
+
+        public string Measurement
+        {
+            get
+            {
+                if (_selectedMaterialIndex > 0)
+                {
+                    return _elementSet.MaterialSets[_selectedMaterialSetIndex].SpatialDimensions.ToString();
+                }
+                else
+                    return "";
+            }
+            set
+            {
+                _elementSet.MaterialSets[_selectedMaterialSetIndex].SpatialDimensions = (Measurement)Enum.Parse(typeof(Measurement), value);
+                RaisePropertyChanged(nameof(Measurement));
+                RaisePropertyChanged("");
             }
         }
 
@@ -161,7 +184,7 @@ namespace CarbonCalculator
                 {
                     var mat = _elementSet.MaterialSets[_selectedMaterialSetIndex].Materials[_selectedMaterialIndex];
 
-                    _selectedMaterial = new MaterialVM(mat);
+                    _selectedMaterial = new MaterialVM(mat, _elementSet.MaterialSets[_selectedMaterialSetIndex].SpatialDimensions);
                     return _selectedMaterial;
                 }
                 else
@@ -385,7 +408,7 @@ namespace CarbonCalculator
             {
                 foreach (var set in SelectionSets)
                 {
-                    set.setParent(this);
+                    set.setParentandCheckMaterialName(this);
                 }
             }
 
@@ -464,7 +487,7 @@ namespace CarbonCalculator
 
         void assignToSelection()
         {
-            SelectionSetVM newSet = new SelectionSetVM(_selectedMaterialSetIndex, this);
+            SelectionSetVM newSet = new SelectionSetVM(MaterialSets[_selectedMaterialSetIndex].Name, this);
             foreach (var filter in Filters)
             {
                 foreach (var item in filter.FilterItems)
@@ -526,17 +549,43 @@ namespace CarbonCalculator
 
         }
 
+        public void UpdateSelection(bool isSelected)
+        {
+            foreach (var elemVM in Elements)
+            {
+                if (elemVM.IsHighlighted)
+                {
+                    elemVM.setSelection(isSelected);
+                }
+            }
+        }
+
         void processSelectionSet(SelectionSetVM set)
         {
             foreach (var elem in Elements)
             {
                 if (elem.checkElementInFilterSet(set.SelectedFilterValues) && !set.ElementsIdsToExclude.Contains(elem.UniqueID))
                 {
-                    elem.Material = _elementSet.MaterialSets[set.SelectedMaterial];
+                    //elem.Material = _elementSet.MaterialSets[set.SelectedMaterial];
+                    var myList = _elementSet.MaterialSets.Where(a => a.Name == set.SelectedMaterialSetName);
+                    if (myList.Count() > 0)
+                    {
+                        elem.Material = myList.First();
+                    }
+                    else
+                        MessageBox.Show("No material with name " + set.SelectedMaterialSetName + " found.");
+                    
                 }
                 else if (set.ElementsIdsToInclude.Contains(elem.UniqueID))
                 {
-                    elem.Material = _elementSet.MaterialSets[set.SelectedMaterial];
+                    //elem.Material = _elementSet.MaterialSets[set.SelectedMaterial];
+                    var myList = _elementSet.MaterialSets.Where(a => a.Name == set.SelectedMaterialSetName);
+                    if (myList.Count() > 0)
+                    {
+                        elem.Material = myList.First();
+                    }
+                    else
+                        MessageBox.Show("No material with name " + set.SelectedMaterialSetName + " found.");
                 }
             }
         }
@@ -595,7 +644,7 @@ namespace CarbonCalculator
 
         public void UpdateFilteredElements()
         {
-            SelectionSetVM currentSet = new SelectionSetVM(_selectedMaterialSetIndex, this);
+            SelectionSetVM currentSet = new SelectionSetVM(MaterialSets[_selectedMaterialSetIndex].Name, this);
             foreach (var filter in Filters)
             {
                 foreach (var item in filter.FilterItems)
@@ -694,11 +743,14 @@ namespace CarbonCalculator
                         }
                         else
                         {
-                            catCarbon += elem.Volume;
+                            catCarbon += elem.Quantity;
                         }
                     }
                 }
-                series.Add(new PieSeries { Values = new ChartValues<double> { catCarbon }, Title = item.Name, Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(item.Color)) });
+                if (catCarbon > 0)
+                {
+                    series.Add(new PieSeries { Values = new ChartValues<double> { catCarbon }, Title = item.Name, Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(item.Color)) });
+                }
             }
             _carbonVsCategory = series;
         }

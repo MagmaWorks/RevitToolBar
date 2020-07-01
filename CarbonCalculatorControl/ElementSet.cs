@@ -44,7 +44,8 @@ namespace CarbonCalculator
                 CarbonMaterials.GWPMaterialSet.GetDefaultRC3240(),
                 CarbonMaterials.GWPMaterialSet.GetDefaultRC3240GGBS20(),
                 CarbonMaterials.GWPMaterialSet.GetDefaultRC4050(),
-                CarbonMaterials.GWPMaterialSet.GetDefaultRC4050GGBS20()
+                CarbonMaterials.GWPMaterialSet.GetDefaultRC4050GGBS20(),
+                CarbonMaterials.GWPMaterialSet.GetDefaultBrickAndSteelStudWall()
             };
         }
 

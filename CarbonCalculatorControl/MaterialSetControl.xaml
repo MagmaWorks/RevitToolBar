@@ -80,11 +80,15 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Set name: " Grid.Row="0"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <TextBlock Text="Set name: " />
                             <TextBox Text="{Binding SelectedMaterialSetName}" MinWidth="200"/>
                         </StackPanel>
-                        <ListView x:Name="ListOfMaterials" ItemsSource="{Binding MaterialNames}" Grid.Row="1" SelectionMode="Single" SelectedIndex="{Binding SelectedMaterialIndex}">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <TextBlock Text="Applied to: "/>
+                            <ComboBox ItemsSource="{Binding Measurements}" SelectedValue="{Binding Measurement, Mode=TwoWay}" />
+                        </StackPanel>
+                        <ListView x:Name="ListOfMaterials" ItemsSource="{Binding MaterialNames}" Grid.Row="2" SelectionMode="Single" SelectedIndex="{Binding SelectedMaterialIndex}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>

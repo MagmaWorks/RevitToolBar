@@ -22,18 +22,42 @@ namespace CarbonCalculator
 
         MaterialSetVM _parent;
 
+        Measurement _measure;
+
+        //public string Units
+        //{
+        //    get
+        //    {
+        //        switch (_measure)
+        //        {
+        //            case Measurement.Volume:
+        //                return "m3";
+        //            case Measurement.Area:
+        //                return "m2";
+        //            case Measurement.Length:
+        //                return "m";
+        //            case Measurement.Item:
+        //                return "item";
+        //            default:
+        //                return "";
+        //        }
+        //    }
+        //}
+
         public string Name => _material.Name;
 
-        public MaterialVM(GWPMaterial material, MaterialSetVM parent)
+        public MaterialVM(GWPMaterial material, MaterialSetVM parent, Measurement measure)
         {
             _material = material;
             _parent = parent;
+            _measure = measure;
         }
 
-        public MaterialVM(GWPMaterial material)
+        public MaterialVM(GWPMaterial material, Measurement measure)
         {
             _material = material;
             _parent = null;
+            _measure = measure;
         }
 
         //ICommand _editMaterialCommand;
@@ -66,19 +90,19 @@ namespace CarbonCalculator
             switch (mat)
             {
                 case ICEConcrete m:
-                    return new ICEv2ConcreteVM(mat as ICEConcrete);
+                    return new ICEv2ConcreteVM(mat as ICEConcrete, _measure);
                 case ICESteel m:
-                    return new ICEv2SteelVM(mat as ICESteel);
+                    return new ICEv2SteelVM(mat as ICESteel, _measure);
                 case ICETimber m:
-                    return new ICEv2TimberVM(mat as ICETimber);
+                    return new ICEv2TimberVM(mat as ICETimber, _measure);
                 case ICE3ConcreteModel m:
-                    return new ICEv3ConcreteVM(mat as ICE3ConcreteModel);
+                    return new ICEv3ConcreteVM(mat as ICE3ConcreteModel, _measure);
                 case ICEv3General m:
-                    return new ICEv3GeneralVM(mat as ICEv3General);
+                    return new ICEv3GeneralVM(mat as ICEv3General, _measure);
                 case ICENone m:
                     return new ICENoneVM(mat as ICENone);
                 case ICEv2General m:
-                    return new ICEv2GeneralVM(mat as ICEv2General);
+                    return new ICEv2GeneralVM(mat as ICEv2General, _measure);
                 default:
                     return new ICEMaterialVMBase();
             }

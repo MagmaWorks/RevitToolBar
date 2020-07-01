@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CarbonCalculator
 {
@@ -189,6 +190,85 @@ namespace CarbonCalculator
             Model.ElementSet.AddElement(new Element("User element", 0, "User" + _userelem.ToString("0000"), filterVals));
             Model.Elements.Add(new ElementVM(Model.ElementSet.Elements.Last(), Model));
             _userelem++;
+            Model.UpdateAll();
+        }
+
+        ICommand _deleteElementCommand;
+
+        public ICommand DeleteElementCommand
+        {
+            get
+            {
+                return _deleteElementCommand ?? (_deleteElementCommand = new CommandHandler(() => deleteElement(), true));
+            }
+        }
+
+        void deleteElement()
+        {
+            List<int> indicesToDelete = new List<int>();
+            for (int i = 0; i < Model.Elements.Count; i++)
+            {
+                if (Model.Elements[i].IsSelected)
+                {
+                    indicesToDelete.Add(i);
+                }
+            }
+            indicesToDelete.Reverse();
+
+            foreach (var item in indicesToDelete)
+            {
+                Model.ElementSet.Elements.Remove(Model.Elements[item].Element);
+                Model.Elements.RemoveAt(item);
+
+            }
+            Model.UpdateAll();
+
+        }
+
+        ICommand _changeToVolumeCommand;
+
+        public ICommand ChangeToVolumeCommand
+        {
+            get
+            {
+                return _changeToVolumeCommand ?? (_changeToVolumeCommand = new CommandHandler(() => changeToVolume(), true));
+            }
+        }
+
+        void changeToVolume()
+        {
+            foreach (var elem in Model.Elements)
+            {
+                if (elem.IsSelected)
+                {
+                    elem.Element.SpatialDimensions = CarbonMaterials.Measurement.Volume;
+                }
+            }
+
+            Model.UpdateAll();
+        }
+
+        ICommand _changeToAreaCommand;
+
+        public ICommand ChangeToAreaCommand
+        {
+            get
+            {
+                return _changeToAreaCommand ?? (_changeToAreaCommand = new CommandHandler(() => changeToArea(), true));
+            }
+        }
+
+        void changeToArea()
+        {
+            foreach (var elem in Model.Elements)
+            {
+                if (elem.IsSelected)
+                {
+                    elem.Element.SpatialDimensions = CarbonMaterials.Measurement.Area;
+                }
+            }
+
+            Model.UpdateAll();
         }
 
         int _userelem = 0;

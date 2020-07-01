@@ -67,6 +67,8 @@ namespace CarbonMaterials
             return returnSet;
         }
 
+        public Measurement SpatialDimensions { get; set; } = Measurement.Volume;
+
         public static GWPMaterialSet GetDefaultGWPConcreteSetSeparateSteel()
         {
             var conc = new ICEConcrete("RC32/40", "zero", 0);
@@ -220,6 +222,25 @@ namespace CarbonMaterials
                 {
                     conc
                 });
+        }
+
+        public static GWPMaterialSet GetDefaultBrickAndSteelStudWall()
+        {
+            var block = ICEv3General.GetBlockwork100mm();
+            var studs = ICEv3General.GetSteelStud20kg();
+            var insulation = ICEv2General.GetInsulation();
+            block.ConstructionFactor = 0.2;
+            block.DeConstructionFactor = 0.1;
+            studs.ConstructionFactor = 0.1;
+            studs.DeConstructionFactor = 0.05;
+            return new GWPMaterialSet("Brick and stud cavity wall",
+            new List<GWPMaterial>
+            {
+                block,
+                insulation,
+                studs
+            })
+            { SpatialDimensions = Measurement.Area };
         }
     }
 }
