@@ -82,11 +82,11 @@ namespace CarbonCalculator
         {
             var constit = new CarbonMaterials.CementAndConcreteConstituent
             {
-                Material = _constituents[0].Material.AllConstituents["Aggregates"],
+                Material = ICE3CementModel.getCementConstituents()["Aggregates"],
                 Proportion = 0
             };
             (_material as CarbonMaterials.ICE3ConcreteModel).Constituents.Add(constit);
-            _constituents.Add(new ConstituentVM(constit, this));
+            Constituents.Add(new ConstituentVM(constit, this));
         }
 
 

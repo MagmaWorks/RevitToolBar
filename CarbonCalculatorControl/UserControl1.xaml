@@ -34,6 +34,8 @@
                 <MenuItem Header="Import Selection Set..." IsEnabled="False"/>
                 <MenuItem Header="Import Material Sets..." Command="{Binding ImportMaterialsCommand}"/>
                 <MenuItem Header="Output results to CSV..." Command="{Binding OutputCSVCommand}"/>
+                <MenuItem Header="Output summary results to CSV..." Command="{Binding OutputSummaryCSVCommand}"/>
+
             </MenuItem>
             <MenuItem Header="Elements">
                 <MenuItem Header="Add" Command="{Binding AddElementCommand}"/>

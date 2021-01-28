@@ -45,6 +45,8 @@ namespace MagmaWorksToolbar
                 LargeImage = new BitmapImage(batchIcon)
             });
 
+            checkDynamoFolder(@"W:\WW General\WW Software Resources\Dynamo\Packages");
+
             //Uri dynamoCheckIcon = new Uri("pack://application:,,,/WhitbyWoodToolbar;component/resources/DynamoCheck.png");
             //panel1.AddItem(new PushButtonData(
             //    "Check Dynamo version and packages",
@@ -70,6 +72,41 @@ namespace MagmaWorksToolbar
             return Result.Succeeded;
         }
 
+        void checkDynamoFolder(string location)
+        {
+            string localDynamoPackagesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Dynamo\Dynamo Revit";
+            var localVersionFolders = Directory.GetDirectories(localDynamoPackagesFolder);
+            string[] localVersionFolderNames = new string[localVersionFolders.Count()];
+            for (int i = 0; i < localVersionFolders.Length; i++)
+            {
+                localVersionFolderNames[i] = Path.GetFileName(localVersionFolders[i]);
+            }
 
+            var versionFolders = Directory.GetDirectories(location);
+            foreach (var versionFolder in versionFolders)
+            {
+                string versionToCheck = Path.GetFileName(versionFolder);
+                if (!localVersionFolderNames.Contains(versionToCheck)) ;
+                { MessageBox.Show("Dynamo pacakges folder " + versionFolder + " is missing." + versionToCheck + localVersionFolderNames[0]); }
+
+                var packageFolders = Directory.GetDirectories(versionFolder);
+                foreach (var packageFolder in packageFolders)
+                {
+                    if (File.Exists(packageFolder + @"\pkg.json"))
+                    {
+                        var jsonData = System.IO.File.ReadAllText(packageFolder + @"\pkg.json");
+                        DynamoPackageInfo info = Newtonsoft.Json.JsonConvert.DeserializeObject<DynamoPackageInfo>(jsonData);
+                        MessageBox.Show(info.name + " " + info.version);
+                    }
+                }                
+            }
+        }
+
+    }
+
+    public class DynamoPackageInfo
+    {
+        public string name { get; set; }
+        public string version { get; set; }
     }
 }

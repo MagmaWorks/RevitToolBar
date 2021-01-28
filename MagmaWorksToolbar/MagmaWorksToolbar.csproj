@@ -160,6 +160,7 @@
     <PostBuildEvent>xcopy "$(ProjectDir)resources\MagmaWorksToolbar.addin" "$(TargetDir)" /Y
 xcopy "$(ProjectDir)resources\MagmaWorksRevitToolbarInstaller2018.nsi" "$(TargetDir)" /Y
 xcopy "$(ProjectDir)resources\MagmaWorksRevitToolbarInstaller2019.nsi" "$(TargetDir)" /Y
+xcopy "$(ProjectDir)resources\MagmaWorksRevitToolbarInstaller2020.nsi" "$(TargetDir)" /Y
 mkdir "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetPath)" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)Newtonsoft.Json.dll" "$(TargetDir)MagmaWorksToolbar" /Y
@@ -169,6 +170,7 @@ xcopy "$(TargetDir)CarbonCalculatorWPF.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)CarbonMaterials.dll" "$(TargetDir)MagmaWorksToolbar" /Y
 xcopy "$(TargetDir)Resources\FreightCarbonCoefficients.csv" "$(TargetDir)MagmaWorksToolbar\resources" /Y
 "C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)MagmaWorksRevitToolbarInstaller2018.nsi"
-"C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)MagmaWorksRevitToolbarInstaller2019.nsi"</PostBuildEvent>
+"C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)MagmaWorksRevitToolbarInstaller2019.nsi"
+"C:\Program Files (x86)\NSIS\makensis.exe" "$(TargetDir)MagmaWorksRevitToolbarInstaller2020.nsi"</PostBuildEvent>
   </PropertyGroup>
 </Project>

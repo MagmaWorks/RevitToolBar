@@ -291,17 +291,22 @@ namespace CarbonCalculator
                 save.AddExtension = true;
                 save.DefaultExt = "csv";
                 save.Filter = @"CSV files | *.csv";
+                string filterNames = "";
+                foreach (var item in Model.ElementSet.FilterNames)
+                {
+                    filterNames += "," + item;
+                }
                 if (save.ShowDialog() == DialogResult.OK)
                 {
                     using (var w = new StreamWriter(save.FileName))
                     {
-                        w.WriteLine("ID, Name, Material, A1-A3, A4, A5, B1-B7, C1, C2, C3, C4");
+                        w.WriteLine("ID, Name, Material, A1-A3, A4, A5, B1-B7, C1, C2, C3, C4" + filterNames);
                         foreach (var elem in vm.ElementSet.Elements)
                         {
                             string newLine = "";
                             newLine += elem.UniqueID + ",";
-                            newLine += elem.Name + ",";
-                            newLine += elem.Material.Name + ",";
+                            newLine += "\"" + elem.Name + "\"" + ",";
+                            newLine += "\"" + elem.Material.Name + "\"" + ",";
                             newLine += elem.A1toA3 + ",";
                             newLine += elem.A4 + ",";
                             newLine += elem.A5 + ",";
@@ -310,6 +315,12 @@ namespace CarbonCalculator
                             newLine += elem.C2 + ",";
                             newLine += elem.C3 + ",";
                             newLine += elem.C4;
+                            string filterValues = "";
+                            foreach (var item in elem.Filters)
+                            {
+                                filterValues += "," + "\"" + item + "\"";
+                            }
+                            newLine += filterValues;
                             w.WriteLine(newLine);
                             w.Flush();
                         }
@@ -323,6 +334,69 @@ namespace CarbonCalculator
 
 
         }
+
+        ICommand _outputSummaryCSVCommand;
+
+        public ICommand OutputSummaryCSVCommand
+        {
+            get
+            {
+                return _outputSummaryCSVCommand ?? (_outputSummaryCSVCommand = new CommandHandler(() => outputSummaryToCSV(), true));
+            }
+        }
+
+        void outputSummaryToCSV()
+        {
+            try
+            {
+                var save = new SaveFileDialog();
+                save.AddExtension = true;
+                save.DefaultExt = "csv";
+                save.Filter = @"CSV files | *.csv";
+                string filterNames = "";
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    using (var w = new StreamWriter(save.FileName))
+                    {
+                        for (int i = 0; i < Model.ElementSet.FilterNames.Count(); i++)
+                        {
+                            string filterName = Model.ElementSet.FilterNames[i];
+                            string[] uniqueFilterValues = vm.ElementSet.Elements.Select(a => a.Filters[i]).Distinct().ToArray();
+
+                            string valueHeaders = "";
+                            string valuesA = "A1-A5";
+                            string valuesBC = "B1-C4";
+                            foreach (var item in uniqueFilterValues)
+                            {
+                                valueHeaders += ",";
+                                valueHeaders += item;
+
+                                double totalA = Model.ElementSet.Elements.Where(a => a.Filters[i] == item).Sum(a => a.TotalA);
+                                valuesA += "," + totalA;
+                                double totalBC = Model.ElementSet.Elements.Where(a => a.Filters[i] == item).Sum(a => a.TotalB + a.TotalC);
+                                valuesBC += "," + totalBC;
+
+                            }
+                            w.WriteLine("Results by " + filterName);
+                            w.WriteLine(valueHeaders);
+                            w.WriteLine(valuesA);
+                            w.WriteLine(valuesBC);
+                            w.Flush();
+                        }
+                    }
+                }
+
+
+           
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("oops..." + Environment.NewLine + ex.Message);
+            }
+
+
+        }
+
 
         ICommand _importMaterialsCommand;
 
